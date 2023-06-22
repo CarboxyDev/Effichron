@@ -7,7 +7,7 @@ interface Timer {
   reset: () => void;
 }
 
-export const usedurationerPersistent = create<Timer>()(
+export const useTimer = create<Timer>()(
   persist(
     (set) => ({
       duration: 0,
