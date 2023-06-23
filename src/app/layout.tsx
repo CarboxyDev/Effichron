@@ -1,3 +1,4 @@
+import { cn } from '@/utils/util';
 import '../styles/globals.css';
 import { Inter } from 'next/font/google';
 
@@ -13,7 +14,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={cn(inter.className, 'bg-zinc-900 text-zinc-100')}>
+        {children}
+      </body>
     </html>
   );
 }

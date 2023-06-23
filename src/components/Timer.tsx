@@ -12,7 +12,6 @@ const Timer = () => {
     const clientCalculateTime = setInterval(() => {
       if (activeTimer) {
         persistentTimer?.setDuration(persistentTimer?.duration + 1);
-        console.log(`Timer: ${persistentTimer?.duration}`);
       }
     }, 1000);
 
