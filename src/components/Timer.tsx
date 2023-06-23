@@ -2,7 +2,9 @@
 
 import { useStore } from '@/lib/store/useStore';
 import { useTimer } from '@/lib/store/useTimer';
+import { secondsToTimeFormat } from '@/utils/util';
 import { useEffect, useState } from 'react';
+import TimeDisplay from './TimeDisplay';
 
 const Timer = () => {
   const persistentTimer = useStore(useTimer, (state) => state);
@@ -20,7 +22,11 @@ const Timer = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div>Time: {persistentTimer?.duration}</div>
+      <div>
+        <TimeDisplay
+          time={secondsToTimeFormat(persistentTimer?.duration || 0)}
+        />
+      </div>
       <div className="mt-4 gap-x-2 flex flex-row">
         <button
           className="px-4 py-2 bg-blue-500 text-white rounded-lg"
