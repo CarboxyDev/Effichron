@@ -1,7 +1,7 @@
 import { cn } from '@/utils/util';
-import { Barlow } from 'next/font/google';
+import { IBM_Plex_Mono } from 'next/font/google';
 
-const barlow = Barlow({ weight: '600', subsets: ['latin'] });
+const timerFont = IBM_Plex_Mono({ weight: '600', subsets: ['latin'] });
 
 interface TimeFormat {
   hours: number;
@@ -18,8 +18,15 @@ const TimeDisplay = (props: TimeDisplayProps) => {
   return (
     <>
       <div>
-        <div className={cn(barlow.className, 'text-5xl')}>
-          {hours.toString().padStart(2, '0')}:
+        <div
+          className={cn(
+            timerFont.className,
+            'text-5xl font-bold text-zinc-200'
+          )}
+        >
+          <span className={cn(hours && '')}>
+            {hours.toString().padStart(2, '0')}:
+          </span>
           {minutes.toString().padStart(2, '0')}:
           {seconds.toString().padStart(2, '0')}
         </div>
