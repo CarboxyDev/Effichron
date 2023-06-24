@@ -8,17 +8,16 @@ import TimeDisplay from './TimeDisplay';
 
 const Timer = () => {
   const persistentTimer = useStore(useTimer, (state) => state);
-  const [activeTimer, setActiveTimer] = useState(true);
 
   useEffect(() => {
     const clientCalculateTime = setInterval(() => {
-      if (activeTimer) {
+      if (persistentTimer?.isActive) {
         persistentTimer?.setDuration(persistentTimer?.duration + 1);
       }
     }, 1000);
 
     return () => clearInterval(clientCalculateTime);
-  }, [persistentTimer, activeTimer]);
+  }, [persistentTimer]);
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -30,9 +29,11 @@ const Timer = () => {
       <div className="mt-4 gap-x-2 flex flex-row">
         <button
           className="px-4 py-2 bg-blue-500 text-white rounded-lg"
-          onClick={() => setActiveTimer(!activeTimer)}
+          onClick={() =>
+            persistentTimer?.setIsActive(!persistentTimer?.isActive)
+          }
         >
-          {activeTimer ? 'Pause' : 'Start'}
+          {persistentTimer?.isActive ? 'Pause' : 'Start'}
         </button>
         <button
           className="px-4 py-2 bg-slate-500 text-white rounded-lg"

@@ -1,7 +1,7 @@
 import { cn } from '@/utils/util';
 import { IBM_Plex_Mono } from 'next/font/google';
 
-const timerFont = IBM_Plex_Mono({ weight: '600', subsets: ['latin'] });
+const timerFont = IBM_Plex_Mono({ weight: '400', subsets: ['latin'] });
 
 interface TimeFormat {
   hours: number;
@@ -18,12 +18,7 @@ const TimeDisplay = (props: TimeDisplayProps) => {
   return (
     <>
       <div>
-        <div
-          className={cn(
-            timerFont.className,
-            'text-5xl font-bold text-zinc-200'
-          )}
-        >
+        <div className={cn(timerFont.className, 'text-6xl text-zinc-200')}>
           <span className={cn(hours && '')}>
             {hours.toString().padStart(2, '0')}:
           </span>
