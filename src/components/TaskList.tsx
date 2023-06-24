@@ -22,7 +22,7 @@ const Task = (props: { task: Task }): JSX.Element => {
 
   return (
     <>
-      <div className="w-160 h-32 rounded-lg bg-zinc-800">
+      <div className="w-160 h-28 rounded-lg bg-zinc-800">
         <div className="mx-7 flex items-center flex-row h-full">
           <div className="mr-auto flex flex-row gap-x-8 items-center">
             <div
@@ -41,7 +41,7 @@ const Task = (props: { task: Task }): JSX.Element => {
 const TaskList = () => {
   return (
     <>
-      <div className="gap-y-6 flex flex-col items-center">
+      <div className="gap-y-4 flex flex-col items-center">
         {tasks.map((task) => (
           <Task key={task.id} task={task} />
         ))}

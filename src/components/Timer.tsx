@@ -3,7 +3,7 @@
 import { useStore } from '@/lib/store/useStore';
 import { useTimer } from '@/lib/store/useTimer';
 import { secondsToTimeFormat } from '@/utils/util';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import TimeDisplay from './TimeDisplay';
 
 const Timer = () => {
