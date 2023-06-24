@@ -2,6 +2,7 @@
 
 import { useStore } from '@/lib/store/useStore';
 import { useTasks } from '@/lib/store/useTasks';
+import { cn } from '@/utils/util';
 import { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 
@@ -9,6 +10,7 @@ interface Task {
   id: string;
   name: string;
   color: string;
+  isActive: boolean;
 }
 
 const hardcodedTasks: Task[] = [
@@ -16,24 +18,35 @@ const hardcodedTasks: Task[] = [
     id: uuid(),
     name: 'Work',
     color: '#06b6d4',
+    isActive: true,
   },
   {
     id: uuid(),
     name: 'Learn',
     color: '#a78bfa',
+    isActive: false,
   },
 ];
 
 const Task = (props: { task: Task }): JSX.Element => {
   const { task } = props;
 
+  const switchTask = () => {
+    console.log('switchTask');
+  };
+
   return (
     <>
-      <div className="w-160 h-28 rounded-lg bg-zinc-800">
+      <div
+        onClick={() => switchTask()}
+        className={cn(
+          'w-160 h-28 rounded-lg bg-zinc-800 hover:bg-zinc-900 hover:cursor-pointer group hover:border hover:border-zinc-800 border border-transparent transition ease-in duration-200 delay-75'
+        )}
+      >
         <div className="mx-7 flex items-center flex-row h-full">
           <div className="mr-auto flex flex-row gap-x-8 items-center">
             <div
-              className="h-12 w-12 rounded-full"
+              className="h-12 w-12 rounded-full group-hover:animate-pulse"
               style={{ backgroundColor: task.color }}
             ></div>
             <div className="text-zinc-300 text-xl">{task.name}</div>

@@ -6,6 +6,7 @@ interface Task {
   id: string;
   name: string;
   color: string;
+  isActve: boolean;
 }
 
 interface TaskList {
@@ -24,11 +25,13 @@ export const useTasks = create<TaskList>()(
           id: uuid(),
           name: 'Work',
           color: '#06b6d4',
+          isActve: true,
         },
         {
           id: uuid(),
           name: 'Learn',
           color: '#a78bfa',
+          isActve: false,
         },
       ],
       addTask: (task: Task) =>
