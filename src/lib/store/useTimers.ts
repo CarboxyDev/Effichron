@@ -7,10 +7,6 @@ interface Timer {
   id: string;
   duration: number;
   isActive: boolean;
-  setIsActive: (isActive: boolean) => void;
-  setDuration: (timeInSeconds: number) => void;
-  increment: (amount: number) => void;
-  reset: () => void;
 }
 
 interface Timers {
@@ -25,7 +21,13 @@ export const useTimers = create<Timers>()(
   devtools(
     persist(
       (set) => ({
-        timers: [],
+        timers: [
+          {
+            id: '1',
+            duration: 0,
+            isActive: false,
+          },
+        ],
         addTimer: (timer: Timer) =>
           set((state) => ({ timers: [...state.timers, timer] })),
         removeTimer: (id: string) =>
