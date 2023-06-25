@@ -1,17 +1,11 @@
 'use client';
 
+import { Task } from '@/lib/types';
 import { useStore } from '@/lib/store/useStore';
 import { useTasks } from '@/lib/store/useTasks';
 import { cn } from '@/utils/util';
 import { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
-
-interface Task {
-  id: string;
-  name: string;
-  color: string;
-  isActive: boolean;
-}
 
 const hardcodedTasks: Task[] = [
   {

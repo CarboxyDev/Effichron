@@ -1,13 +1,7 @@
+import { Task } from '@/lib/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { v4 as uuid } from 'uuid';
-
-interface Task {
-  id: string;
-  name: string;
-  color: string;
-  isActve: boolean;
-}
 
 interface TaskList {
   tasks: Task[];
@@ -22,16 +16,16 @@ export const useTasks = create<TaskList>()(
     (set) => ({
       tasks: [
         {
-          id: uuid(),
+          id: '1',
           name: 'Work',
           color: '#06b6d4',
-          isActve: true,
+          isActive: true,
         },
         {
-          id: uuid(),
+          id: '2',
           name: 'Learn',
           color: '#a78bfa',
-          isActve: false,
+          isActive: false,
         },
       ],
       addTask: (task: Task) =>
