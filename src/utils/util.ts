@@ -30,3 +30,14 @@ export function secondsToTimeFormat(seconds: number): TimeFormat {
     seconds: parseInt(sec),
   };
 }
+
+export function secondsToAlphaTimeFormat(seconds: number): string {
+  const date = new Date(0);
+  date.setSeconds(seconds);
+  const dateAsString = date.toISOString().substring(11, 19);
+  let [hr, min] = dateAsString.split(':');
+
+  if (parseInt(hr) === 0) return `${parseInt(min)}m`;
+
+  return `${parseInt(hr)}h ${parseInt(min)}m`;
+}

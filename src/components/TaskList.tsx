@@ -2,8 +2,8 @@
 
 import { Task } from '@/lib/types';
 import { useStore } from '@/lib/store/useStore';
-import { useTasks } from '@/lib/store/useTasks';
-import { cn } from '@/utils/util';
+import { TaskListStore, useTasks } from '@/lib/store/useTasks';
+import { cn, secondsToAlphaTimeFormat } from '@/utils/util';
 import { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 
@@ -24,11 +24,20 @@ const hardcodedTasks: Task[] = [
   },
 ];
 
-const Task = (props: { task: Task }): JSX.Element => {
-  const { task } = props;
+const Task = (props: { task: Task; taskStore: TaskListStore | undefined }) => {
+  const { task, taskStore } = props;
 
   const switchTask = () => {
-    console.log('switchTask');
+    if (taskStore === undefined) {
+      return;
+    }
+    if (taskStore.activeTask != task.id) {
+      if (taskStore.activeTask != undefined) {
+        taskStore.changeActiveState(taskStore.activeTask, false);
+      }
+
+      taskStore.setActiveTask(task.id);
+    }
   };
 
   return (
@@ -47,7 +56,9 @@ const Task = (props: { task: Task }): JSX.Element => {
             ></div>
             <div className="text-zinc-300 text-xl">{task.name}</div>
           </div>
-          <div className="ml-auto text-zinc-400 text-lg">1h 23m</div>
+          <div className="ml-auto text-zinc-400 text-lg">
+            {task.isActive ? 'active' : secondsToAlphaTimeFormat(task.duration)}
+          </div>
         </div>
       </div>
     </>
@@ -95,7 +106,7 @@ const TaskList = (): JSX.Element => {
     <>
       <div className="gap-y-4 flex flex-col items-center">
         {tasks?.map((task) => (
-          <Task key={task.id} task={task} />
+          <Task key={task.id} task={task} taskStore={taskStore} />
         ))}
       </div>
     </>

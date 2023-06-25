@@ -9,14 +9,16 @@ import { Task } from '@/lib/types';
 
 const Timer = () => {
   const taskStore = useStore(useTasks, (state) => state);
-  const tasks = taskStore?.tasks;
   const [activeIdentifier, setActiveIdentifier] = useState<string>('');
   const [activeTask, setActiveTask] = useState<Task | undefined>(undefined);
 
   useEffect(() => {
+    const tasks = taskStore?.tasks;
+
     const getActiveTask = (): Task | undefined => {
-      const _activeTask = tasks?.find((task) => {
-        return task.isActive;
+      const activeTaskID = taskStore?.activeTask;
+      const _activeTask = tasks?.find((t) => {
+        return t.id === activeTaskID;
       });
 
       return _activeTask;
@@ -32,16 +34,16 @@ const Timer = () => {
     }, 1000);
 
     return () => clearInterval(clientCalculateTime);
-  }, [activeIdentifier, taskStore, tasks, activeTask]);
+  }, [activeIdentifier, taskStore, activeTask]);
 
   return (
     <div className="flex flex-col justify-center items-center">
       <div>
         <TimeDisplay time={secondsToTimeFormat(activeTask?.duration || 0)} />
       </div>
-      <div className="mt-4 gap-x-2 flex flex-row">
+      <div className="mt-8 gap-x-2 flex flex-row">
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+          className="w-32 py-2 bg-blue-500 text-white rounded-md"
           onClick={() => {}}
         >
           {activeTask?.isActive ? 'Pause' : 'Start'}
