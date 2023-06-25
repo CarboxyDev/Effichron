@@ -4,25 +4,6 @@ import { Task } from '@/lib/types';
 import { useStore } from '@/lib/store/useStore';
 import { TaskListStore, useTasks } from '@/lib/store/useTasks';
 import { cn, secondsToAlphaTimeFormat } from '@/utils/util';
-import { useEffect } from 'react';
-import { v4 as uuid } from 'uuid';
-
-const hardcodedTasks: Task[] = [
-  {
-    id: uuid(),
-    name: 'Work',
-    color: '#06b6d4',
-    isActive: true,
-    duration: 0,
-  },
-  {
-    id: uuid(),
-    name: 'Learn',
-    color: '#a78bfa',
-    isActive: false,
-    duration: 0,
-  },
-];
 
 const Task = (props: { task: Task; taskStore: TaskListStore | undefined }) => {
   const { task, taskStore } = props;
@@ -71,38 +52,6 @@ const TaskList = (): JSX.Element => {
   console.log('Render TaskList');
   const taskStore = useStore(useTasks, (state) => state);
   const tasks = taskStore?.tasks;
-
-  useEffect(() => {
-    console.log(tasks);
-
-    // Match against Name not ID
-    const checkIfTaskExists = (task: Task): boolean => {
-      console.log('checkIfTaskExists');
-      console.log(tasks);
-      tasks?.forEach((t) => {
-        console.log('fe');
-        if (t.name === task.name) {
-          console.log('matched ', t.name);
-          return true;
-        }
-      });
-      return false;
-    };
-
-    // TODO: Checking for already existing tasks is not working. Fix it later.
-    // Probably has something to with tasks being useEffect dependency
-
-    if (checkIfTaskExists(hardcodedTasks[0])) {
-      console.log('Task 0 exists');
-    } else {
-      console.log('Task 0 does not exist');
-      //taskStore?.addTask(hardcodedTasks[0]);
-    }
-    // Add hardcoded tasks to store
-    //taskStore?.addTask(hardcodedTasks[0]);
-    //taskStore?.addTask(hardcodedTasks[1]);
-    //taskStore?.clear();
-  }, [taskStore, tasks]);
 
   return (
     <>
