@@ -8,6 +8,7 @@ interface TaskList {
   addTask: (task: Task) => void;
   removeTask: (id: string) => void;
   updateTask: (task: Task) => void;
+  incrementDuration: (id: string, amount: number) => void;
   clear: () => void;
 }
 
@@ -19,13 +20,15 @@ export const useTasks = create<TaskList>()(
           id: '1',
           name: 'Work',
           color: '#06b6d4',
-          isActive: true,
+          isActive: false,
+          duration: 0,
         },
         {
           id: '2',
           name: 'Learn',
           color: '#a78bfa',
           isActive: false,
+          duration: 0,
         },
       ],
       addTask: (task: Task) =>
@@ -37,6 +40,12 @@ export const useTasks = create<TaskList>()(
       updateTask: (task: Task) =>
         set((state) => ({
           tasks: state.tasks.map((t) => (t.id === task.id ? task : t)),
+        })),
+      incrementDuration: (id: string, amount: number) =>
+        set((state) => ({
+          tasks: state.tasks.map((t) =>
+            t.id === id ? { ...t, duration: t.duration + amount } : t
+          ),
         })),
       clear: () => set({ tasks: [] }),
     }),

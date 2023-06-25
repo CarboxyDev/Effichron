@@ -6,7 +6,6 @@ import { useTasks } from '@/lib/store/useTasks';
 import { cn } from '@/utils/util';
 import { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
-import { useTimers } from '@/lib/store/useTimers';
 
 const hardcodedTasks: Task[] = [
   {
@@ -14,12 +13,14 @@ const hardcodedTasks: Task[] = [
     name: 'Work',
     color: '#06b6d4',
     isActive: true,
+    duration: 0,
   },
   {
     id: uuid(),
     name: 'Learn',
     color: '#a78bfa',
     isActive: false,
+    duration: 0,
   },
 ];
 
@@ -56,11 +57,9 @@ const Task = (props: { task: Task }): JSX.Element => {
 const TaskList = (): JSX.Element => {
   console.log('Render TaskList');
   const taskStore = useStore(useTasks, (state) => state);
-  const timersStore = useStore(useTimers, (state) => state);
   const tasks = taskStore?.tasks;
 
   useEffect(() => {
-    console.log('useEffect TaskList');
     console.log(tasks);
 
     // Match against Name not ID
@@ -90,30 +89,7 @@ const TaskList = (): JSX.Element => {
     //taskStore?.addTask(hardcodedTasks[0]);
     //taskStore?.addTask(hardcodedTasks[1]);
     //taskStore?.clear();
-
-    // Create associated timers for each task if they don't already exist
-    // Maybe I could just not have this here and just create timer when the task is created mhmmmm
-    // This code below under this useEffect is kind of useless for now I guess
-    const timerForTaskExists = (task: Task): boolean => {
-      const timers = timersStore?.timers;
-      let foundTimer = false;
-
-      timers?.forEach((timer) => {
-        if (timer.id == task.id) {
-          foundTimer = true;
-        }
-      });
-      return foundTimer;
-    };
-
-    console.log('Running forEach on tasks');
-    tasks?.forEach((task: Task) => {
-      console.log(timerForTaskExists(task));
-      if (!timerForTaskExists(task)) {
-        //
-      }
-    });
-  }, [taskStore, tasks, timersStore]);
+  }, [taskStore, tasks]);
 
   return (
     <>
