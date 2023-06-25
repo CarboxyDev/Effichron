@@ -57,7 +57,9 @@ const Task = (props: { task: Task; taskStore: TaskListStore | undefined }) => {
             <div className="text-zinc-300 text-xl">{task.name}</div>
           </div>
           <div className="ml-auto text-zinc-400 text-lg">
-            {task.isActive ? 'active' : secondsToAlphaTimeFormat(task.duration)}
+            {taskStore?.activeTask == task.id
+              ? 'active'
+              : secondsToAlphaTimeFormat(task.duration)}
           </div>
         </div>
       </div>
