@@ -33,6 +33,13 @@ export const useTasks = create<TaskListStore>()(
           isActive: false,
           duration: 7500,
         },
+        {
+          id: '3',
+          name: 'Casual',
+          color: '#14B8A6',
+          isActive: false,
+          duration: 0,
+        },
       ],
       activeTask: '1',
       setActiveTask: (id: string) => set({ activeTask: id }),

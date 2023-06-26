@@ -49,6 +49,8 @@ const Task = (props: { task: Task; taskStore: TaskListStore | undefined }) => {
 };
 
 const TaskList = (): JSX.Element => {
+  // This re-renders every time the taskStore is modified (which is every second) which is rather bad for performance
+  // Try optimizing this in the future so that it only renders when absolutely needed
   console.log('Render TaskList');
   const taskStore = useStore(useTasks, (state) => state);
   const tasks = taskStore?.tasks;
@@ -56,9 +58,16 @@ const TaskList = (): JSX.Element => {
   return (
     <>
       <div className="gap-y-4 flex flex-col items-center">
-        {tasks?.map((task) => (
-          <Task key={task.id} task={task} taskStore={taskStore} />
-        ))}
+        {tasks?.map((task) => {
+          if (task.id == taskStore?.activeTask) {
+            return <Task key={task.id} task={task} taskStore={taskStore} />;
+          }
+        })}
+        {tasks?.map((task) => {
+          if (task.id != taskStore?.activeTask) {
+            return <Task key={task.id} task={task} taskStore={taskStore} />;
+          }
+        })}
       </div>
     </>
   );
