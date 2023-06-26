@@ -29,7 +29,7 @@ const Task = (props: { task: Task; taskStore: TaskListStore | undefined }) => {
           'w-160 h-28 rounded-lg bg-zinc-800 hover:bg-zinc-900 hover:cursor-pointer group hover:border hover:border-zinc-800 border border-transparent transition ease-in duration-200 delay-75'
         )}
       >
-        <div className="mx-7 flex items-center flex-row h-full">
+        <div className="ml-7 flex items-center flex-row h-full">
           <div className="mr-auto flex flex-row gap-x-8 items-center">
             <div
               className="h-12 w-12 rounded-full group-hover:animate-pulse"
@@ -37,11 +37,17 @@ const Task = (props: { task: Task; taskStore: TaskListStore | undefined }) => {
             ></div>
             <div className="text-zinc-300 text-xl">{task.name}</div>
           </div>
-          <div className="ml-auto text-zinc-400 text-lg">
+          <div className="ml-auto text-zinc-400 text-lg mr-7">
             {taskStore?.activeTask == task.id
               ? 'active'
               : secondsToAlphaTimeFormat(task.duration)}
           </div>
+          <div
+            className={cn(
+              task.id != taskStore?.activeTask && 'hidden',
+              'w-2 h-full bg-emerald-400 rounded-r-lg'
+            )}
+          ></div>
         </div>
       </div>
     </>

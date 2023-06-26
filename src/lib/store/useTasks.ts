@@ -12,6 +12,7 @@ export interface TaskListStore {
   updateTask: (task: Task) => void;
   incrementDuration: (id: string, amount: number) => void;
   changeActiveState: (id: string, isActive: boolean) => void;
+  refreshTasks: () => void; // Sets duration and isActive to default (0 and false)
   clear: () => void;
 }
 
@@ -62,6 +63,12 @@ export const useTasks = create<TaskListStore>()(
       changeActiveState: (id: string, isActive: boolean) =>
         set((state) => ({
           tasks: state.tasks.map((t) => (t.id === id ? { ...t, isActive } : t)),
+        })),
+      refreshTasks: () =>
+        set((state) => ({
+          tasks: state.tasks.map((t) =>
+            true ? { ...t, duration: 0, isActive: false } : t
+          ),
         })),
       clear: () => set({ tasks: [] }),
     }),
