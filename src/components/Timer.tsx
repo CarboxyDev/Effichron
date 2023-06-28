@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import TimeDisplay from './TimeDisplay';
 import { useTasks } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
+import { Icon } from '@iconify/react';
 
 const Timer = () => {
   const taskStore = useStore(useTasks, (state) => state);
@@ -47,12 +48,16 @@ const Timer = () => {
       <div>
         <TimeDisplay time={secondsToTimeFormat(activeTask?.duration || 0)} />
       </div>
-      <div className="mt-8 gap-x-2 flex flex-row">
+      <div className="mt-12 gap-x-2 flex flex-row">
         <button
-          className="w-32 py-2 bg-blue-500 text-white rounded-md"
+          className="hover:bg-sky-500 transition duration-700 ease-in-out w-16 h-16 bg-zinc-700 text-zinc-200 rounded-full flex items-center justify-center"
           onClick={() => toggleTaskTimer()}
         >
-          {activeTask?.isActive ? 'Pause' : 'Start'}
+          {activeTask?.isActive ? (
+            <Icon icon="ph:pause-fill" className="w-7 h-7" />
+          ) : (
+            <Icon icon="ph:play-fill" className="w-7 h-7" />
+          )}
         </button>
       </div>
     </div>
