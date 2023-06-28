@@ -1,6 +1,10 @@
 'use client';
 import { useStore } from '@/lib/store/useStore';
-import { useRefreshTasks, useTasks } from '@/lib/store/useTasks';
+import {
+  useRefreshTasks,
+  useResetActiveTask,
+  useTasks,
+} from '@/lib/store/useTasks';
 import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
@@ -9,6 +13,7 @@ import { useState } from 'react';
 
 const ActionButton = () => {
   const refreshTasks = useRefreshTasks();
+  const resetActiveTask = useResetActiveTask();
   const [open, setOpen] = useState(false);
 
   const saveSession = (): void => {
@@ -17,11 +22,17 @@ const ActionButton = () => {
     refreshTasks();
   };
 
+  const resetActiveTaskTimer = (): void => {
+    // TODO: Ask confirmation via a popup and add a toast as confirmation of reset
+    resetActiveTask();
+  };
+
   return (
     <>
       <div className="inline-flex">
         <button
           onClick={() => setOpen(!open)}
+          title="View actions"
           className="w-14 h-14 group flex items-center justify-center bg-blue-500 text-zinc-200 rounded-lg hover:cursor-pointer hover:bg-blue-400 transition duration-300 ease-in-out active:scale-105"
         >
           <Icon
@@ -35,13 +46,21 @@ const ActionButton = () => {
               saveSession();
               setOpen(false);
             }}
-            className="absolute bottom-16 w-14 h-14 group flex items-center justify-center bg-zinc-500 rounded-lg hover:cursor-pointer hover:bg-emerald-400 transition duration-300 ease-in-out active:scale-105"
+            title="Save session"
+            className="absolute right-0 bottom-16 w-14 h-14 group flex items-center justify-center bg-zinc-500 rounded-lg hover:cursor-pointer hover:bg-emerald-400 transition duration-300 ease-in-out active:scale-105"
           >
             <Icon icon="mdi:success" className="w-8 h-8 text-zinc-300" />
           </button>
         )}
         {open && (
-          <button className="absolute right-16 w-14 h-14 group flex items-center justify-center bg-zinc-500 rounded-lg hover:cursor-pointer hover:bg-red-600 transition duration-300 ease-in-out active:scale-105">
+          <button
+            onClick={() => {
+              resetActiveTaskTimer();
+              setOpen(false);
+            }}
+            title="Reset task"
+            className="absolute right-16 w-14 h-14 group flex items-center justify-center bg-zinc-500 rounded-lg hover:cursor-pointer hover:bg-red-600 transition duration-300 ease-in-out active:scale-105"
+          >
             <Icon icon="mdi:trash-outline" className="w-8 h-8 text-zinc-300" />
           </button>
         )}

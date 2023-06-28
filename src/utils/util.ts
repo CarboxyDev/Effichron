@@ -35,9 +35,11 @@ export function secondsToAlphaTimeFormat(seconds: number): string {
   const date = new Date(0);
   date.setSeconds(seconds);
   const dateAsString = date.toISOString().substring(11, 19);
-  let [hr, min] = dateAsString.split(':');
+  let [hr, min, sec] = dateAsString.split(':');
 
-  if (parseInt(hr) === 0) return `${parseInt(min)}m`;
+  if (parseInt(hr) === 0 && parseInt(min) != 0) return `${parseInt(min)}m`;
+
+  if (parseInt(hr) === 0 && parseInt(min) === 0) return `${parseInt(sec)}s`;
 
   return `${parseInt(hr)}h ${parseInt(min)}m`;
 }

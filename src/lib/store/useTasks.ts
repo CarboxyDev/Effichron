@@ -12,6 +12,7 @@ export interface TaskListStore {
   incrementDuration: (id: string, amount: number) => void;
   changeActiveState: (id: string, isActive: boolean) => void;
   refreshTasks: () => void; // Sets duration and isActive to default (0 and false)
+  resetActiveTask: () => void;
   clear: () => void;
 }
 
@@ -69,11 +70,20 @@ export const useTasks = create<TaskListStore>()(
             true ? { ...t, duration: 0, isActive: false } : t
           ),
         })),
+      resetActiveTask: () => {
+        set((state) => ({
+          tasks: state.tasks.map((t) =>
+            t.id === state.activeTask ? { ...t, duration: 0 } : t
+          ),
+        }));
+      },
       clear: () => set({ tasks: [] }),
     }),
     { name: 'tasks' }
   )
 );
+
+// NOTE: Maybe use our own useStore hook for wrapping these hooks in a useEffect?
 
 export const useGetTasks = () => {
   const tasks = useTasks((state) => state.tasks);
@@ -105,4 +115,9 @@ export const useChangeTaskActiveState = () => {
 export const useSetActiveTask = () => {
   const setActiveTask = useTasks((state) => state.setActiveTask);
   return setActiveTask;
+};
+
+export const useResetActiveTask = () => {
+  const resetActiveTask = useTasks((state) => state.resetActiveTask);
+  return resetActiveTask;
 };
