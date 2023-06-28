@@ -1,7 +1,6 @@
 import { Task } from '@/lib/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { v4 as uuid } from 'uuid';
 
 export interface TaskListStore {
   tasks: Task[];
@@ -75,3 +74,20 @@ export const useTasks = create<TaskListStore>()(
     { name: 'tasks' }
   )
 );
+
+export const useActiveTask = () => {
+  const activeTask = useTasks((state) =>
+    state.tasks.find((task) => task.id === state.activeTask)
+  );
+  return activeTask;
+};
+
+export const useActiveTaskId = () => {
+  const activeTaskId = useTasks((state) => state.activeTask);
+  return activeTaskId;
+};
+
+export const useRefreshTasks = () => {
+  const refreshTasks = useTasks((state) => state.refreshTasks);
+  return refreshTasks;
+};

@@ -1,16 +1,16 @@
 'use client';
 import { useStore } from '@/lib/store/useStore';
-import { useTasks } from '@/lib/store/useTasks';
+import { useRefreshTasks, useTasks } from '@/lib/store/useTasks';
 
 // NOTE: Maybe use an icon to convey meaning of the button instead of two words of text
 
 const SaveSessionButton = () => {
-  const taskStore = useStore(useTasks, (state) => state);
+  const refreshTasks = useRefreshTasks();
 
   const saveSession = (): void => {
     // TODO: Take a snapshot of the task store and upload to database
     // Convey success via popup/toast and only after that reset the local session
-    taskStore?.refreshTasks();
+    refreshTasks();
   };
 
   return (
