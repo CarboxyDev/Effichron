@@ -33,7 +33,7 @@ const Task = (props: { task: Task }) => {
       <div
         onClick={() => switchTask()}
         className={cn(
-          'w-160 h-28 rounded-lg bg-zinc-800 hover:bg-zinc-900 hover:cursor-pointer group hover:border hover:border-zinc-800 border border-transparent transition ease-in duration-200 delay-75'
+          'w-160 group h-28 rounded-lg bg-zinc-800 hover:bg-zinc-900 hover:cursor-pointer group hover:border hover:border-zinc-800 border border-transparent transition ease-in duration-200 delay-75'
         )}
       >
         <div className="ml-7 flex items-center flex-row h-full">
@@ -44,15 +44,18 @@ const Task = (props: { task: Task }) => {
             ></div>
             <div className="text-zinc-300 text-xl">{task.name}</div>
           </div>
-          <div className="ml-auto text-zinc-400 text-lg mr-7">
-            {activeTaskID == task.id
-              ? 'active'
-              : secondsToAlphaTimeFormat(task.duration)}
+          <div
+            className={cn(
+              activeTaskID === task.id && 'hidden',
+              'ml-auto text-zinc-400 text-lg mr-7'
+            )}
+          >
+            {secondsToAlphaTimeFormat(task.duration)}
           </div>
           <div
             className={cn(
-              task.id != activeTaskID && 'hidden',
-              'w-2 h-full bg-emerald-400 rounded-r-lg'
+              activeTaskID != task.id && 'hidden',
+              'h-4 w-4 bg-green-500/80 motion-safe:animate-pulse-slow rounded-full ml-auto mr-7 group-hover:bg-blue-400/80 group-hover:animate-none'
             )}
           ></div>
         </div>
