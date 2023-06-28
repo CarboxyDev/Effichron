@@ -75,6 +75,11 @@ export const useTasks = create<TaskListStore>()(
   )
 );
 
+export const useGetTasks = () => {
+  const tasks = useTasks((state) => state.tasks);
+  return tasks;
+};
+
 export const useActiveTask = () => {
   const activeTask = useTasks((state) =>
     state.tasks.find((task) => task.id === state.activeTask)
@@ -90,4 +95,14 @@ export const useActiveTaskId = () => {
 export const useRefreshTasks = () => {
   const refreshTasks = useTasks((state) => state.refreshTasks);
   return refreshTasks;
+};
+
+export const useChangeTaskActiveState = () => {
+  const changeActiveState = useTasks((state) => state.changeActiveState);
+  return changeActiveState;
+};
+
+export const useSetActiveTask = () => {
+  const setActiveTask = useTasks((state) => state.setActiveTask);
+  return setActiveTask;
 };

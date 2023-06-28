@@ -2,22 +2,29 @@
 
 import { Task } from '@/lib/types';
 import { useStore } from '@/lib/store/useStore';
-import { TaskListStore, useTasks } from '@/lib/store/useTasks';
+import {
+  useActiveTaskId,
+  useChangeTaskActiveState,
+  useSetActiveTask,
+  useTasks,
+} from '@/lib/store/useTasks';
 import { cn, secondsToAlphaTimeFormat } from '@/utils/util';
 
-const Task = (props: { task: Task; taskStore: TaskListStore | undefined }) => {
-  const { task, taskStore } = props;
+const Task = (props: { task: Task }) => {
+  const task = props.task;
+  const activeTaskID = useActiveTaskId();
+  const changeTaskActiveState = useChangeTaskActiveState();
+  const setActiveTask = useSetActiveTask();
 
   const switchTask = () => {
-    if (taskStore === undefined) {
+    if (activeTaskID === undefined) {
       return;
     }
-    if (taskStore.activeTask != task.id) {
-      if (taskStore.activeTask != undefined) {
-        taskStore.changeActiveState(taskStore.activeTask, false);
+    if (activeTaskID != task.id) {
+      if (activeTaskID != undefined) {
+        changeTaskActiveState(activeTaskID, false);
       }
-
-      taskStore.setActiveTask(task.id);
+      setActiveTask(task.id);
     }
   };
 
@@ -38,13 +45,13 @@ const Task = (props: { task: Task; taskStore: TaskListStore | undefined }) => {
             <div className="text-zinc-300 text-xl">{task.name}</div>
           </div>
           <div className="ml-auto text-zinc-400 text-lg mr-7">
-            {taskStore?.activeTask == task.id
+            {activeTaskID == task.id
               ? 'active'
               : secondsToAlphaTimeFormat(task.duration)}
           </div>
           <div
             className={cn(
-              task.id != taskStore?.activeTask && 'hidden',
+              task.id != activeTaskID && 'hidden',
               'w-2 h-full bg-emerald-400 rounded-r-lg'
             )}
           ></div>
@@ -66,12 +73,12 @@ const TaskList = (): JSX.Element => {
       <div className="gap-y-4 flex flex-col items-center">
         {tasks?.map((task) => {
           if (task.id == taskStore?.activeTask) {
-            return <Task key={task.id} task={task} taskStore={taskStore} />;
+            return <Task key={task.id} task={task} />;
           }
         })}
         {tasks?.map((task) => {
           if (task.id != taskStore?.activeTask) {
-            return <Task key={task.id} task={task} taskStore={taskStore} />;
+            return <Task key={task.id} task={task} />;
           }
         })}
       </div>
