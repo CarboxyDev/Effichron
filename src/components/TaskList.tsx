@@ -55,7 +55,7 @@ const Task = (props: { task: Task }) => {
           <div
             className={cn(
               activeTaskID != task.id && 'hidden',
-              'h-4 w-4 bg-green-500/80 motion-safe:animate-pulse-slow rounded-full ml-auto mr-7 group-hover:bg-blue-400/80 group-hover:animate-none'
+              'h-4 w-4 bg-green-500/80 motion-safe:animate-pulse-slow rounded-full ml-auto mr-7 group-hover:animate-none'
             )}
           ></div>
         </div>

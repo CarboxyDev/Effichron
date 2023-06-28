@@ -1,4 +1,4 @@
-import SaveSessionButton from '@/components/ActionButtons';
+import ActionButton from '@/components/ActionButton';
 import TaskList from '@/components/TaskList';
 import Timer from '@/components/Timer';
 
@@ -10,7 +10,7 @@ export default function Home() {
         <div className="mt-32"></div>
         <TaskList />
         <div className="fixed right-4 bottom-4">
-          <SaveSessionButton />
+          <ActionButton />
         </div>
       </div>
     </main>

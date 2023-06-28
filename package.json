@@ -27,6 +27,7 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
+    "@iconify/react": "^4.1.1",
     "@types/uuid": "^9.0.2"
   }
 }
