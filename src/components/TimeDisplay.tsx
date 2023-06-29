@@ -18,7 +18,7 @@ const TimeDisplay = (props: TimeDisplayProps) => {
   return (
     <>
       <div>
-        <div className={cn(timerFont.className, 'text-6xl text-zinc-200')}>
+        <div className={cn(timerFont.className, 'text-7xl text-zinc-200')}>
           <span className={cn(hours && '')}>
             {hours.toString().padStart(2, '0')}:
           </span>
