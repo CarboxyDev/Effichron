@@ -1,6 +1,7 @@
 import { cn } from '@/utils/util';
 import '../styles/globals.css';
 import { Inter } from 'next/font/google';
+import Providers from '@/utils/providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +16,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={cn(inter.className, 'bg-zinc-900 text-zinc-100')}>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
