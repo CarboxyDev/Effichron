@@ -33,21 +33,21 @@ const Task = (props: { task: Task }) => {
       <div
         onClick={() => switchTask()}
         className={cn(
-          'w-160 group h-28 rounded-lg bg-zinc-800 hover:bg-zinc-900 hover:cursor-pointer group hover:border hover:border-zinc-800 border border-transparent transition ease-in duration-200 delay-75'
+          'group group h-28 w-160 rounded-lg border border-transparent bg-zinc-800 transition delay-75 duration-200 ease-in hover:cursor-pointer hover:border hover:border-zinc-800 hover:bg-zinc-900'
         )}
       >
-        <div className="ml-7 flex items-center flex-row h-full">
-          <div className="mr-auto flex flex-row gap-x-8 items-center">
+        <div className="ml-7 flex h-full flex-row items-center">
+          <div className="mr-auto flex flex-row items-center gap-x-8">
             <div
               className="h-12 w-12 rounded-full group-hover:animate-pulse"
               style={{ backgroundColor: task.color }}
             ></div>
-            <div className="text-zinc-300 text-xl">{task.name}</div>
+            <div className="text-xl text-zinc-300">{task.name}</div>
           </div>
           <div
             className={cn(
               activeTaskID === task.id && 'hidden',
-              'ml-auto text-zinc-400 text-lg mr-7'
+              'ml-auto mr-7 text-lg text-zinc-400'
             )}
           >
             {secondsToAlphaTimeFormat(task.duration)}
@@ -55,7 +55,7 @@ const Task = (props: { task: Task }) => {
           <div
             className={cn(
               activeTaskID != task.id && 'hidden',
-              'h-4 w-4 bg-green-500/80 motion-safe:animate-pulse-slow rounded-full ml-auto mr-7 group-hover:animate-none'
+              'ml-auto mr-7 h-4 w-4 rounded-full bg-green-500/80 group-hover:animate-none motion-safe:animate-pulse-slow'
             )}
           ></div>
         </div>
@@ -73,7 +73,7 @@ const TaskList = (): JSX.Element => {
 
   return (
     <>
-      <div className="gap-y-4 flex flex-col items-center">
+      <div className="flex flex-col items-center gap-y-4">
         {tasks?.map((task) => {
           if (task.id == taskStore?.activeTask) {
             return <Task key={task.id} task={task} />;

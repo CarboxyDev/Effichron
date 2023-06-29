@@ -44,19 +44,19 @@ const Timer = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col items-center justify-center">
       <div>
         <TimeDisplay time={secondsToTimeFormat(activeTask?.duration || 0)} />
       </div>
-      <div className="mt-12 gap-x-2 flex flex-row">
+      <div className="mt-12 flex flex-row gap-x-2">
         <button
-          className="hover:bg-sky-500 transition duration-700 ease-in-out w-16 h-16 bg-zinc-800 text-zinc-200 rounded-full flex items-center justify-center"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-zinc-800 text-zinc-200 transition duration-700 ease-in-out hover:bg-sky-500"
           onClick={() => toggleTaskTimer()}
         >
           {activeTask?.isActive ? (
-            <Icon icon="ph:pause-fill" className="w-6 h-6" />
+            <Icon icon="ph:pause-fill" className="h-6 w-6" />
           ) : (
-            <Icon icon="ph:play-fill" className="w-6 h-6" />
+            <Icon icon="ph:play-fill" className="h-6 w-6" />
           )}
         </button>
       </div>
