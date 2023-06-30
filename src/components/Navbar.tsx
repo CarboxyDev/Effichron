@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useSession } from 'next-auth/react';
@@ -18,9 +17,11 @@ const ProfileDropdownMenu = (): JSX.Element => {
         <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
           My profile
         </DropdownMenu.Item>
-        <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
-          Session history
-        </DropdownMenu.Item>
+        <Link href={'/history'}>
+          <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
+            Session history
+          </DropdownMenu.Item>
+        </Link>
       </DropdownMenu.Content>
     </DropdownMenu.Portal>
   );
@@ -28,8 +29,6 @@ const ProfileDropdownMenu = (): JSX.Element => {
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-  const [openDropdown, setOpenDropdown] = useState(false);
-  console.log('Checking if user is logged in');
 
   return (
     <>
@@ -49,7 +48,6 @@ const Navbar = () => {
                   src={session.user?.image || ''}
                   alt={'pfp'}
                   className="h-full w-full rounded-full"
-                  onClick={() => setOpenDropdown(!openDropdown)}
                 />
               </DropdownMenu.Trigger>
               <ProfileDropdownMenu />
