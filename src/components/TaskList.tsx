@@ -73,7 +73,7 @@ const TaskList = (): JSX.Element => {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-y-4">
+      <div className="flex flex-col items-center gap-y-3">
         {tasks?.map((task) => {
           if (task.id == taskStore?.activeTask) {
             return <Task key={task.id} task={task} />;
