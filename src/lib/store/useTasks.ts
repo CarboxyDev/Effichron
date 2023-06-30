@@ -24,15 +24,15 @@ export const useTasks = create<TaskListStore>()(
           id: '1',
           name: 'Work',
           color: '#06b6d4',
-          isActive: true,
-          duration: 67,
+          isActive: false,
+          duration: 0,
         },
         {
           id: '2',
           name: 'Learn',
           color: '#a78bfa',
           isActive: false,
-          duration: 7500,
+          duration: 0,
         },
         {
           id: '3',
