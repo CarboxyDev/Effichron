@@ -36,7 +36,7 @@ const ActionButton = () => {
         <button
           onClick={() => setOpen(!open)}
           title="View actions"
-          className="group flex h-12 w-12 items-center justify-center rounded-lg bg-violet-500 text-zinc-200 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-blue-400 active:scale-105"
+          className="group flex h-12 w-12 items-center justify-center rounded-lg bg-violet-500 text-zinc-200 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-violet-600 active:scale-105"
         >
           <Icon
             icon="majesticons:timer-line"
