@@ -1,17 +1,30 @@
 'use client';
-import { useStore } from '@/lib/store/useStore';
-import {
-  useRefreshTasks,
-  useResetActiveTask,
-  useTasks,
-} from '@/lib/store/useTasks';
+
+import { useRefreshTasks, useResetActiveTask } from '@/lib/store/useTasks';
 import { notify } from '@/utils/notify';
 import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
+import * as Dialog from '@radix-ui/react-dialog';
+
+const AddTaskPopup = (): JSX.Element => {
+  return (
+    <>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0" />
+        <Dialog.Content className="py- fixed left-[50%] top-[50%] h-100 w-120 translate-x-[-50%] translate-y-[-50%] rounded-lg bg-zinc-800 px-12 py-16 text-zinc-200 shadow-xl">
+          <Dialog.Title className="text-lg font-medium">
+            Create new task
+          </Dialog.Title>
+          <Dialog.Description />
+          <Dialog.Close />
+        </Dialog.Content>
+      </Dialog.Portal>
+    </>
+  );
+};
 
 // NOTE: Maybe use an icon to convey meaning of the button instead of two words of text
-
 const ActionButton = () => {
   const refreshTasks = useRefreshTasks();
   const resetActiveTask = useResetActiveTask();
@@ -58,16 +71,21 @@ const ActionButton = () => {
           </button>
         )}
         {open && (
-          <button
-            onClick={() => {
-              createTask();
-              setOpen(false);
-            }}
-            title="Reset task"
-            className="group absolute bottom-14 right-14  flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:bg-violet-500 active:scale-105"
-          >
-            <Icon icon="ic:round-plus" className="h-7 w-7 text-zinc-300" />
-          </button>
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <button
+                onClick={() => {
+                  createTask();
+                  //setOpen(false);
+                }}
+                title="Create new task"
+                className="group absolute bottom-14 right-14  flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:bg-violet-500 active:scale-105"
+              >
+                <Icon icon="ic:round-plus" className="h-7 w-7 text-zinc-300" />
+              </button>
+            </Dialog.Trigger>
+            <AddTaskPopup />
+          </Dialog.Root>
         )}
         {open && (
           <button
