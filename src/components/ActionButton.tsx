@@ -30,6 +30,8 @@ const ActionButton = () => {
     resetActiveTask();
   };
 
+  const createTask = (): void => {};
+
   return (
     <>
       <div className="inline-flex">
@@ -53,6 +55,18 @@ const ActionButton = () => {
             className="group absolute bottom-14 right-0 flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-emerald-400 active:scale-105"
           >
             <Icon icon="mdi:success" className="h-7 w-7 text-zinc-300" />
+          </button>
+        )}
+        {open && (
+          <button
+            onClick={() => {
+              createTask();
+              setOpen(false);
+            }}
+            title="Reset task"
+            className="group absolute bottom-14 right-14  flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:bg-violet-500 active:scale-105"
+          >
+            <Icon icon="ic:round-plus" className="h-7 w-7 text-zinc-300" />
           </button>
         )}
         {open && (
