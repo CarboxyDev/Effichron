@@ -13,10 +13,11 @@ export default function TasksPage() {
         <div className="mb-20 mt-12 h-[2px] w-full bg-zinc-800"></div>
         <div className="flex w-full items-center justify-center">
           <TaskListView />
-          <div className="fixed bottom-4 right-4">
-            <CreateTaskButton />
-          </div>
         </div>
+      </div>
+      <div className="mt-24"></div>
+      <div className="fixed bottom-4 right-4">
+        <CreateTaskButton />
       </div>
     </main>
   );

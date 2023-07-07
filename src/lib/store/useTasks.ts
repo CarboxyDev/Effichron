@@ -121,3 +121,8 @@ export const useResetActiveTask = () => {
   const resetActiveTask = useTasks((state) => state.resetActiveTask);
   return resetActiveTask;
 };
+
+export const useAddTask = () => {
+  const _addTask = useTasks((state) => state.addTask);
+  return _addTask;
+};
