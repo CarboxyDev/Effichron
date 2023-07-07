@@ -14,9 +14,16 @@ const ProfileDropdownMenu = (): JSX.Element => {
         collisionPadding={16}
         className="rounded-lg bg-zinc-800 px-5 py-5 shadow-2xl"
       >
-        <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
-          My profile
-        </DropdownMenu.Item>
+        <Link href={'/profile'}>
+          <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
+            My profile
+          </DropdownMenu.Item>
+        </Link>
+        <Link href={'/tasks'}>
+          <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
+            My tasks
+          </DropdownMenu.Item>
+        </Link>
         <Link href={'/history'}>
           <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
             Session history
