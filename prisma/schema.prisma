@@ -8,65 +8,58 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Comment {
-  id            String  @id
-  author        String
-  authorAvatar  String
-  content       String
-  authorIsAdmin Boolean @default(false)
-}
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
 
-model Note {
-  id               String   @id
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime
-  title            String
-  cid              String
-  originalFileName String
-  description      String   @db.Text
-  authorId         String
-  rating           Float
-  price            Float    @default(0)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([authorId])
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id        String   @id
-  createdAt DateTime @default(now())
-  expires   DateTime
-  handle    String   @unique
-  userId    String
-
-  @@index([userId])
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id        String   @id
-  createdAt DateTime @default(now())
-  email     String   @unique
-  name      String
-  password  String
-  role      String   @default("member")
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
 }
 
-// Models for the Productivity Tracker
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-model PT_User {
-  id        String      @id @default(uuid())
-  name      String
-  email     String   
-  createdAt DateTime @default(now())
+  @@unique([identifier, token])
 }
-
-model PT_SessionLog {
+model SessionLog {
   id        String      @id @default(uuid())
   userId    Int
   token     String
   createdAt DateTime @default(now())
 }
 
-model PT_Task {
+model Task {
   id        String      @id @default(uuid())
   userId    Int
   name     String

@@ -34,6 +34,11 @@ const ProfileDropdownMenu = (): JSX.Element => {
             Sessions history
           </DropdownMenu.Item>
         </Link>
+        <Link href={'/api/auth/signout'}>
+          <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
+            Sign out
+          </DropdownMenu.Item>
+        </Link>
       </DropdownMenu.Content>
     </DropdownMenu.Portal>
   );
@@ -45,10 +50,10 @@ const Navbar = () => {
   return (
     <>
       <div className="flex w-full flex-row px-4 py-4">
-        <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-zinc-700 hover:cursor-pointer">
+        <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 hover:cursor-pointer">
           {status != 'authenticated' && (
             <Link href={'/api/auth/signin'}>
-              <Icon icon="ep:user-filled" className="h-6 w-6 text-zinc-800" />
+              <Icon icon="ep:user-filled" className="h-5 w-5 text-zinc-400" />
             </Link>
           )}
           {status === 'authenticated' && (
