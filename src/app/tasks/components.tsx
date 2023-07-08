@@ -2,10 +2,11 @@
 import { useStore } from '@/lib/store/useStore';
 import { useAddTask, useGetTasks } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
+import { notify } from '@/utils/notify';
 import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -43,9 +44,11 @@ export const TaskListView = () => {
 };
 
 export const CreateTaskButton = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
-      <Dialog.Root>
+      <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Trigger asChild>
           <button
             title="Create task"
@@ -54,16 +57,21 @@ export const CreateTaskButton = () => {
             <Icon icon="ph:plus-bold" className="h-7 w-7 text-zinc-200" />
           </button>
         </Dialog.Trigger>
-        <CreateTaskDialog />
+        <CreateTaskDialog setOpen={setOpen} />
       </Dialog.Root>
     </>
   );
 };
 
-const CreateTaskDialog = () => {
+const CreateTaskDialog = (props: {
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const addTask = useAddTask();
+  const setOpen = props.setOpen;
+
   const [color, setColor] = useState('#0ea5e9');
   const [taskName, setTaskName] = useState('Untitled');
+
   console.log(
     `Render CreateTaskDialog values={color: ${color}, name: ${taskName}}`
   );
@@ -84,6 +92,10 @@ const CreateTaskDialog = () => {
     };
 
     addTask(newTask);
+    notify('Created a new task', 'success');
+    setOpen(false);
+    setColor('#0ea5e9');
+    setTaskName('Untitled');
   }
 
   return (
@@ -95,7 +107,7 @@ const CreateTaskDialog = () => {
             <Dialog.Title className="mr-auto text-lg font-semibold text-zinc-300">
               New Task
             </Dialog.Title>
-            <Dialog.Close className="ml-auto">
+            <Dialog.Close asChild className="ml-auto">
               <button>
                 <Icon
                   icon="maki:cross"
@@ -111,8 +123,8 @@ const CreateTaskDialog = () => {
               </label>
               <input
                 type="text"
-                className="mt-3 h-12 w-full rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-600 placeholder:text-zinc-600 focus:outline-none"
-                placeholder={taskName}
+                className="mt-3 h-12 w-full rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-500 placeholder:text-zinc-600 focus:outline-violet-500"
+                placeholder={taskName || 'Untitled'}
                 onChange={(e) => setTaskName(e.target.value)}
               />
             </div>
@@ -127,7 +139,7 @@ const CreateTaskDialog = () => {
                 ></div>
                 <input
                   type="text"
-                  className="h-12 flex-grow rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-600 placeholder:text-zinc-600 focus:outline-none"
+                  className="h-12 flex-grow rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-500 placeholder:text-zinc-600 focus:outline-violet-500"
                   placeholder={(color || '#8b5cf6').toUpperCase()}
                   onChange={(e) => {
                     setColor(e.target.value);
@@ -136,7 +148,7 @@ const CreateTaskDialog = () => {
               </div>
             </div>
             <button
-              className="mt-12 flex h-11 items-center justify-center rounded-lg bg-violet-500 text-lg font-medium text-zinc-200"
+              className="mt-12 flex h-11 items-center justify-center rounded-lg bg-violet-500 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-violet-600"
               type="submit"
               onClick={() => {
                 createTask(taskName, color);
