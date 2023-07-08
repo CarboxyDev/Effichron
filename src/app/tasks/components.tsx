@@ -71,6 +71,7 @@ const CreateTaskDialog = (props: {
 
   const [color, setColor] = useState('#0ea5e9');
   const [taskName, setTaskName] = useState('Untitled');
+  const [openColorPicker, setOpenColorPicker] = useState(false);
 
   console.log(
     `Render CreateTaskDialog values={color: ${color}, name: ${taskName}}`
@@ -102,7 +103,10 @@ const CreateTaskDialog = (props: {
     <>
       <Dialog.Portal>
         <Dialog.Overlay className="data-[state=open]:insert-animate-here fixed inset-0 bg-zinc-900/40" />
-        <Dialog.Content className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl bg-zinc-950 px-6 py-8 shadow-xl">
+        <Dialog.Content
+          onCloseAutoFocus={() => setOpenColorPicker(false)}
+          className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl bg-zinc-950 px-6 py-8 shadow-xl"
+        >
           <div className="flex flex-row">
             <Dialog.Title className="mr-auto text-lg font-semibold text-zinc-300">
               New Task
@@ -132,19 +136,30 @@ const CreateTaskDialog = (props: {
               <label className="mx-1 text-lg font-medium text-zinc-500">
                 Color
               </label>
-              <div className="mt-3 flex flex-row items-center gap-x-4">
+              <div className="mt-3 flex flex-row items-center">
                 <div
-                  className="h-9 w-9 rounded-full"
+                  className="mr-4 h-9 w-9 rounded-full"
                   style={{ backgroundColor: color || '#8b5cf6' }}
                 ></div>
-                <input
-                  type="text"
-                  className="h-12 flex-grow rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-500 placeholder:text-zinc-600 focus:outline-violet-500"
-                  placeholder={(color || '#8b5cf6').toUpperCase()}
-                  onChange={(e) => {
-                    setColor(e.target.value);
-                  }}
-                />
+                <div className="flex flex-grow flex-row justify-center rounded-lg bg-zinc-900">
+                  <input
+                    type="text"
+                    className="h-12 rounded-lg bg-transparent px-3 py-3 text-lg text-zinc-500 placeholder:text-zinc-600 focus:outline-violet-500"
+                    placeholder={(color || '#8b5cf6').toUpperCase()}
+                    onChange={(e) => {
+                      setColor(e.target.value);
+                    }}
+                  />
+                  <div
+                    onClick={() => setOpenColorPicker(!openColorPicker)}
+                    className="flex flex-grow select-none items-center justify-center rounded-r-lg transition delay-200 duration-200 ease-linear hover:cursor-pointer hover:bg-violet-400"
+                  >
+                    <Icon
+                      icon="mdi:color"
+                      className="mx-auto h-6 w-6 text-zinc-700"
+                    ></Icon>
+                  </div>
+                </div>
               </div>
             </div>
             <button
@@ -157,6 +172,11 @@ const CreateTaskDialog = (props: {
               Create task
             </button>
           </div>
+          {openColorPicker && (
+            <div className="absolute bottom-32 left-108">
+              <HexColorPicker color={color} onChange={setColor} />
+            </div>
+          )}
         </Dialog.Content>
       </Dialog.Portal>
     </>
