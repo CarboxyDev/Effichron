@@ -42,7 +42,7 @@ const Task = (props: { task: Task }) => {
               className="h-12 w-12 rounded-full group-hover:animate-pulse"
               style={{ backgroundColor: task.color }}
             ></div>
-            <div className="text-xl text-zinc-200">{task.name}</div>
+            <div className="text-lg text-zinc-300">{task.name}</div>
           </div>
           <div
             className={cn(
