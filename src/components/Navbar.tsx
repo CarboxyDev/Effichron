@@ -14,9 +14,9 @@ const ProfileDropdownMenu = (): JSX.Element => {
         collisionPadding={16}
         className="rounded-lg bg-zinc-800 px-5 py-5 shadow-2xl"
       >
-        <Link href={'/profile'}>
+        <Link href={'/'}>
           <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
-            My profile
+            Home
           </DropdownMenu.Item>
         </Link>
         <Link href={'/tasks'}>
@@ -24,9 +24,14 @@ const ProfileDropdownMenu = (): JSX.Element => {
             My tasks
           </DropdownMenu.Item>
         </Link>
+        <Link href={'/profile'}>
+          <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
+            Profile
+          </DropdownMenu.Item>
+        </Link>
         <Link href={'/history'}>
           <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
-            Session history
+            Sessions history
           </DropdownMenu.Item>
         </Link>
       </DropdownMenu.Content>

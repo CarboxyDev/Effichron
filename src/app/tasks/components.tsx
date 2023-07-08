@@ -127,7 +127,7 @@ const CreateTaskDialog = (props: {
               </label>
               <input
                 type="text"
-                className="mt-3 h-12 w-full rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-500 placeholder:text-zinc-600 focus:outline-violet-500"
+                className="mt-3 h-12 w-full rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:outline-violet-500"
                 placeholder={taskName || 'Untitled'}
                 onChange={(e) => setTaskName(e.target.value)}
               />
@@ -144,7 +144,7 @@ const CreateTaskDialog = (props: {
                 <div className="flex flex-grow flex-row justify-center rounded-lg bg-zinc-900">
                   <input
                     type="text"
-                    className="h-12 rounded-lg bg-transparent px-3 py-3 text-lg text-zinc-500 placeholder:text-zinc-600 focus:outline-violet-500"
+                    className="h-12 rounded-lg bg-transparent px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:outline-violet-500"
                     placeholder={(color || '#8b5cf6').toUpperCase()}
                     onChange={(e) => {
                       setColor(e.target.value);
