@@ -5,8 +5,8 @@ import { useStore } from '@/lib/store/useStore';
 import {
   useActiveTaskId,
   useChangeTaskActiveState,
+  useGetTasks,
   useSetActiveTask,
-  useTasks,
 } from '@/lib/store/useTasks';
 import { cn, secondsToAlphaTimeFormat } from '@/utils/util';
 
@@ -67,20 +67,20 @@ const Task = (props: { task: Task }) => {
 const TaskList = (): JSX.Element => {
   // This re-renders every time the taskStore is modified (which is every second) which is rather bad for performance
   // Try optimizing this in the future so that it only renders when absolutely needed
-  console.log('Render TaskList');
-  const taskStore = useStore(useTasks, (state) => state);
-  const tasks = taskStore?.tasks;
+  console.log('Render Tasklist');
+  const tasks = useStore(useGetTasks, (state) => state) as Task[];
+  const activeTask = useStore(useActiveTaskId, (state) => state) as string;
 
   return (
     <>
       <div className="flex flex-col items-center gap-y-3">
         {tasks?.map((task) => {
-          if (task.id == taskStore?.activeTask) {
+          if (task.id == activeTask) {
             return <Task key={task.id} task={task} />;
           }
         })}
         {tasks?.map((task) => {
-          if (task.id != taskStore?.activeTask) {
+          if (task.id != activeTask) {
             return <Task key={task.id} task={task} />;
           }
         })}
