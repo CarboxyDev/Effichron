@@ -62,10 +62,19 @@ export const CreateTaskButton = () => {
 
 const CreateTaskDialog = () => {
   const addTask = useAddTask();
-  const [color, setColor] = useState('#22d3ee');
+  const [color, setColor] = useState('#0ea5e9');
   const [taskName, setTaskName] = useState('Untitled');
+  console.log(
+    `Render CreateTaskDialog values={color: ${color}, name: ${taskName}}`
+  );
 
   function createTask(name: string, color: string) {
+    if (name.length === 0) {
+      name = 'Untitled';
+    }
+    if (color.length === 0) {
+      color = '#0ea5e9';
+    }
     const newTask: Task = {
       id: uuidv4(),
       name: name,
@@ -81,39 +90,53 @@ const CreateTaskDialog = () => {
     <>
       <Dialog.Portal>
         <Dialog.Overlay className="data-[state=open]:insert-animate-here fixed inset-0 bg-zinc-900/40" />
-        <Dialog.Content className="fixed left-[50%] top-[50%] h-120 w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl bg-zinc-950 px-6 py-6">
+        <Dialog.Content className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl bg-zinc-950 px-6 py-8 shadow-xl">
           <div className="flex flex-row">
-            <Dialog.Title className="mr-auto text-lg font-medium">
+            <Dialog.Title className="mr-auto text-lg font-semibold text-zinc-300">
               New Task
             </Dialog.Title>
             <Dialog.Close className="ml-auto">
               <button>
                 <Icon
                   icon="maki:cross"
-                  className="h-5 w-5 text-zinc-200"
+                  className="h-5 w-5 text-zinc-500"
                 ></Icon>
               </button>
             </Dialog.Close>
           </div>
-
-          <Dialog.Description />
-          <div className="mx-auto mt-20 flex w-3/4 flex-col">
-            <label className="">Task</label>
-            <input
-              type="text"
-              className="text-zinc-800"
-              placeholder="untitled"
-              onChange={(e) => setTaskName(e.target.value)}
-            />
-            <div className="mt-4"></div>
-            <HexColorPicker color={color} onChange={setColor} />
-            <div
-              className="mt-4 h-6 w-6 rounded-full"
-              style={{ backgroundColor: color }}
-            ></div>
-            <div className="mt-4"></div>
+          <div className="mx-auto mt-12 flex flex-col">
+            <div className="">
+              <label className="mx-1 text-lg font-medium text-zinc-500">
+                Name
+              </label>
+              <input
+                type="text"
+                className="mt-3 h-12 w-full rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-600 placeholder:text-zinc-600 focus:outline-none"
+                placeholder={taskName}
+                onChange={(e) => setTaskName(e.target.value)}
+              />
+            </div>
+            <div className="mt-8">
+              <label className="mx-1 text-lg font-medium text-zinc-500">
+                Color
+              </label>
+              <div className="mt-3 flex flex-row items-center gap-x-4">
+                <div
+                  className="h-9 w-9 rounded-full"
+                  style={{ backgroundColor: color || '#8b5cf6' }}
+                ></div>
+                <input
+                  type="text"
+                  className="h-12 flex-grow rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-600 placeholder:text-zinc-600 focus:outline-none"
+                  placeholder={(color || '#8b5cf6').toUpperCase()}
+                  onChange={(e) => {
+                    setColor(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
             <button
-              className=""
+              className="mt-12 flex h-11 items-center justify-center rounded-lg bg-violet-500 text-lg font-medium text-zinc-200"
               type="submit"
               onClick={() => {
                 createTask(taskName, color);
