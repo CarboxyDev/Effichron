@@ -12,7 +12,7 @@ const ProfileDropdownMenu = (): JSX.Element => {
       <DropdownMenu.Content
         sideOffset={12}
         collisionPadding={16}
-        className="rounded-lg bg-zinc-800 px-5 py-5 shadow-2xl"
+        className="rounded-lg bg-zinc-900 px-5 py-5 shadow-2xl"
       >
         <Link href={'/'}>
           <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
