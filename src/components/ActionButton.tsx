@@ -1,20 +1,25 @@
 'use client';
 
-import { useRefreshTasks, useResetActiveTask } from '@/lib/store/useTasks';
+import {
+  getTasks,
+  useRefreshTasks,
+  useResetActiveTask,
+} from '@/lib/store/useTasks';
 import { notify } from '@/utils/notify';
 import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
 
-// NOTE: Maybe use an icon to convey meaning of the button instead of two words of text
 const ActionButton = () => {
+  console.log('Render ActionButton');
+
   const refreshTasks = useRefreshTasks();
   const resetActiveTask = useResetActiveTask();
   const [open, setOpen] = useState(false);
 
   const saveSession = (): void => {
-    // TODO: Take a snapshot of the task store and upload to database
-    // Convey success via popup/toast and only after that reset the local session
+    // TODO: Convey success via popup/toast and only after that reset the local session
+    const sessionSnapshot = getTasks();
     notify('Saved the current session', 'success');
     refreshTasks();
   };
@@ -24,8 +29,6 @@ const ActionButton = () => {
     notify('Reset the active task timer', 'warning');
     resetActiveTask();
   };
-
-  const createTask = (): void => {};
 
   return (
     <>

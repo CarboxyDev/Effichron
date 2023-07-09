@@ -34,13 +34,6 @@ export const useTasks = create<TaskListStore>()(
           isActive: false,
           duration: 0,
         },
-        {
-          id: '3',
-          name: 'Casual',
-          color: '#14B8A6',
-          isActive: false,
-          duration: 0,
-        },
       ],
       activeTask: '1',
       setActiveTask: (id: string) => set({ activeTask: id }),
@@ -86,8 +79,8 @@ export const useTasks = create<TaskListStore>()(
 // NOTE: Maybe use our own useStore hook for wrapping these hooks in a useEffect?
 
 export const useGetTasks = () => {
-  const tasks = useTasks((state) => state.tasks);
-  return tasks;
+  const _tasks = useTasks((state) => state.tasks);
+  return _tasks;
 };
 
 export const useActiveTask = () => {
@@ -125,4 +118,11 @@ export const useResetActiveTask = () => {
 export const useAddTask = () => {
   const _addTask = useTasks((state) => state.addTask);
   return _addTask;
+};
+
+/* Non-reactive states, do not use as hooks */
+
+export const getTasks = () => {
+  const _tasks = useTasks.getState().tasks;
+  return _tasks;
 };
