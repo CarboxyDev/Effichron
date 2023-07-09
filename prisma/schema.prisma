@@ -58,7 +58,7 @@ model VerificationToken {
 model SessionLog {
   id        String   @id @default(uuid())
   userId    String
-  token     String
+  sessionSnapshot String @db.VarChar(1000) // This will store the strigified session object.
   createdAt DateTime @default(now())
 }
 

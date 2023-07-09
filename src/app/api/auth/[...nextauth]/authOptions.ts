@@ -3,10 +3,9 @@ import DiscordProvider from 'next-auth/providers/discord';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { PrismaClient } from '@prisma/client';
 import { Adapter } from 'next-auth/adapters';
+import { prisma } from '@/lib/prisma';
 
-const prisma = new PrismaClient();
 const adapter = PrismaAdapter(prisma) as Adapter;
 
 // Using this to fix the Github oauth w/ prisma adapter issue
