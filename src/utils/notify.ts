@@ -1,6 +1,11 @@
 import { toast } from 'react-hot-toast';
 
 type notifType = 'success' | 'failure' | 'warning';
+interface NotifyPromiseStatesMessage {
+  success: string;
+  error: string;
+  loading: string;
+}
 
 const toastStyle = {
   background: '#27272a',
@@ -22,4 +27,22 @@ export const notify = (message: string, type: notifType) => {
       style: toastStyle,
     });
   }
+};
+
+export const notifyPromise = (
+  promise: Promise<any>,
+  states: NotifyPromiseStatesMessage
+) => {
+  const { success, error, loading } = states;
+  toast.promise(
+    promise,
+    {
+      loading: loading,
+      success: success,
+      error: error,
+    },
+    {
+      style: toastStyle,
+    }
+  );
 };

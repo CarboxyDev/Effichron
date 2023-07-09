@@ -24,4 +24,5 @@ export async function POST(req: Request, res: Response) {
   const sessionSnapshot = body.data.session;
   console.log(user);
   console.log(sessionSnapshot);
+  return new Response('OK', { status: 200 });
 }

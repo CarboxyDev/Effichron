@@ -7,7 +7,7 @@ import {
   useResetActiveTask,
 } from '@/lib/store/useTasks';
 import { SessionSnapshot } from '@/lib/types';
-import { notify } from '@/utils/notify';
+import { notify, notifyPromise } from '@/utils/notify';
 import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import { useMutation } from '@tanstack/react-query';
@@ -22,15 +22,30 @@ const ActionButton = () => {
 
   const sessionMutation = useMutation({
     mutationFn: async (sessionSnapshot: SessionSnapshot) => {
-      return axios.post('/api/session', sessionSnapshot);
+      const save = axios.post('/api/session', sessionSnapshot, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      notifyPromise(save, {
+        loading: 'Saving session...',
+        success: 'Saved your session',
+        error: 'Unable to save your session',
+      });
+      return save;
     },
+    onSuccess: () => {
+      refreshTasks();
+    },
+    onError: () => {},
   });
 
-  const saveSession = () => {
+  const saveSession = async () => {
     const sessionSnapshot = getTasks();
-    sessionMutation.mutate({ session: sessionSnapshot });
-    notify('Saved the current session', 'success');
-    refreshTasks();
+    sessionMutation.mutate({
+      session: sessionSnapshot,
+    });
   };
 
   const resetActiveTaskTimer = (): void => {
