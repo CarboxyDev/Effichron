@@ -1,14 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import {
   getTasks,
   useRefreshTasks,
   useResetActiveTask,
 } from '@/lib/store/useTasks';
+import { SessionSnapshot } from '@/lib/types';
 import { notify } from '@/utils/notify';
 import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
 const ActionButton = () => {
   console.log('Render ActionButton');
@@ -17,9 +20,15 @@ const ActionButton = () => {
   const resetActiveTask = useResetActiveTask();
   const [open, setOpen] = useState(false);
 
-  const saveSession = (): void => {
-    // TODO: Convey success via popup/toast and only after that reset the local session
+  const sessionMutation = useMutation({
+    mutationFn: async (sessionSnapshot: SessionSnapshot) => {
+      return axios.post('/api/session', sessionSnapshot);
+    },
+  });
+
+  const saveSession = () => {
     const sessionSnapshot = getTasks();
+    sessionMutation.mutate({ session: sessionSnapshot });
     notify('Saved the current session', 'success');
     refreshTasks();
   };

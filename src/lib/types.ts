@@ -5,3 +5,7 @@ export interface Task {
   isActive: boolean;
   duration: number;
 }
+
+export interface SessionSnapshot {
+  session: Task[] | null;
+}
