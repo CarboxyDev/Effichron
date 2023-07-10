@@ -1,42 +1,42 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 interface SessionLog {
-  name: string;
-  duration: number;
+  id: String;
+  createdAt: Date;
+  sessionSnapshot: {
+    name: string;
+    duration: number;
+  };
 }
 
 const SessionHistoryContainer = () => {
   console.log('Render SessionHistoryContainer');
-  const [sessionLogs, setSessionLogs] = useState<SessionLog[] | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isFailed, setIsFailed] = useState(false);
-  useEffect(() => {
-    fetch('/api/session')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch notes');
-        return res.json();
-      })
-      .then((data) => {
-        console.log('Success');
-        setSessionLogs(data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log('Error');
-        setIsFailed(true);
-        setIsLoading(false);
-      });
-  }, []);
-  if (isLoading) {
+
+  const { data, status, error } = useQuery({
+    queryKey: ['session-history'],
+    queryFn: async () => {
+      const { data } = await axios.get('/api/session');
+      return data as SessionLog[];
+    },
+  });
+
+  if (status === 'loading') {
     return <>Loading...</>;
   }
-  if (isFailed) {
-    return <>Unable to fetch sessions</>;
+
+  if (status === 'error') {
+    return <>Unable to fetch history</>;
   }
-  return <>{JSON.stringify(sessionLogs)}</>;
+
+  return (
+    <>
+      <div>{JSON.stringify(data)}</div>
+    </>
+  );
 };
 
 export default SessionHistoryContainer;
