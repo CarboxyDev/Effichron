@@ -1,6 +1,6 @@
 import Navbar from '@/components/Navbar';
 import { Toaster } from 'react-hot-toast';
-import SessionHistoryContainer from './components';
+import { SessionHistoryContainer } from './components';
 
 export default function HistoryPage() {
   return (
@@ -13,7 +13,7 @@ export default function HistoryPage() {
           Sessions History
         </h2>
         <div className="mb-20 mt-12 h-[1px] w-full bg-zinc-900"></div>
-        <div className="flex w-full items-center justify-center">
+        <div className="flex w-full items-center">
           <SessionHistoryContainer />
         </div>
       </div>
