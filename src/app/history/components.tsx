@@ -133,7 +133,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
             }
           : {})}
       >
-        <div className="grid w-full grow grid-cols-4 gap-x-20 gap-y-16 px-20 py-14">
+        <div className="grid w-200 grow grid-cols-4 gap-x-15 gap-y-16 px-20 py-14">
           {sessionSnapshot.map((task, idx) => {
             if (idx >= 4 && !expandLog) {
               if (!isBigLog) {
@@ -144,7 +144,13 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
             return (
               <div key={task.name} className="w-fit">
                 <div className="text-xl font-medium text-zinc-400">
-                  {task.name}
+                  {task.name.slice(0, 8)}
+                  {task.name.length >= 9 && task.name.length <= 11 && (
+                    <>{task.name.slice(8, 11)}</>
+                  )}
+                  {task.name.length >= 9 && task.name.length > 11 && (
+                    <span className="text-zinc-600">...</span>
+                  )}
                 </div>
                 <div className="mt-6 text-lg text-zinc-600">
                   {secondsToAlphaTimeFormat(task.duration, false)}
