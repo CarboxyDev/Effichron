@@ -113,6 +113,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
   const dateFormatted = dateToAlphaDayFormat(date);
 
   const sessionSnapshot = session.sessionSnapshot;
+
   // sort the snapshots by their duration (bigger comes first)
   sessionSnapshot.sort((a: SessionSnapshot, b: SessionSnapshot) => {
     return a.duration <= b.duration ? 1 : -1;
@@ -142,6 +143,9 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
               return <></>;
             }
             return (
+              // TODO: Maybe hide tasks with duration 0 because they're probably not needed
+              // But then again, the user might want to see the tasks which he failed to spend time on
+
               <div key={task.name} className="w-fit">
                 <div className="text-xl font-medium text-zinc-400">
                   {task.name.slice(0, 8)}

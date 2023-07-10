@@ -24,11 +24,6 @@ const ProfileDropdownMenu = (): JSX.Element => {
             My tasks
           </DropdownMenu.Item>
         </Link>
-        <Link href={'/profile'}>
-          <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
-            Profile
-          </DropdownMenu.Item>
-        </Link>
         <Link href={'/history'}>
           <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
             Sessions history
