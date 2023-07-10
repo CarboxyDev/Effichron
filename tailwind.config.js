@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -21,6 +22,9 @@ module.exports = {
           900: '#3b406d',
           950: '#272a44',
           DEFAULT: '#5969b7',
+        },
+        zinc: {
+          925: '#141417',
         },
       },
       spacing: {

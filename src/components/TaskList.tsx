@@ -33,7 +33,7 @@ const Task = (props: { task: Task }) => {
       <div
         onClick={() => switchTask()}
         className={cn(
-          'group group h-28 w-160 rounded-lg border border-transparent bg-zinc-900 transition delay-75 duration-200 ease-in hover:cursor-pointer hover:border hover:border-zinc-800 hover:bg-zinc-900'
+          'hov hover: group group h-28 w-160 rounded-lg border border-transparent border-zinc-800 bg-zinc-900 shadow-sm transition-all delay-75 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-925'
         )}
       >
         <div className="ml-7 flex h-full flex-row items-center">

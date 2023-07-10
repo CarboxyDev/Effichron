@@ -122,7 +122,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
     <>
       <div
         className={cn(
-          'flex w-full select-none flex-row rounded-lg border border-transparent bg-zinc-900 shadow-md transition delay-200 duration-300 ease-linear hover:border-zinc-800',
+          'flex w-full select-none flex-row rounded-lg border border-transparent border-zinc-800 bg-zinc-900 shadow-md transition delay-200 duration-300 ease-linear',
           isBigLog && 'hover:cursor-pointer'
         )}
         {...(isBigLog
