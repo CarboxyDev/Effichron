@@ -78,12 +78,18 @@ const CreateTaskDialog = (props: {
   );
 
   function createTask(name: string, color: string) {
+    console.log('Create Task');
     if (name.length === 0) {
       name = 'Untitled';
     }
     if (color.length === 0) {
       color = '#0ea5e9';
     }
+    if (name.length > 20) {
+      notify('Try to shorten the task name', 'warning');
+      return;
+    }
+
     const newTask: Task = {
       id: uuidv4(),
       name: name,
@@ -138,28 +144,18 @@ const CreateTaskDialog = (props: {
               </label>
               <div className="mt-3 flex flex-row items-center">
                 <div
-                  className="mr-4 h-9 w-9 rounded-full"
+                  className="mr-4 h-9 w-9 rounded-full hover:cursor-pointer"
                   style={{ backgroundColor: color || '#8b5cf6' }}
+                  onClick={() => setOpenColorPicker(!openColorPicker)}
                 ></div>
-                <div className="flex flex-grow flex-row justify-center rounded-lg bg-zinc-900">
-                  <input
-                    type="text"
-                    className="h-12 rounded-lg bg-transparent px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:outline-violet-500"
-                    placeholder={(color || '#8b5cf6').toUpperCase()}
-                    onChange={(e) => {
-                      setColor(e.target.value);
-                    }}
-                  />
-                  <div
-                    onClick={() => setOpenColorPicker(!openColorPicker)}
-                    className="flex flex-grow select-none items-center justify-center rounded-r-lg transition delay-200 duration-200 ease-linear hover:cursor-pointer hover:bg-violet-400"
-                  >
-                    <Icon
-                      icon="mdi:color"
-                      className="mx-auto h-6 w-6 text-zinc-700"
-                    ></Icon>
-                  </div>
-                </div>
+                <input
+                  type="text"
+                  className="flex h-12 flex-grow rounded-lg bg-transparent bg-zinc-900 px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:outline-violet-500"
+                  placeholder={(color || '#8b5cf6').toUpperCase()}
+                  onChange={(e) => {
+                    setColor(e.target.value);
+                  }}
+                />
               </div>
             </div>
             <button
