@@ -1,16 +1,22 @@
 'use client';
 
-import { dateToAlphaDayFormat, secondsToAlphaTimeFormat } from '@/utils/util';
+import {
+  dateDifference,
+  dateToAlphaDayFormat,
+  secondsToAlphaTimeFormat,
+} from '@/utils/util';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+
+interface SessionSnapshot {
+  name: string;
+  duration: number;
+}
 
 interface SessionLog {
   id: String;
   createdAt: Date;
-  sessionSnapshot: {
-    name: string;
-    duration: number;
-  }[];
+  sessionSnapshot: SessionSnapshot[];
 }
 
 export const SessionHistoryContainer = () => {
@@ -32,10 +38,50 @@ export const SessionHistoryContainer = () => {
     return <>Unable to fetch history: {error.message}</>;
   }
 
+  const todaySessions: SessionLog[] = [];
+  const thisWeekSessions: SessionLog[] = [];
+  const oldSessions: SessionLog[] = [];
+
+  data?.forEach((session) => {
+    const dateDiff = dateDifference(new Date(), new Date(session.createdAt));
+    if (dateDifference(new Date(), new Date(session.createdAt)) <= 1) {
+      todaySessions.push(session);
+    } else if (dateDiff > 1 && dateDiff <= 7) {
+      thisWeekSessions.push(session);
+    } else {
+      oldSessions.push(session);
+    }
+  });
+
   return (
     <>
-      <div className="grid w-full gap-y-8">
-        {data?.map((session) => {
+      <div className="grid gap-y-6">
+        {todaySessions.length > 0 && (
+          <h3 className="mb-6 text-xl font-medium text-zinc-500">Today</h3>
+        )}
+        {todaySessions?.map((session) => {
+          return (
+            <SessionLogCard key={session.id as string} session={session} />
+          );
+        })}
+
+        {thisWeekSessions.length > 0 && (
+          <h3 className="mb-6 mt-20 text-xl font-medium text-zinc-500">
+            This week
+          </h3>
+        )}
+        {thisWeekSessions?.map((session) => {
+          return (
+            <SessionLogCard key={session.id as string} session={session} />
+          );
+        })}
+
+        {oldSessions.length > 0 && (
+          <h3 className="mb-6 mt-20 text-xl font-medium text-zinc-500">
+            Older
+          </h3>
+        )}
+        {oldSessions?.map((session) => {
           return (
             <SessionLogCard key={session.id as string} session={session} />
           );
@@ -61,11 +107,17 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
   const date = new Date(session.createdAt);
   const dateFormatted = dateToAlphaDayFormat(date);
 
+  const sessionSnapshot = session.sessionSnapshot;
+  // sort the snapshots by their duration (bigger comes first)
+  sessionSnapshot.sort((a: SessionSnapshot, b: SessionSnapshot) => {
+    return a.duration <= b.duration ? 1 : -1;
+  });
+
   return (
     <>
-      <div className="flex w-full flex-row rounded-lg bg-zinc-900 shadow-md">
-        <div className="grid grow grid-cols-4 gap-x-20 px-20 py-14">
-          {session.sessionSnapshot.map((task) => {
+      <div className="flex w-full flex-row rounded-lg border border-transparent bg-zinc-900 shadow-md transition delay-200 duration-300 ease-linear hover:border-zinc-800">
+        <div className="grid w-170 grow grid-cols-4 gap-x-20 px-20 py-14">
+          {sessionSnapshot.map((task) => {
             return (
               <div key={task.name} className="w-fit">
                 <div className="text-xl font-medium text-zinc-400">
@@ -78,8 +130,8 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
             );
           })}
         </div>
-        <div className="flex justify-center border-l border-zinc-800 px-20 py-14">
-          <div className="flex flex-col items-start">
+        <div className="flex w-60 items-center justify-center border-l border-zinc-800">
+          <div className="flex flex-col justify-center">
             <div className="text-3xl font-semibold text-zinc-400">
               {totalDurationFormatted}
             </div>

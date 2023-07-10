@@ -86,6 +86,10 @@ export async function GET(req: Request, res: Response) {
     where: {
       userId: userId,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    take: 15, // hard limit of 15 for now
   });
 
   const sessionLogsJSON = sessionLogs.map((log) => {
