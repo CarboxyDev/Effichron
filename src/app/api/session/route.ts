@@ -56,3 +56,46 @@ export async function POST(req: Request, res: Response) {
   console.log('[DB] Saved session snapshot');
   return new Response('OK', { status: 200 });
 }
+
+export async function GET(req: Request, res: Response) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
+  const user = session.user;
+
+  if (user === null || user === undefined) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
+  const prismaUser = await prisma.user.findUnique({
+    where: {
+      email: user.email as string,
+    },
+  });
+
+  if (!prismaUser) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
+  const userId = prismaUser?.id;
+
+  const sessionLogs = await prisma.sessionLog.findMany({
+    where: {
+      userId: userId,
+    },
+  });
+
+  const sessionLogsJSON = sessionLogs.map((log) => {
+    return {
+      id: log.id,
+      sessionSnapshot: JSON.parse(log.sessionSnapshot),
+      createdAt: log.createdAt,
+    };
+  });
+
+  console.log('[+] Send session logs');
+  return new Response(JSON.stringify(sessionLogsJSON), { status: 200 });
+}
