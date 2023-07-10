@@ -1,12 +1,14 @@
 'use client';
 
 import {
+  cn,
   dateDifference,
   dateToAlphaDayFormat,
   secondsToAlphaTimeFormat,
 } from '@/utils/util';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useState } from 'react';
 
 interface SessionSnapshot {
   name: string;
@@ -98,6 +100,9 @@ const totalDurationReducer = (total: number, task: any) => {
 export const SessionLogCard = (props: { session: SessionLog }) => {
   const { session } = props;
 
+  const [isBigLog, setIsBigLog] = useState(false);
+  const [expandLog, setExpandLog] = useState(false);
+
   const totalDuration: number = session.sessionSnapshot.reduce(
     totalDurationReducer,
     0
@@ -115,9 +120,27 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
 
   return (
     <>
-      <div className="flex w-full flex-row rounded-lg border border-transparent bg-zinc-900 shadow-md transition delay-200 duration-300 ease-linear hover:border-zinc-800">
-        <div className="grid w-170 grow grid-cols-4 gap-x-20 px-20 py-14">
-          {sessionSnapshot.map((task) => {
+      <div
+        className={cn(
+          'flex w-full select-none flex-row rounded-lg border border-transparent bg-zinc-900 shadow-md transition delay-200 duration-300 ease-linear hover:border-zinc-800',
+          isBigLog && 'hover:cursor-pointer'
+        )}
+        {...(isBigLog
+          ? {
+              onClick: () => {
+                setExpandLog(!expandLog);
+              },
+            }
+          : {})}
+      >
+        <div className="grid w-full grow grid-cols-4 gap-x-20 gap-y-16 px-20 py-14">
+          {sessionSnapshot.map((task, idx) => {
+            if (idx >= 4 && !expandLog) {
+              if (!isBigLog) {
+                setIsBigLog(true);
+              }
+              return <></>;
+            }
             return (
               <div key={task.name} className="w-fit">
                 <div className="text-xl font-medium text-zinc-400">
@@ -130,7 +153,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
             );
           })}
         </div>
-        <div className="flex w-60 items-center justify-center border-l border-zinc-800">
+        <div className="flex w-80 items-center justify-center border-l border-zinc-800">
           <div className="flex flex-col justify-center">
             <div className="text-3xl font-semibold text-zinc-400">
               {totalDurationFormatted}
