@@ -1,23 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { useResetActiveTask } from '@/lib/store/useTasks';
-import { notify } from '@/utils/notify';
 import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import * as Dialog from '@radix-ui/react-dialog';
-import SaveSessionConfirmationDialog from './Dialogs';
+import {
+  ResetActiveTaskConfirmationDialog,
+  SaveSessionConfirmationDialog,
+} from './Dialogs';
 
 const ActionButton = () => {
   console.log('Render ActionButton');
-  const resetActiveTask = useResetActiveTask();
   const [open, setOpen] = useState(false);
-
-  const resetActiveTaskTimer = (): void => {
-    // TODO: Ask confirmation via a popup and add a toast as confirmation of reset
-    notify('Reset the active task timer', 'warning');
-    resetActiveTask();
-  };
 
   return (
     <>
@@ -46,16 +40,23 @@ const ActionButton = () => {
           </Dialog.Root>
         )}
         {open && (
-          <button
-            onClick={() => {
-              resetActiveTaskTimer();
-              setOpen(false);
-            }}
-            title="Reset task"
-            className="group absolute right-14 flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-red-600 active:scale-105"
-          >
-            <Icon icon="mdi:trash-outline" className="h-7 w-7 text-zinc-300" />
-          </button>
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <button
+                onClick={() => {
+                  //resetActiveTaskTimer();
+                }}
+                title="Reset task"
+                className="group absolute right-14 flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-red-600 active:scale-105"
+              >
+                <Icon
+                  icon="mdi:trash-outline"
+                  className="h-7 w-7 text-zinc-300"
+                />
+              </button>
+            </Dialog.Trigger>
+            <ResetActiveTaskConfirmationDialog setActionMenuOpen={setOpen} />
+          </Dialog.Root>
         )}
       </div>
     </>
