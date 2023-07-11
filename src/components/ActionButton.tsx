@@ -63,7 +63,7 @@ const ActionButton = () => {
           className="group flex h-12 w-12 items-center justify-center rounded-lg bg-violet-500 text-zinc-200 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-violet-600 active:scale-105"
         >
           <Icon
-            icon="majesticons:timer-line"
+            icon="ic:round-timer"
             className={cn(open && '', 'h-7 w-7 text-zinc-200')}
           />
         </button>

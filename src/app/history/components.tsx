@@ -123,7 +123,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
     <>
       <div
         className={cn(
-          'flex w-full select-none flex-row rounded-lg border border-transparent border-zinc-800 bg-zinc-900 shadow-md transition delay-200 duration-300 ease-linear',
+          'flex w-full select-none flex-row rounded-lg border border-transparent border-zinc-800 bg-zinc-900 shadow-md transition delay-200 duration-300 ease-in-out hover:border-zinc-700',
           isBigLog && 'hover:cursor-pointer'
         )}
         {...(isBigLog
@@ -147,7 +147,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
               // But then again, the user might want to see the tasks which he failed to spend time on
 
               <div key={task.name} className="w-fit">
-                <div className="text-xl font-medium text-zinc-400">
+                <div className="text-xl text-zinc-400">
                   {task.name.slice(0, 8)}
                   {task.name.length >= 9 && task.name.length <= 11 && (
                     <>{task.name.slice(8, 11)}</>
@@ -163,7 +163,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
             );
           })}
         </div>
-        <div className="flex w-80 items-center justify-center border-l border-zinc-800">
+        <div className="flex w-60 items-center justify-center border-l border-zinc-800">
           <div className="flex flex-col justify-center">
             <div className="text-3xl font-semibold text-zinc-400">
               {totalDurationFormatted}
