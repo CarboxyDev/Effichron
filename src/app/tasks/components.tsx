@@ -6,6 +6,7 @@ import { notify } from '@/utils/notify';
 import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import * as Dialog from '@radix-ui/react-dialog';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { v4 as uuidv4 } from 'uuid';
@@ -22,7 +23,7 @@ export const TaskListView = () => {
             <div
               key={task.id}
               className={cn(
-                'group group h-28 w-160 rounded-lg border border-transparent bg-zinc-900 transition delay-75 duration-200 ease-in hover:cursor-pointer hover:border hover:border-zinc-800'
+                'group h-28 w-160 rounded-lg border border-zinc-800 bg-zinc-900 transition-all delay-200 duration-300 ease-in-out hover:border hover:border-zinc-700'
               )}
             >
               <div className="ml-7 flex h-full flex-row items-center">
@@ -33,7 +34,15 @@ export const TaskListView = () => {
                   ></div>
                   <div className="text-lg text-zinc-300">{task.name}</div>
                 </div>
-                <div className="ml-auto mr-7 text-base text-zinc-500">Edit</div>
+                <DropdownMenu.Root>
+                  <DropdownMenu.Trigger asChild>
+                    <Icon
+                      icon="material-symbols:more-vert"
+                      className="ml-auto mr-7 h-6 w-6 text-zinc-600 hover:cursor-pointer hover:text-zinc-700"
+                    ></Icon>
+                  </DropdownMenu.Trigger>
+                  <TaskDropdownMenu />
+                </DropdownMenu.Root>
               </div>
             </div>
           );
@@ -175,6 +184,20 @@ const CreateTaskDialog = (props: {
           )}
         </Dialog.Content>
       </Dialog.Portal>
+    </>
+  );
+};
+
+const TaskDropdownMenu = () => {
+  return (
+    <>
+      <DropdownMenu.Portal>
+        <DropdownMenu.Content
+          sideOffset={12}
+          collisionPadding={16}
+          className="flex min-w-[120px] flex-col rounded-lg border border-zinc-800 bg-zinc-900 text-sm shadow-2xl"
+        ></DropdownMenu.Content>
+      </DropdownMenu.Portal>
     </>
   );
 };

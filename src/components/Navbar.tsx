@@ -51,7 +51,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex w-full flex-row px-4 py-4">
+      <div className="flex w-full select-none flex-row px-4 py-4">
         <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 hover:cursor-pointer">
           {status != 'authenticated' && (
             <Link href={status === 'loading' ? '' : '/api/auth/signin'}>
