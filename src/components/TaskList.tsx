@@ -50,7 +50,7 @@ const Task = (props: { task: Task }) => {
               'ml-auto mr-7 text-lg text-zinc-500'
             )}
           >
-            {secondsToAlphaTimeFormat(task.duration)}
+            {secondsToAlphaTimeFormat(task.duration, true)}
           </div>
           <div
             className={cn(

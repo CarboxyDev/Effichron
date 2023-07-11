@@ -33,17 +33,14 @@ export function secondsToTimeFormat(seconds: number): TimeFormat {
 
 export function secondsToAlphaTimeFormat(
   seconds: number,
-  includeSeconds?: boolean
+  includeSeconds: boolean
 ): string {
-  if (includeSeconds === undefined) {
-    includeSeconds = true;
-  }
   const date = new Date(0);
   date.setSeconds(seconds);
   const dateAsString = date.toISOString().substring(11, 19);
   let [hr, min, sec] = dateAsString.split(':');
 
-  if (parseInt(hr) === 0) return `${parseInt(min)}m`;
+  if (parseInt(hr) === 0 && !includeSeconds) return `${parseInt(min)}m`;
 
   if (parseInt(hr) === 0 && parseInt(min) === 0 && includeSeconds)
     return `${parseInt(sec)}s`;

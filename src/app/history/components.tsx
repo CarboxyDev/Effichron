@@ -107,7 +107,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
     totalDurationReducer,
     0
   );
-  const totalDurationFormatted = secondsToAlphaTimeFormat(totalDuration, false);
+  const totalDurationFormatted = secondsToAlphaTimeFormat(totalDuration, true);
 
   const date = new Date(session.createdAt);
   const dateFormatted = dateToAlphaDayFormat(date);
