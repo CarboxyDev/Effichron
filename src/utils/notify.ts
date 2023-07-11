@@ -8,9 +8,10 @@ interface NotifyPromiseStatesMessage {
 }
 
 const toastStyle = {
-  background: '#27272a',
+  background: '#18181b',
   color: '#e4e4e7',
-};
+  wordWrap: 'break-word',
+} as const;
 
 export const notify = (message: string, type: notifType) => {
   if (type === 'success') {

@@ -1,6 +1,7 @@
 'use client';
+
 import { useStore } from '@/lib/store/useStore';
-import { useAddTask, useGetTasks } from '@/lib/store/useTasks';
+import { useAddTask, useDeleteTask, useGetTasks } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
 import { notify } from '@/utils/notify';
 import { cn } from '@/utils/util';
@@ -14,6 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const TaskListView = () => {
   console.log('Render TaskListView');
   const tasks = useStore(useGetTasks, (state) => state) as Task[];
+  const deleteTaskFn = useDeleteTask();
 
   return (
     <>
@@ -41,7 +43,10 @@ export const TaskListView = () => {
                       className="ml-auto mr-7 h-6 w-6 text-zinc-600 hover:cursor-pointer hover:text-zinc-700"
                     ></Icon>
                   </DropdownMenu.Trigger>
-                  <TaskDropdownMenu />
+                  <TaskDropdownMenu
+                    task={task}
+                    actions={{ deleteFn: deleteTaskFn }}
+                  />
                 </DropdownMenu.Root>
               </div>
             </div>
@@ -188,7 +193,17 @@ const CreateTaskDialog = (props: {
   );
 };
 
-const TaskDropdownMenu = () => {
+interface TaskDropdownMenuProps {
+  task: Task;
+  actions: {
+    deleteFn: (id: string) => void;
+  };
+}
+
+const TaskDropdownMenu = (props: TaskDropdownMenuProps) => {
+  const { task } = props;
+  const deleteTask = props.actions.deleteFn;
+
   return (
     <>
       <DropdownMenu.Portal>
@@ -196,10 +211,16 @@ const TaskDropdownMenu = () => {
           sideOffset={0}
           className="flex w-30 select-none flex-col items-center rounded-lg border border-zinc-800 bg-zinc-900 shadow-xl"
         >
-          <DropdownMenu.Item className="w-full flex-1 rounded-t-lg border-b border-b-zinc-800 py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800">
+          <DropdownMenu.Item className="w-full flex-1 rounded-t-lg border-b border-b-zinc-800 py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 focus:outline-none">
             Edit
           </DropdownMenu.Item>
-          <DropdownMenu.Item className="w-full flex-1 rounded-b-lg py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800">
+          <DropdownMenu.Item
+            className="w-full flex-1 rounded-b-lg py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 focus:outline-none"
+            onClick={() => {
+              deleteTask(task.id);
+              notify('Deleted task ' + task.name, 'warning');
+            }}
+          >
             Delete
           </DropdownMenu.Item>
         </DropdownMenu.Content>

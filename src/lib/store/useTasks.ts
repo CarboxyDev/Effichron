@@ -7,7 +7,7 @@ export interface TaskListStore {
   activeTask: string | undefined; // id of the active task
   setActiveTask: (id: string) => void;
   addTask: (task: Task) => void;
-  removeTask: (id: string) => void;
+  deleteTask: (id: string) => void;
   updateTask: (task: Task) => void;
   incrementDuration: (id: string, amount: number) => void;
   changeActiveState: (id: string, isActive: boolean) => void;
@@ -39,7 +39,7 @@ export const useTasks = create<TaskListStore>()(
       setActiveTask: (id: string) => set({ activeTask: id }),
       addTask: (task: Task) =>
         set((state) => ({ tasks: [...state.tasks, task] })),
-      removeTask: (id: string) =>
+      deleteTask: (id: string) =>
         set((state) => ({
           tasks: state.tasks.filter((task) => task.id !== id),
         })),
@@ -118,6 +118,11 @@ export const useResetActiveTask = () => {
 export const useAddTask = () => {
   const _addTask = useTasks((state) => state.addTask);
   return _addTask;
+};
+
+export const useDeleteTask = () => {
+  const _deleteTask = useTasks((state) => state.deleteTask);
+  return _deleteTask;
 };
 
 /* Non-reactive states, do not use as hooks */
