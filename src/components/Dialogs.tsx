@@ -153,7 +153,7 @@ export const ResetActiveTaskConfirmationDialog = (props: {
                 Cancel
               </button>
               <button
-                className="flex h-11 items-center justify-center rounded-lg bg-red-500 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:bg-red-600"
+                className="flex h-11 items-center justify-center rounded-lg bg-red-500 text-lg font-medium text-zinc-100 transition delay-200 duration-200 ease-in-out hover:bg-red-600"
                 type="submit"
                 onClick={() => {
                   resetActiveTaskTimer();

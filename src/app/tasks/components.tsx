@@ -34,7 +34,7 @@ export const TaskListView = () => {
                   ></div>
                   <div className="text-lg text-zinc-300">{task.name}</div>
                 </div>
-                <DropdownMenu.Root>
+                <DropdownMenu.Root modal={false}>
                   <DropdownMenu.Trigger asChild>
                     <Icon
                       icon="material-symbols:more-vert"
@@ -193,10 +193,16 @@ const TaskDropdownMenu = () => {
     <>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          sideOffset={12}
-          collisionPadding={16}
-          className="flex min-w-[120px] flex-col rounded-lg border border-zinc-800 bg-zinc-900 text-sm shadow-2xl"
-        ></DropdownMenu.Content>
+          sideOffset={0}
+          className="flex w-30 select-none flex-col items-center rounded-lg border border-zinc-800 bg-zinc-900 shadow-xl"
+        >
+          <DropdownMenu.Item className="w-full flex-1 rounded-t-lg border-b border-b-zinc-800 py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800">
+            Edit
+          </DropdownMenu.Item>
+          <DropdownMenu.Item className="w-full flex-1 rounded-b-lg py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800">
+            Delete
+          </DropdownMenu.Item>
+        </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </>
   );
