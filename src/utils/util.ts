@@ -42,6 +42,10 @@ export function secondsToAlphaTimeFormat(
 
   if (parseInt(hr) === 0 && !includeSeconds) return `${parseInt(min)}m`;
 
+  if (parseInt(hr) === 0 && parseInt(min) != 0 && includeSeconds) {
+    return `${parseInt(min)}m`;
+  }
+
   if (parseInt(hr) === 0 && parseInt(min) === 0 && includeSeconds)
     return `${parseInt(sec)}s`;
 

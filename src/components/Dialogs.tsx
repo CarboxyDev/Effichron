@@ -53,7 +53,7 @@ export const SaveSessionConfirmationDialog = (props: {
     <>
       <Dialog.Portal>
         <Dialog.Overlay className="data-[state=open]:insert-animate-here fixed inset-0 bg-zinc-900/40" />
-        <Dialog.Content className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl bg-zinc-950 px-6 py-8 shadow-xl">
+        <Dialog.Content className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-zinc-800 bg-zinc-950 px-6 py-8 shadow-xl">
           <div className="flex flex-row">
             <Dialog.Title className="mr-auto text-lg font-semibold text-zinc-300">
               Save Session
@@ -117,7 +117,7 @@ export const ResetActiveTaskConfirmationDialog = (props: {
     <>
       <Dialog.Portal>
         <Dialog.Overlay className="data-[state=open]:insert-animate-here fixed inset-0 bg-zinc-900/40" />
-        <Dialog.Content className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl bg-zinc-950 px-6 py-8 shadow-xl">
+        <Dialog.Content className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-zinc-800 bg-zinc-950 px-6 py-8 shadow-xl">
           <div className="flex flex-row">
             <Dialog.Title className="mr-auto text-lg font-semibold text-zinc-300">
               Reset Task

@@ -58,6 +58,11 @@ export const SessionHistoryContainer = () => {
   return (
     <>
       <div className="grid gap-y-6">
+        {data?.length === 0 && (
+          <div className="mt-12 text-2xl text-zinc-400">
+            You do not have any saved sessions
+          </div>
+        )}
         {todaySessions.length > 0 && (
           <h3 className="mb-6 text-xl font-medium text-zinc-500">Today</h3>
         )}
