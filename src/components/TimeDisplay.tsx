@@ -1,7 +1,9 @@
 import { cn } from '@/utils/util';
 import { IBM_Plex_Mono } from 'next/font/google';
+import { Chivo_Mono } from 'next/font/google';
 
 const timerFont = IBM_Plex_Mono({ weight: '400', subsets: ['latin'] });
+//const timerFont2 = Chivo_Mono({ weight: '400', subsets: ['latin'] });
 
 interface TimeFormat {
   hours: number;

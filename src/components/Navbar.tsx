@@ -12,26 +12,33 @@ const ProfileDropdownMenu = (): JSX.Element => {
       <DropdownMenu.Content
         sideOffset={12}
         collisionPadding={16}
-        className="rounded-lg bg-zinc-900 px-5 py-5 shadow-2xl"
+        className="flex min-w-[120px] flex-col rounded-lg border border-zinc-800 bg-zinc-900 text-sm shadow-2xl"
       >
         <Link href={'/'}>
-          <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
-            Home
+          <DropdownMenu.Item className="flex flex-row items-center gap-x-2 rounded-t-lg pb-3 pl-3 pt-4 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none">
+            <Icon
+              icon="ic:round-timer"
+              className="h-5 w-5 text-zinc-400"
+            ></Icon>
+            <div className="text-zinc-300">Timer</div>
           </DropdownMenu.Item>
         </Link>
         <Link href={'/tasks'}>
-          <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
-            My tasks
+          <DropdownMenu.Item className="flex flex-row items-center gap-x-2 py-3 pl-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none">
+            <Icon icon="ic:round-task" className="h-5 w-5 text-zinc-400"></Icon>
+            <div className="text-zinc-300">Tasks</div>
           </DropdownMenu.Item>
         </Link>
         <Link href={'/history'}>
-          <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
-            Sessions history
+          <DropdownMenu.Item className="flex flex-row items-center gap-x-2 py-3 pl-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none">
+            <Icon icon="mdi:history" className="h-5 w-5 text-zinc-400"></Icon>
+            <div className="text-zinc-300">History</div>
           </DropdownMenu.Item>
         </Link>
         <Link href={'/api/auth/signout'}>
-          <DropdownMenu.Item className="mb-2 rounded-md px-2 py-1 text-zinc-300 hover:cursor-pointer hover:bg-zinc-700 hover:outline-none">
-            Sign out
+          <DropdownMenu.Item className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none">
+            <Icon icon="mdi:sign-out" className="h-5 w-5 text-zinc-600"></Icon>
+            <div className="text-zinc-500">Sign out</div>
           </DropdownMenu.Item>
         </Link>
       </DropdownMenu.Content>
