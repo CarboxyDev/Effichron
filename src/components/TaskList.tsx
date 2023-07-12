@@ -3,6 +3,7 @@
 import { Task } from '@/lib/types';
 import { useStore } from '@/lib/store/useStore';
 import {
+  getTasks,
   useActiveTaskId,
   useChangeTaskActiveState,
   useGetTasks,
@@ -68,7 +69,7 @@ const TaskList = (): JSX.Element => {
   // This re-renders every time the taskStore is modified (which is every second) which is rather bad for performance
   // Try optimizing this in the future so that it only renders when absolutely needed
   console.log('Render Tasklist');
-  const tasks = useStore(useGetTasks, (state) => state) as Task[];
+  const tasks = useStore(getTasks, (state) => state) as Task[];
   const activeTask = useStore(useActiveTaskId, (state) => state) as string;
 
   return (

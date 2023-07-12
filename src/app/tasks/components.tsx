@@ -9,7 +9,7 @@ import {
 } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
 import { notify } from '@/utils/notify';
-import { cn, randint } from '@/utils/util';
+import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
