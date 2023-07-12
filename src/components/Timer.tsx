@@ -50,7 +50,7 @@ const Timer = () => {
       </div>
       <div className="mt-12 flex flex-row gap-x-2">
         <button
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-zinc-900 text-zinc-200 transition duration-700 ease-in-out hover:bg-sky-500"
+          className="flex h-16 w-16 items-center justify-center rounded-full border border-transparent bg-zinc-900 text-zinc-400 transition delay-300 duration-500 ease-in-out hover:border-zinc-800 hover:text-zinc-600"
           onClick={() => toggleTaskTimer()}
         >
           {activeTask?.isActive ? (
