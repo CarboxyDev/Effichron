@@ -120,6 +120,11 @@ export const useAddTask = () => {
   return _addTask;
 };
 
+export const useUpdateTask = () => {
+  const _updateTask = useTasks((state) => state.updateTask);
+  return _updateTask;
+};
+
 export const useDeleteTask = () => {
   const _deleteTask = useTasks((state) => state.deleteTask);
   return _deleteTask;
