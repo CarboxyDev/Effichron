@@ -22,14 +22,13 @@ interface SessionLog {
 }
 
 export const SessionHistoryContainer = () => {
-  console.log('Render SessionHistoryContainer');
-
   const { data, status, error } = useQuery({
     queryKey: ['session-history'],
     queryFn: async () => {
       const { data } = await axios.get('/api/session');
       return data as SessionLog[];
     },
+    staleTime: 5 * (60 * 1000), // 5 minutes
   });
 
   if (status === 'loading') {

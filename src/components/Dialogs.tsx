@@ -8,7 +8,7 @@ import { notify, notifyPromise } from '@/utils/notify';
 import { Icon } from '@iconify/react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Link from 'next/link';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -39,7 +39,14 @@ export const SaveSessionConfirmationDialog = (props: {
     onSuccess: () => {
       refreshTasks();
     },
-    onError: () => {},
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          console.log(error.response.data);
+          notify(error.response.data, 'failure');
+        }
+      }
+    },
   });
 
   const saveSession = async () => {

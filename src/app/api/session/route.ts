@@ -46,6 +46,33 @@ export async function POST(req: Request, res: Response) {
 
   const userId = prismaUser?.id;
 
+  // This goes through all the database records which makes it very inefficient.
+  // Try having the latest session's timestamp recorded somewhere instead.
+  const latestSessionLog = await prisma.sessionLog.findMany({
+    where: {
+      userId: userId,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    take: 1,
+  });
+
+  if (latestSessionLog) {
+    const latestLog = latestSessionLog[0];
+    const now = new Date();
+    const diff = now.getTime() - latestLog.createdAt.getTime();
+    const diffInMins = Math.floor(diff / 1000 / 60);
+
+    if (diffInMins < 5) {
+      console.log('[!] User tried to save session too soon');
+      return new Response(
+        JSON.stringify('You must wait 5 minutes before saving another session'),
+        { status: 429 }
+      );
+    }
+  }
+
   await prisma.sessionLog.create({
     data: {
       userId: userId,
