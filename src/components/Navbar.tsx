@@ -1,5 +1,6 @@
 'use client';
 
+import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useSession } from 'next-auth/react';
@@ -53,11 +54,15 @@ const Navbar = () => {
     <>
       <div className="flex w-full select-none flex-row px-4 py-4">
         <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 hover:cursor-pointer">
-          {status != 'authenticated' && (
-            <Link href={status === 'loading' ? '' : '/api/auth/signin'}>
-              <Icon icon="ep:user-filled" className="h-5 w-5 text-zinc-400" />
+          {status === 'unauthenticated' && (
+            <Link href="/api/auth/signin">
+              <Icon
+                icon="ep:user-filled"
+                className={cn('h-5 w-5 text-zinc-400')}
+              />
             </Link>
           )}
+          {status === 'loading' && <></>}
           {status === 'authenticated' && (
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
