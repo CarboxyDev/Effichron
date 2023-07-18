@@ -218,8 +218,8 @@ interface TaskDropdownMenuProps {
 
 const TaskDropdownMenu = (props: TaskDropdownMenuProps) => {
   const { task } = props;
-  const deleteTask = props.actions.deleteFn;
-  const [open, setOpen] = useState(false);
+  const [editTaskOpen, setEditTaskOpen] = useState(false);
+  const [deleteTaskOpen, setDeleteTaskOpen] = useState(false);
 
   return (
     <>
@@ -230,30 +230,36 @@ const TaskDropdownMenu = (props: TaskDropdownMenuProps) => {
         >
           <EditTaskDialog
             task={task}
-            open={open}
-            setOpen={setOpen}
+            open={editTaskOpen}
+            setOpen={setEditTaskOpen}
             trigger={
               <DropdownMenu.Item
                 className="w-full flex-1 rounded-t-lg border-b border-b-zinc-800 py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 focus:outline-none"
                 onSelect={(event) => {
                   event.preventDefault();
-                  setOpen(true);
+                  setEditTaskOpen(true);
                 }}
               >
                 Edit
               </DropdownMenu.Item>
             }
           />
-
-          <DropdownMenu.Item
-            className="w-full flex-1 rounded-b-lg py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 focus:outline-none"
-            onClick={() => {
-              deleteTask(task.id);
-              notify('Deleted task ' + task.name, 'warning');
-            }}
-          >
-            Delete
-          </DropdownMenu.Item>
+          <DeleteTaskDialog
+            task={task}
+            open={deleteTaskOpen}
+            setOpen={setDeleteTaskOpen}
+            trigger={
+              <DropdownMenu.Item
+                className="w-full flex-1 rounded-b-lg  py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-red-500 focus:outline-none"
+                onSelect={(event) => {
+                  event.preventDefault();
+                  setDeleteTaskOpen(true);
+                }}
+              >
+                Delete
+              </DropdownMenu.Item>
+            }
+          />
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </>
@@ -309,7 +315,7 @@ const EditTaskDialog = (props: EditTaskDialogProps) => {
           <Dialog.Overlay className="data-[state=open]:insert-animate-here fixed inset-0 bg-zinc-900/40" />
           <Dialog.Content
             onCloseAutoFocus={() => setOpenColorPicker(false)}
-            className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl border border border-zinc-800 border-zinc-800 bg-zinc-950 px-6 py-8 shadow-xl"
+            className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-zinc-800 bg-zinc-950 px-6 py-8 shadow-xl"
           >
             <div className="flex flex-row">
               <Dialog.Title className="mr-auto text-lg font-semibold text-zinc-300">
@@ -369,6 +375,80 @@ const EditTaskDialog = (props: EditTaskDialogProps) => {
                 <HexColorPicker color={color} onChange={setColor} />
               </div>
             )}
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </>
+  );
+};
+
+type DeleteTaskDialogProps = {
+  trigger?: React.ReactNode;
+  open?: boolean;
+  setOpen?: (open: boolean) => void;
+  task: Task;
+};
+
+const DeleteTaskDialog = (props: DeleteTaskDialogProps) => {
+  const { task, setOpen, open, trigger } = props;
+
+  const deleteTaskFn = useDeleteTask();
+
+  const deleteTask = () => {
+    deleteTaskFn(task.id);
+    if (setOpen) setOpen(false);
+    notify('Deleted task ' + task.name, 'warning');
+  };
+
+  return (
+    <>
+      <Dialog.Root open={open} onOpenChange={setOpen}>
+        <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+        <Dialog.Portal>
+          <Dialog.Overlay className="data-[state=open]:insert-animate-here fixed inset-0 bg-zinc-900/40" />
+          <Dialog.Content className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-zinc-800 bg-zinc-950 px-6 py-8 shadow-xl">
+            <div className="flex flex-row">
+              <Dialog.Title className="mr-auto text-lg font-semibold text-zinc-300">
+                Delete Task
+              </Dialog.Title>
+              <Dialog.Close asChild className="ml-auto">
+                <button>
+                  <Icon
+                    icon="maki:cross"
+                    className="h-5 w-5 text-zinc-500"
+                  ></Icon>
+                </button>
+              </Dialog.Close>
+            </div>
+            <div className="mx-auto mt-12 flex flex-col">
+              <h3 className="text-center text-[22px] font-medium text-zinc-300">
+                Are you sure you want to delete this task?
+              </h3>
+              <div className="mx-6 mt-16 text-zinc-500">
+                <ul className="list-outside list-disc">
+                  <li>
+                    You are deleting the task{' '}
+                    <span className="text-violet-400">{task.name}</span>.
+                  </li>
+                  <li>
+                    This task and it&apos;s associated timer will be deleted
+                    forever.
+                  </li>
+                  <li>
+                    The saved sessions which have this task will still retain
+                    the saved data.
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                className="mt-12 flex h-11 items-center justify-center rounded-lg bg-violet-500 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-violet-600"
+                type="submit"
+                onClick={() => deleteTask()}
+              >
+                Delete task
+              </button>
+            </div>
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
