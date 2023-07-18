@@ -349,13 +349,13 @@ const EditTaskDialog = (props: EditTaskDialogProps) => {
                 <div className="mt-3 flex flex-row items-center">
                   <div
                     className="mr-4 h-9 w-9 rounded-full hover:cursor-pointer"
-                    style={{ backgroundColor: task.color }}
+                    style={{ backgroundColor: color }}
                     onClick={() => setOpenColorPicker(!openColorPicker)}
                   ></div>
                   <input
                     type="text"
                     className="flex h-12 flex-grow rounded-lg bg-transparent bg-zinc-900 px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:outline-violet-500"
-                    placeholder={task.color.toUpperCase()}
+                    placeholder={color.toUpperCase()}
                     onChange={(e) => {
                       setColor(e.target.value);
                     }}
