@@ -219,6 +219,7 @@ interface TaskDropdownMenuProps {
 const TaskDropdownMenu = (props: TaskDropdownMenuProps) => {
   const { task } = props;
   const deleteTask = props.actions.deleteFn;
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -227,17 +228,23 @@ const TaskDropdownMenu = (props: TaskDropdownMenuProps) => {
           sideOffset={0}
           className="flex w-30 select-none flex-col items-center rounded-lg border border-zinc-800 bg-zinc-900 shadow-xl"
         >
-          <Dialog.Root>
-            <Dialog.Trigger asChild>
+          <EditTaskDialog
+            task={task}
+            open={open}
+            setOpen={setOpen}
+            trigger={
               <DropdownMenu.Item
                 className="w-full flex-1 rounded-t-lg border-b border-b-zinc-800 py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 focus:outline-none"
-                onClick={() => {}}
+                onSelect={(event) => {
+                  event.preventDefault();
+                  setOpen(true);
+                }}
               >
                 Edit
               </DropdownMenu.Item>
-            </Dialog.Trigger>
-            <EditTaskDialog task={task} />
-          </Dialog.Root>
+            }
+          />
+
           <DropdownMenu.Item
             className="w-full flex-1 rounded-b-lg py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 focus:outline-none"
             onClick={() => {
@@ -253,8 +260,15 @@ const TaskDropdownMenu = (props: TaskDropdownMenuProps) => {
   );
 };
 
-const EditTaskDialog = (props: { task: Task }) => {
-  const { task } = props;
+type EditTaskDialogProps = {
+  trigger?: React.ReactNode;
+  open?: boolean;
+  setOpen?: (open: boolean) => void;
+  task: Task;
+};
+
+const EditTaskDialog = (props: EditTaskDialogProps) => {
+  const { task, setOpen, open, trigger } = props;
 
   const updateTaskFn = useUpdateTask();
 
@@ -283,77 +297,81 @@ const EditTaskDialog = (props: { task: Task }) => {
     };
 
     updateTaskFn(newTask);
+    if (setOpen) setOpen(false);
     notify('Edited task ' + task.name, 'success');
   };
 
   return (
     <>
-      <Dialog.Portal>
-        <Dialog.Overlay className="data-[state=open]:insert-animate-here fixed inset-0 bg-zinc-900/40" />
-        <Dialog.Content
-          onCloseAutoFocus={() => setOpenColorPicker(false)}
-          className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl border border border-zinc-800 border-zinc-800 bg-zinc-950 px-6 py-8 shadow-xl"
-        >
-          <div className="flex flex-row">
-            <Dialog.Title className="mr-auto text-lg font-semibold text-zinc-300">
-              Edit Task
-            </Dialog.Title>
-            <Dialog.Close asChild className="ml-auto">
-              <button>
-                <Icon
-                  icon="maki:cross"
-                  className="h-5 w-5 text-zinc-500"
-                ></Icon>
-              </button>
-            </Dialog.Close>
-          </div>
-          <div className="mx-auto mt-12 flex flex-col">
-            <div className="">
-              <label className="mx-1 text-lg font-medium text-zinc-500">
-                Name
-              </label>
-              <input
-                type="text"
-                className="mt-3 h-12 w-full rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:outline-violet-500"
-                placeholder={task.name}
-                onChange={(e) => setTaskName(e.target.value)}
-              />
+      <Dialog.Root open={open} onOpenChange={setOpen}>
+        <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+        <Dialog.Portal>
+          <Dialog.Overlay className="data-[state=open]:insert-animate-here fixed inset-0 bg-zinc-900/40" />
+          <Dialog.Content
+            onCloseAutoFocus={() => setOpenColorPicker(false)}
+            className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl border border border-zinc-800 border-zinc-800 bg-zinc-950 px-6 py-8 shadow-xl"
+          >
+            <div className="flex flex-row">
+              <Dialog.Title className="mr-auto text-lg font-semibold text-zinc-300">
+                Edit Task
+              </Dialog.Title>
+              <Dialog.Close asChild className="ml-auto">
+                <button>
+                  <Icon
+                    icon="maki:cross"
+                    className="h-5 w-5 text-zinc-500"
+                  ></Icon>
+                </button>
+              </Dialog.Close>
             </div>
-            <div className="mt-8">
-              <label className="mx-1 text-lg font-medium text-zinc-500">
-                Color
-              </label>
-              <div className="mt-3 flex flex-row items-center">
-                <div
-                  className="mr-4 h-9 w-9 rounded-full hover:cursor-pointer"
-                  style={{ backgroundColor: task.color }}
-                  onClick={() => setOpenColorPicker(!openColorPicker)}
-                ></div>
+            <div className="mx-auto mt-12 flex flex-col">
+              <div className="">
+                <label className="mx-1 text-lg font-medium text-zinc-500">
+                  Name
+                </label>
                 <input
                   type="text"
-                  className="flex h-12 flex-grow rounded-lg bg-transparent bg-zinc-900 px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:outline-violet-500"
-                  placeholder={task.color.toUpperCase()}
-                  onChange={(e) => {
-                    setColor(e.target.value);
-                  }}
+                  className="mt-3 h-12 w-full rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:outline-violet-500"
+                  placeholder={task.name}
+                  onChange={(e) => setTaskName(e.target.value)}
                 />
               </div>
+              <div className="mt-8">
+                <label className="mx-1 text-lg font-medium text-zinc-500">
+                  Color
+                </label>
+                <div className="mt-3 flex flex-row items-center">
+                  <div
+                    className="mr-4 h-9 w-9 rounded-full hover:cursor-pointer"
+                    style={{ backgroundColor: task.color }}
+                    onClick={() => setOpenColorPicker(!openColorPicker)}
+                  ></div>
+                  <input
+                    type="text"
+                    className="flex h-12 flex-grow rounded-lg bg-transparent bg-zinc-900 px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:outline-violet-500"
+                    placeholder={task.color.toUpperCase()}
+                    onChange={(e) => {
+                      setColor(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+              <button
+                className="mt-12 flex h-11 items-center justify-center rounded-lg bg-violet-500 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-violet-600"
+                type="submit"
+                onClick={() => editTask()}
+              >
+                Edit task
+              </button>
             </div>
-            <button
-              className="mt-12 flex h-11 items-center justify-center rounded-lg bg-violet-500 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-violet-600"
-              type="submit"
-              onClick={() => editTask()}
-            >
-              Edit task
-            </button>
-          </div>
-          {openColorPicker && (
-            <div className="absolute bottom-32 left-108">
-              <HexColorPicker color={color} onChange={setColor} />
-            </div>
-          )}
-        </Dialog.Content>
-      </Dialog.Portal>
+            {openColorPicker && (
+              <div className="absolute bottom-32 left-108">
+                <HexColorPicker color={color} onChange={setColor} />
+              </div>
+            )}
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </>
   );
 };
