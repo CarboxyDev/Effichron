@@ -5,7 +5,7 @@ import { useStore } from '@/lib/store/useStore';
 import {
   getTasks,
   useActiveTaskId,
-  useChangeTaskActiveState,
+  useChangeIfTimerRunning,
   useSetActiveTask,
 } from '@/lib/store/useTasks';
 import { cn, secondsToAlphaTimeFormat } from '@/utils/util';
@@ -13,7 +13,7 @@ import { cn, secondsToAlphaTimeFormat } from '@/utils/util';
 const Task = (props: { task: Task }) => {
   const task = props.task;
   const activeTaskID = useActiveTaskId();
-  const changeTaskActiveState = useChangeTaskActiveState();
+  const changeTaskActiveState = useChangeIfTimerRunning();
   const setActiveTask = useSetActiveTask();
 
   const switchTask = () => {

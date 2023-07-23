@@ -27,7 +27,7 @@ const Timer = () => {
     setActiveTask(getActiveTask());
 
     const clientCalculateTime = setInterval(() => {
-      if (activeTask?.isActive) {
+      if (activeTask?.isTimerRunning) {
         taskStore?.incrementDuration(activeTask.id, 1);
       }
     }, 1000);
@@ -40,7 +40,7 @@ const Timer = () => {
       return;
     }
 
-    taskStore.changeActiveState(activeTask.id, !activeTask.isActive);
+    taskStore.changeIfTimerRunning(activeTask.id, !activeTask.isTimerRunning);
   };
 
   return (
@@ -53,7 +53,7 @@ const Timer = () => {
           className="flex h-16 w-16 items-center justify-center rounded-full border border-transparent bg-zinc-900 text-zinc-400 transition delay-300 duration-500 ease-in-out hover:border-zinc-800 hover:text-zinc-600"
           onClick={() => toggleTaskTimer()}
         >
-          {activeTask?.isActive ? (
+          {activeTask?.isTimerRunning ? (
             <Icon icon="ph:pause-fill" className="h-6 w-6" />
           ) : (
             <Icon icon="ph:play-fill" className="h-6 w-6" />

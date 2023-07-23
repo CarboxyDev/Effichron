@@ -10,8 +10,8 @@ export interface TaskListStore {
   deleteTask: (id: string) => void;
   updateTask: (task: Task) => void;
   incrementDuration: (id: string, amount: number) => void;
-  changeActiveState: (id: string, isActive: boolean) => void;
-  refreshTasks: () => void; // Sets duration and isActive to default (0 and false)
+  changeIfTimerRunning: (id: string, isActive: boolean) => void;
+  refreshTasks: () => void; // Sets duration and isTimerRunning of Task to default (0 and false)
   resetActiveTask: () => void;
   clear: () => void;
 }
@@ -24,14 +24,14 @@ export const useTasks = create<TaskListStore>()(
           id: '1',
           name: 'Work',
           color: '#06b6d4',
-          isActive: false,
+          isTimerRunning: false,
           duration: 0,
         },
         {
           id: '2',
           name: 'Learn',
           color: '#a78bfa',
-          isActive: false,
+          isTimerRunning: false,
           duration: 0,
         },
       ],
@@ -53,14 +53,16 @@ export const useTasks = create<TaskListStore>()(
             t.id === id ? { ...t, duration: t.duration + amount } : t
           ),
         })),
-      changeActiveState: (id: string, isActive: boolean) =>
+      changeIfTimerRunning: (id: string, isTimerRunning: boolean) =>
         set((state) => ({
-          tasks: state.tasks.map((t) => (t.id === id ? { ...t, isActive } : t)),
+          tasks: state.tasks.map((t) =>
+            t.id === id ? { ...t, isTimerRunning } : t
+          ),
         })),
       refreshTasks: () =>
         set((state) => ({
           tasks: state.tasks.map((t) =>
-            true ? { ...t, duration: 0, isActive: false } : t
+            true ? { ...t, duration: 0, isTimerRunning: false } : t
           ),
         })),
       resetActiveTask: () => {
@@ -100,9 +102,9 @@ export const useRefreshTasks = () => {
   return refreshTasks;
 };
 
-export const useChangeTaskActiveState = () => {
-  const changeActiveState = useTasks((state) => state.changeActiveState);
-  return changeActiveState;
+export const useChangeIfTimerRunning = () => {
+  const changeFn = useTasks((state) => state.changeIfTimerRunning);
+  return changeFn;
 };
 
 export const useSetActiveTask = () => {

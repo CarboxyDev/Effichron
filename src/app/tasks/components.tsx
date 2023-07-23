@@ -124,7 +124,7 @@ const CreateTaskDialog = (props: {
       id: uuidv4(),
       name: name,
       color: color,
-      isActive: false,
+      isTimerRunning: false,
       duration: 0,
     };
 
@@ -298,7 +298,7 @@ const EditTaskDialog = (props: EditTaskDialogProps) => {
       id: task.id,
       name: taskName,
       color: color,
-      isActive: false,
+      isTimerRunning: false,
       duration: task.duration, // For now, not resetting the task timer's duration. Maybe ask the user in the future if they want to reset it when editing?
     };
 
