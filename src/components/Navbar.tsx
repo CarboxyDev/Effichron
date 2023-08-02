@@ -47,12 +47,24 @@ const ProfileDropdownMenu = (): JSX.Element => {
   );
 };
 
-const Navbar = () => {
+interface NavbarProps {
+  variant?: 'with-branding';
+}
+
+const Navbar = (props: NavbarProps) => {
+  const variant = props.variant;
   const { data: session, status } = useSession();
 
   return (
     <>
-      <div className="flex w-full select-none flex-row px-4 py-4">
+      <div className="flex w-full select-none flex-row items-center px-4 py-4">
+        {variant === 'with-branding' && (
+          <div>
+            <h2 className="text-lg font-semibold text-zinc-200">
+              Productivity Tracker
+            </h2>
+          </div>
+        )}
         <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 hover:cursor-pointer">
           {status === 'unauthenticated' && (
             <Link href="/api/auth/signin">

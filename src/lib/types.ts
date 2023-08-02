@@ -6,7 +6,7 @@ export const Task = z.object({
   color: z.string(),
   isTimerRunning: z.boolean(),
   duration: z.number(),
-  lastStartTime: z.date().nullable(),
+  lastStartTime: z.coerce.date().nullable(),
   sortPriority: z.number(),
 });
 
