@@ -158,6 +158,5 @@ export const getActiveTask = () => {
 */
 
 export const fixTaskStructure = () => {
-  useTasks.getState().clear();
   useTasks.getState().tasks = defaultTasks;
 };

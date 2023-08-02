@@ -3,10 +3,40 @@
 import { useStore } from '@/lib/store/useStore';
 import { secondsToTimeFormat } from '@/utils/util';
 import { useEffect, useState } from 'react';
-import TimeDisplay from './TimeDisplay';
+import { cn } from '@/utils/util';
+import { IBM_Plex_Mono } from 'next/font/google';
 import { useTasks } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
 import { Icon } from '@iconify/react';
+
+const timerFont = IBM_Plex_Mono({ weight: '400', subsets: ['latin'] });
+
+interface TimeFormat {
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+interface TimeDisplayProps {
+  time: TimeFormat;
+}
+
+const TimeDisplay = (props: TimeDisplayProps) => {
+  const { hours, minutes, seconds } = props.time;
+  return (
+    <>
+      <div>
+        <div className={cn(timerFont.className, 'text-7xl text-zinc-300')}>
+          <span className={cn(hours && '')}>
+            {hours.toString().padStart(2, '0')}:
+          </span>
+          {minutes.toString().padStart(2, '0')}:
+          {seconds.toString().padStart(2, '0')}
+        </div>
+      </div>
+    </>
+  );
+};
 
 const Timer = () => {
   const taskStore = useStore(useTasks, (state) => state);

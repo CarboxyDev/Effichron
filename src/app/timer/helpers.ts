@@ -19,17 +19,16 @@ export const validateTaskStructure = async () => {
     if (error instanceof ZodError) {
       /*
         This is not ideal and will probably be used very rarely as the task structure would not change often.
-        It is more meant to be used as a legacy fix for users who used the app during development.
+        It is more meant to be used as a legacy fix for users who used the app during stages of heavy development.
         Anyways, this is potentially destructive as it resets all the user's tasks without their permission.
       */
-
       console.log(
         '[!] Found mismatch in local task structure and latest task structure.'
       );
       notify('Your tasks are not up to date', 'failure');
       await sleep(3000);
       fixTaskStructure();
-      notify('Resetting to default tasks.', 'warning');
+      notify('Resetting to default tasks', 'warning');
     }
   }
 };

@@ -3,10 +3,10 @@
 import ActionButton from '@/components/ActionButton';
 import Navbar from '@/components/Navbar';
 import TaskList from '@/components/TaskList';
-import Timer from '@/components/Timer';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { validateTaskStructure } from './timer/helpers';
+import Timer from '@/app/timer/components';
 
 export default function Home() {
   useEffect(() => {
