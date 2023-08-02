@@ -6,12 +6,13 @@ import TaskList from '@/components/TaskList';
 import Timer from '@/components/Timer';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { validateTaskStructure } from './timer/helpers';
+import { validateTaskStructure } from './helpers';
 
-export default function Home() {
+export default function TimerPage() {
   useEffect(() => {
     validateTaskStructure();
   }, []);
+
   return (
     <main className="flex flex-col">
       <Toaster position="top-left" />

@@ -16,25 +16,31 @@ export interface TaskListStore {
   clear: () => void;
 }
 
+const defaultTasks: Task[] = [
+  {
+    id: '1',
+    name: 'Work',
+    color: '#06b6d4',
+    isTimerRunning: false,
+    duration: 0,
+    lastStartTime: null,
+    sortPriority: 0,
+  },
+  {
+    id: '2',
+    name: 'Learn',
+    color: '#a78bfa',
+    isTimerRunning: false,
+    duration: 0,
+    lastStartTime: null,
+    sortPriority: 1,
+  },
+];
+
 export const useTasks = create<TaskListStore>()(
   persist(
     (set) => ({
-      tasks: [
-        {
-          id: '1',
-          name: 'Work',
-          color: '#06b6d4',
-          isTimerRunning: false,
-          duration: 0,
-        },
-        {
-          id: '2',
-          name: 'Learn',
-          color: '#a78bfa',
-          isTimerRunning: false,
-          duration: 0,
-        },
-      ],
+      tasks: defaultTasks,
       activeTask: '1',
       setActiveTask: (id: string) => set({ activeTask: id }),
       addTask: (task: Task) =>
@@ -137,4 +143,21 @@ export const useDeleteTask = () => {
 export const getTasks = () => {
   const _tasks = useTasks.getState().tasks;
   return _tasks;
+};
+
+export const getActiveTask = () => {
+  const activeTask = useTasks
+    .getState()
+    .tasks.find((task) => task.id === useTasks.getState().activeTask);
+  return activeTask;
+};
+
+/*
+  Potentially destructive action, use with caution.
+  This clears all the tasks in the user's localstorage and replaces them with the default tasks
+*/
+
+export const fixTaskStructure = () => {
+  useTasks.getState().clear();
+  useTasks.getState().tasks = defaultTasks;
 };

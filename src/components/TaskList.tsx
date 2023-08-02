@@ -1,6 +1,6 @@
 'use client';
 
-import { Task } from '@/lib/types';
+import type { Task } from '@/lib/types';
 import { useStore } from '@/lib/store/useStore';
 import {
   getTasks,
@@ -10,7 +10,7 @@ import {
 } from '@/lib/store/useTasks';
 import { cn, secondsToAlphaTimeFormat } from '@/utils/util';
 
-const Task = (props: { task: Task }) => {
+const TaskCard = (props: { task: Task }) => {
   const task = props.task;
   const activeTaskID = useActiveTaskId();
   const changeTaskActiveState = useChangeIfTimerRunning();
@@ -74,12 +74,12 @@ const TaskList = (): JSX.Element => {
       <div className="flex flex-col items-center gap-y-3">
         {tasks?.map((task) => {
           if (task.id == activeTaskID) {
-            return <Task key={task.id} task={task} />;
+            return <TaskCard key={task.id} task={task} />;
           }
         })}
         {tasks?.map((task) => {
           if (task.id != activeTaskID) {
-            return <Task key={task.id} task={task} />;
+            return <TaskCard key={task.id} task={task} />;
           }
         })}
       </div>
