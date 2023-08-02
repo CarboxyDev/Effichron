@@ -28,7 +28,7 @@ export const validateTaskStructure = async () => {
       notify('Your tasks are not up to date', 'failure');
       await sleep(3000);
       fixTaskStructure();
-      notify('Resetting to default tasks', 'warning');
+      notify('Resetting to default tasks. Please refresh.', 'warning');
     }
   }
 };

@@ -15,7 +15,7 @@ const ProfileDropdownMenu = (): JSX.Element => {
         collisionPadding={16}
         className="flex min-w-[120px] flex-col rounded-lg border border-zinc-800 bg-zinc-900 text-sm shadow-2xl"
       >
-        <Link href={'/'}>
+        <Link href={'/timer'}>
           <DropdownMenu.Item className="flex flex-row items-center gap-x-2 rounded-t-lg pb-3 pl-3 pt-4 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none">
             <Icon
               icon="ic:round-timer"
