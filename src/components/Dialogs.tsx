@@ -1,5 +1,6 @@
 import {
   getTasks,
+  usePauseActiveTask,
   useRefreshTasks,
   useResetActiveTask,
 } from '@/lib/store/useTasks';
@@ -114,10 +115,12 @@ export const ResetActiveTaskConfirmationDialog = (props: {
   setActionMenuOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const resetActiveTask = useResetActiveTask();
+  const pauseActiveTask = usePauseActiveTask();
 
   const resetActiveTaskTimer = (): void => {
     notify('Reset the active task timer', 'warning');
     resetActiveTask();
+    pauseActiveTask();
   };
 
   return (

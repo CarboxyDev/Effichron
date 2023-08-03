@@ -13,6 +13,7 @@ export interface TaskListStore {
   changeIfTimerRunning: (id: string, isActive: boolean) => void;
   refreshTasks: () => void; // Sets duration and isTimerRunning of Task to default (0 and false)
   resetActiveTask: () => void;
+  pauseActiveTask: () => void;
   clear: () => void;
 }
 
@@ -79,6 +80,13 @@ export const useTasks = create<TaskListStore>()(
         }));
       },
       clear: () => set({ tasks: [] }),
+      pauseActiveTask: () => {
+        set((state) => ({
+          tasks: state.tasks.map((t) =>
+            t.id === state.activeTask ? { ...t, isTimerRunning: false } : t
+          ),
+        }));
+      },
     }),
     { name: 'tasks' }
   )
@@ -121,6 +129,11 @@ export const useSetActiveTask = () => {
 export const useResetActiveTask = () => {
   const resetActiveTask = useTasks((state) => state.resetActiveTask);
   return resetActiveTask;
+};
+
+export const usePauseActiveTask = () => {
+  const pauseActiveTask = useTasks((state) => state.pauseActiveTask);
+  return pauseActiveTask;
 };
 
 export const useAddTask = () => {
