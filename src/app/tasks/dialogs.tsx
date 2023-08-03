@@ -54,7 +54,7 @@ export const CreateTaskDialog = (props: {
         contentMethods={{ onCloseAutoFocus: () => setOpenColorPicker(false) }}
       >
         <div className="mx-auto mt-12 flex flex-col">
-          <div className="">
+          <div>
             <label className="mx-1 text-lg font-medium text-zinc-500">
               Name
             </label>
@@ -96,7 +96,7 @@ export const CreateTaskDialog = (props: {
           </button>
         </div>
         {openColorPicker && (
-          <div className="absolute bottom-32 left-108">
+          <div className="absolute bottom-48 left-28 md:bottom-32 md:left-108">
             <HexColorPicker color={color} onChange={setColor} />
           </div>
         )}
@@ -201,7 +201,7 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
             </button>
           </div>
           {openColorPicker && (
-            <div className="absolute bottom-32 left-108">
+            <div className="absolute bottom-48 left-28 md:bottom-32 md:left-108">
               <HexColorPicker color={color} onChange={setColor} />
             </div>
           )}
