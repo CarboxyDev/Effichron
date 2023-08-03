@@ -16,7 +16,13 @@ export default function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
-      <body className={cn(inter.className, 'bg-zinc-950 text-zinc-100')}>
+      <body
+        className={cn(
+          inter.className,
+          process.env.DEV == 'true' && 'debug-screens',
+          'bg-zinc-950 text-zinc-100'
+        )}
+      >
         <Providers>{children}</Providers>
         <Analytics />
       </body>

@@ -43,7 +43,10 @@
     "@iconify/react": "^4.1.1",
     "@tanstack/eslint-plugin-query": "^4.29.9",
     "@types/uuid": "^9.0.2",
+    "eslint-config-prettier": "^8.10.0",
     "prettier": "^2.8.8",
-    "prettier-plugin-tailwindcss": "^0.3.0"
+    "prettier-plugin-organize-imports": "^3.2.3",
+    "prettier-plugin-tailwindcss": "^0.4.1",
+    "tailwindcss-debug-screens": "^2.2.1"
   }
 }
