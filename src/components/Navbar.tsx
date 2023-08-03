@@ -60,7 +60,7 @@ const Navbar = (props: NavbarProps) => {
       <div className="flex w-full select-none flex-row items-center px-4 py-4">
         {variant === 'with-branding' && (
           <div>
-            <h2 className="text-lg font-semibold text-zinc-200">
+            <h2 className="text-md font-semibold text-zinc-200 md:text-lg">
               Productivity Tracker
             </h2>
           </div>
