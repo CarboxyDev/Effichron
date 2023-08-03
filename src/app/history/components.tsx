@@ -10,6 +10,11 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useState } from 'react';
 
+/*
+  CAUTION: This file contains two component versions of a component for mobile and non-mobile support. CSS only support was not feasible.
+  Whenever making changes to the SessionLogCard, do not forget to update its mobile counterpart.
+*/
+
 interface SessionSnapshot {
   name: string;
   duration: number;
@@ -70,7 +75,9 @@ export const SessionHistoryContainer = () => {
           </div>
         )}
         {todaySessions.length > 0 && (
-          <h3 className="mb-6 text-xl font-medium text-zinc-500">Today</h3>
+          <h3 className="mb-3 text-xl font-medium text-zinc-500 md:mb-6">
+            Today
+          </h3>
         )}
         {todaySessions?.map((session) => {
           return (
@@ -86,7 +93,7 @@ export const SessionHistoryContainer = () => {
         })}
 
         {thisWeekSessions.length > 0 && (
-          <h3 className="mb-6 mt-20 text-xl font-medium text-zinc-500">
+          <h3 className="mb-3 mt-12 text-xl font-medium text-zinc-500 md:mb-6 md:mt-20">
             This week
           </h3>
         )}
@@ -104,7 +111,7 @@ export const SessionHistoryContainer = () => {
         })}
 
         {oldSessions.length > 0 && (
-          <h3 className="mb-6 mt-20 text-xl font-medium text-zinc-500">
+          <h3 className="mb-3 mt-12 text-xl font-medium text-zinc-500 md:mb-6 md:mt-20">
             Older
           </h3>
         )}
