@@ -24,32 +24,32 @@ export const TaskListView = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-y-3">
-        {tasks?.map((task) => {
-          return (
-            <div
-              key={task.id}
-              className={cn(
-                'group h-28 w-160 rounded-lg border border-zinc-800 bg-zinc-900 transition-all delay-200 duration-300 ease-in-out hover:border hover:border-zinc-700'
-              )}
-            >
-              <div className="ml-7 flex h-full flex-row items-center">
-                <div className="mr-auto flex flex-row items-center gap-x-8">
-                  <div
-                    className="h-12 w-12 rounded-full group-hover:animate-pulse"
-                    style={{ backgroundColor: task.color }}
-                  ></div>
-                  <div className="text-lg text-zinc-300">{task.name}</div>
+      {tasks?.map((task) => {
+        return (
+          <div
+            key={task.id}
+            className={cn(
+              'group h-24 w-11/12 rounded-lg border border-zinc-800 bg-zinc-900 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:cursor-pointer hover:border-zinc-700 md:mx-0 md:h-28 md:w-160'
+            )}
+          >
+            <div className="ml-5 flex h-full flex-row items-center md:ml-7">
+              <div className="mr-auto flex flex-row items-center gap-x-4 md:gap-x-8">
+                <div
+                  className="h-9 w-9 rounded-full group-hover:animate-pulse md:h-12 md:w-12"
+                  style={{ backgroundColor: task.color }}
+                ></div>
+                <div className="text-base text-zinc-300 md:text-lg">
+                  {task.name}
                 </div>
-                <TaskMoreOptionsButton
-                  task={task}
-                  actions={{ deleteFn: deleteTaskFn }}
-                />
               </div>
+              <TaskMoreOptionsButton
+                task={task}
+                actions={{ deleteFn: deleteTaskFn }}
+              />
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </>
   );
 };
@@ -64,7 +64,7 @@ const TaskMoreOptionsButton = (props: TaskDropdownMenuProps) => {
         <DropdownMenu.Trigger asChild>
           <Icon
             icon="material-symbols:more-vert"
-            className="ml-auto mr-7 h-6 w-6 text-zinc-600 hover:cursor-pointer hover:text-zinc-700"
+            className="ml-auto mr-5 h-6 w-6 text-zinc-600 hover:cursor-pointer hover:text-zinc-700 md:mr-7"
           ></Icon>
         </DropdownMenu.Trigger>
         <TaskDropdownMenu task={task} actions={{ deleteFn: deleteTaskFn }} />
