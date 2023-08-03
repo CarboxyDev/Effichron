@@ -227,9 +227,6 @@ export const ActionButton = () => {
           <Dialog.Root>
             <Dialog.Trigger asChild>
               <button
-                onClick={() => {
-                  //resetActiveTaskTimer();
-                }}
                 title="Reset task"
                 className="group absolute right-14 flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-red-600 active:scale-105"
               >

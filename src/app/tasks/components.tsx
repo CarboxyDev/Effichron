@@ -23,7 +23,7 @@ export const TaskListView = () => {
           <div
             key={task.id}
             className={cn(
-              'group h-24 w-11/12 rounded-lg border border-zinc-800 bg-zinc-900 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:cursor-pointer hover:border-zinc-700 md:mx-0 md:h-28 md:w-160'
+              'group h-24 w-full rounded-lg border border-zinc-800 bg-zinc-900 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:cursor-pointer hover:border-zinc-700 md:mx-0 md:h-28 md:w-160'
             )}
           >
             <div className="ml-5 flex h-full flex-row items-center md:ml-7">
