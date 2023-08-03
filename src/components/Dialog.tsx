@@ -15,10 +15,10 @@ const DialogTemplate = (props: DialogProps) => {
   return (
     <>
       <Dialog.Portal>
-        <Dialog.Overlay className="data-[state=open]:insert-animate-here fixed inset-0 bg-zinc-900/40" />
+        <Dialog.Overlay className="fixed inset-0 bg-zinc-900/40 data-[state=open]:animate-overlayShow" />
         <Dialog.Content
           {...contentMethods}
-          className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-zinc-800 bg-zinc-950 px-6 py-8 shadow-xl"
+          className="fixed left-[50%] top-[50%] w-100 translate-x-[-50%] translate-y-[-50%] rounded-2xl border border-zinc-800 bg-zinc-950 px-6 py-8 shadow-xl data-[state=open]:animate-contentShow"
         >
           <div className="flex flex-row">
             <Dialog.Title className="mr-auto text-lg font-semibold text-zinc-300">
