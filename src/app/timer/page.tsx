@@ -1,11 +1,9 @@
 'use client';
 
-import ActionButton from '@/components/ActionButton';
 import Navbar from '@/components/Navbar';
-import TaskList from '@/components/TaskList';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import Timer from './components';
+import { ActionButton, TaskList, Timer } from './components';
 import { validateTaskStructure } from './helpers';
 
 export default function TimerPage() {
