@@ -39,8 +39,8 @@ export default function HomePage() {
           <div></div>
         </div>
       </div>
-      <div className="mx-4 mt-100 h-px w-full bg-zinc-900"></div>
-      <footer className="w-full">
+      <div className="mx-4 mt-100 h-px bg-zinc-900"></div>
+      <footer>
         <div className="mx-auto my-10 flex w-fit flex-col items-center">
           <p className="text-zinc-200">
             Productivity Tracker{' '}
