@@ -74,7 +74,14 @@ export const SessionHistoryContainer = () => {
         )}
         {todaySessions?.map((session) => {
           return (
-            <SessionLogCard key={session.id as string} session={session} />
+            <div key={session.id as string} className="">
+              <div className="hidden md:block">
+                <SessionLogCard session={session} />
+              </div>
+              <div className="block md:hidden">
+                <SessionLogCardMobile session={session} />
+              </div>
+            </div>
           );
         })}
 
@@ -85,7 +92,14 @@ export const SessionHistoryContainer = () => {
         )}
         {thisWeekSessions?.map((session) => {
           return (
-            <SessionLogCard key={session.id as string} session={session} />
+            <div key={session.id as string} className="">
+              <div className="hidden md:block">
+                <SessionLogCard session={session} />
+              </div>
+              <div className="block md:hidden">
+                <SessionLogCardMobile session={session} />
+              </div>
+            </div>
           );
         })}
 
@@ -96,7 +110,14 @@ export const SessionHistoryContainer = () => {
         )}
         {oldSessions?.map((session) => {
           return (
-            <SessionLogCard key={session.id as string} session={session} />
+            <div key={session.id as string} className="">
+              <div className="hidden md:block">
+                <SessionLogCard session={session} />
+              </div>
+              <div className="block md:hidden">
+                <SessionLogCardMobile session={session} />
+              </div>
+            </div>
           );
         })}
       </div>
@@ -141,7 +162,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
             }
           : {})}
       >
-        <div className="grid w-200 grow grid-cols-4 gap-x-15 gap-y-16 px-20 py-14">
+        <div className="grid w-140 grow grid-cols-4 gap-x-15 gap-y-16 px-20 py-14 lg:w-160 xl:w-200">
           {sessionSnapshot.map((task, idx) => {
             if (idx >= 4 && !expandLog) {
               if (!isBigLog) {
@@ -178,6 +199,82 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
             <div className="mt-4 text-xl font-medium text-zinc-500">
               {dateFormatted}
             </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export const SessionLogCardMobile = (props: { session: SessionLog }) => {
+  const { session } = props;
+
+  const [isBigLog, setIsBigLog] = useState(false);
+  const [expandLog, setExpandLog] = useState(false);
+
+  const totalDuration: number = session.sessionSnapshot.reduce(
+    totalDurationReducer,
+    0
+  );
+  const totalDurationFormatted = secondsToAlphaTimeFormat(totalDuration, true);
+
+  const date = new Date(session.createdAt);
+  const dateFormatted = dateToAlphaDayFormat(date);
+
+  const sessionSnapshot = session.sessionSnapshot;
+
+  // sort the snapshots by their duration (bigger comes first)
+  sessionSnapshot.sort((a: SessionSnapshot, b: SessionSnapshot) => {
+    return a.duration <= b.duration ? 1 : -1;
+  });
+
+  return (
+    <>
+      <div
+        className={cn(
+          'flex w-full select-none flex-row rounded-lg border border-transparent border-zinc-800 bg-zinc-900 shadow-md transition delay-200 duration-300 ease-in-out hover:border-zinc-700',
+          isBigLog && 'hover:cursor-pointer'
+        )}
+        {...(isBigLog
+          ? {
+              onClick: () => {
+                setExpandLog(!expandLog);
+              },
+            }
+          : {})}
+      >
+        <div className="grid w-11/12 grow grid-cols-2 gap-x-10 gap-y-8 px-8 py-6">
+          {sessionSnapshot.map((task, idx) => {
+            if (idx >= 2 && !expandLog) {
+              if (!isBigLog) {
+                setIsBigLog(true);
+              }
+              return <></>;
+            }
+            return (
+              <div key={task.name} className="w-fit">
+                <div className="text-base text-zinc-400">
+                  {task.name.slice(0, 8)}
+                  {task.name.length >= 9 && task.name.length <= 11 && (
+                    <>{task.name.slice(8, 11)}</>
+                  )}
+                  {task.name.length >= 9 && task.name.length > 11 && (
+                    <span className="text-zinc-600">...</span>
+                  )}
+                </div>
+                <div className="mt-2 text-sm text-zinc-600">
+                  {secondsToAlphaTimeFormat(task.duration, false)}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="flex w-40 items-center justify-center border-l border-zinc-800">
+          <div className="flex flex-col justify-center">
+            <div className="text-xl font-semibold text-zinc-400">
+              {totalDurationFormatted}
+            </div>
+            <div className="mt-2 text-base text-zinc-500">{dateFormatted}</div>
           </div>
         </div>
       </div>
