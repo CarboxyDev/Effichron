@@ -1,9 +1,5 @@
 'use client';
 
-import {
-  ResetActiveTaskConfirmationDialog,
-  SaveSessionConfirmationDialog,
-} from '@/components/Dialogs';
 import { useStore } from '@/lib/store/useStore';
 import {
   getTasks,
@@ -18,10 +14,15 @@ import {
   secondsToAlphaTimeFormat,
   secondsToTimeFormat,
 } from '@/utils/util';
+
 import { Icon } from '@iconify/react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { useEffect, useState } from 'react';
+import {
+  ResetActiveTaskConfirmationDialog,
+  SaveSessionConfirmationDialog,
+} from './dialogs';
 
 const timerFont = IBM_Plex_Mono({ weight: '400', subsets: ['latin'] });
 
