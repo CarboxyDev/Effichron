@@ -1,13 +1,12 @@
 'use client';
 
 import { useStore } from '@/lib/store/useStore';
-import { secondsToTimeFormat } from '@/utils/util';
-import { useEffect, useState } from 'react';
-import { cn } from '@/utils/util';
-import { IBM_Plex_Mono } from 'next/font/google';
 import { useTasks } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
+import { cn, secondsToTimeFormat } from '@/utils/util';
 import { Icon } from '@iconify/react';
+import { IBM_Plex_Mono } from 'next/font/google';
+import { useEffect, useState } from 'react';
 
 const timerFont = IBM_Plex_Mono({ weight: '400', subsets: ['latin'] });
 
@@ -26,7 +25,12 @@ const TimeDisplay = (props: TimeDisplayProps) => {
   return (
     <>
       <div>
-        <div className={cn(timerFont.className, 'text-7xl text-zinc-300')}>
+        <div
+          className={cn(
+            timerFont.className,
+            'text-6xl text-zinc-300 md:text-7xl'
+          )}
+        >
           <span className={cn(hours && '')}>
             {hours.toString().padStart(2, '0')}:
           </span>

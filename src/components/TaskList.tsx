@@ -1,6 +1,5 @@
 'use client';
 
-import type { Task } from '@/lib/types';
 import { useStore } from '@/lib/store/useStore';
 import {
   getTasks,
@@ -8,6 +7,7 @@ import {
   useChangeIfTimerRunning,
   useSetActiveTask,
 } from '@/lib/store/useTasks';
+import type { Task } from '@/lib/types';
 import { cn, secondsToAlphaTimeFormat } from '@/utils/util';
 
 const TaskCard = (props: { task: Task }) => {
@@ -33,21 +33,23 @@ const TaskCard = (props: { task: Task }) => {
       <div
         onClick={() => switchTask()}
         className={cn(
-          'group h-28 w-160 rounded-lg border border-zinc-800 bg-zinc-900 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:cursor-pointer hover:border-zinc-700'
+          'group h-24 w-11/12 rounded-lg border border-zinc-800 bg-zinc-900 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:cursor-pointer hover:border-zinc-700 md:mx-0 md:h-28 md:w-160'
         )}
       >
-        <div className="ml-7 flex h-full flex-row items-center">
-          <div className="mr-auto flex flex-row items-center gap-x-8">
+        <div className="ml-5 flex h-full flex-row items-center md:ml-7">
+          <div className="mr-auto flex flex-row items-center gap-x-4 md:gap-x-8">
             <div
-              className="h-12 w-12 rounded-full group-hover:animate-pulse"
+              className="h-9 w-9 rounded-full group-hover:animate-pulse md:h-12 md:w-12"
               style={{ backgroundColor: task.color }}
             ></div>
-            <div className="text-lg text-zinc-300">{task.name}</div>
+            <div className="text-base text-zinc-300 md:text-lg">
+              {task.name}
+            </div>
           </div>
           <div
             className={cn(
               activeTaskID === task.id && 'hidden',
-              'ml-auto mr-7 text-lg text-zinc-500'
+              'ml-auto mr-5 text-base text-zinc-500 md:mr-7 md:text-lg'
             )}
           >
             {secondsToAlphaTimeFormat(task.duration, true)}
@@ -55,7 +57,7 @@ const TaskCard = (props: { task: Task }) => {
           <div
             className={cn(
               activeTaskID != task.id && 'hidden',
-              'ml-auto mr-7 h-4 w-4 rounded-full bg-green-500/80 group-hover:animate-none motion-safe:animate-pulse-slow'
+              'ml-auto mr-5 h-3 w-3 rounded-full bg-green-500/80 group-hover:animate-none motion-safe:animate-pulse-slow md:mr-7 md:h-4 md:w-4'
             )}
           ></div>
         </div>

@@ -5,8 +5,8 @@ import Navbar from '@/components/Navbar';
 import TaskList from '@/components/TaskList';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { validateTaskStructure } from './helpers';
 import Timer from './components';
+import { validateTaskStructure } from './helpers';
 
 export default function TimerPage() {
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function TimerPage() {
     <main className="flex flex-col">
       <Toaster position="top-left" />
       <Navbar />
-      <div className="mt-40">
+      <div className="mt-24 md:mt-40">
         <Timer />
         <div className="mt-24"></div>
         <TaskList />
