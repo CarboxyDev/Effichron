@@ -1,8 +1,12 @@
 'use client';
 
 import Navbar from '@/components/Navbar';
+import { cn } from '@/utils/util';
+import { Poppins } from 'next/font/google';
 import Link from 'next/link';
 import { Toaster } from 'react-hot-toast';
+
+const headingFont = Poppins({ subsets: ['latin'], weight: ['600'] });
 
 export default function HomePage() {
   return (
@@ -13,11 +17,16 @@ export default function HomePage() {
       <div className="mx-20 mt-40">
         <div className="flex flex-row">
           <div className="max-w-2xl">
-            <h1 className="text-5xl font-semibold text-zinc-200">
+            <h1
+              className={cn(
+                headingFont.className,
+                'text-[46px] font-semibold leading-tight text-zinc-100'
+              )}
+            >
               The secret recipe for a more{' '}
               <span className="magic-text">productive you ✨</span>
             </h1>
-            <p className="mt-8 text-lg leading-8 text-zinc-400">
+            <p className="mt-8 text-lg leading-8 text-zinc-300">
               Conveniently track your personal tasks and the time you spend on
               them to figure out your main time wasters.
             </p>
