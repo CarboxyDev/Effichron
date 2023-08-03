@@ -1,5 +1,6 @@
 'use client';
 
+import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { cn } from '@/utils/util';
 import { Poppins } from 'next/font/google';
@@ -39,20 +40,7 @@ export default function HomePage() {
           <div></div>
         </div>
       </div>
-      <div className="mx-4 mt-100 h-px bg-zinc-900"></div>
-      <footer>
-        <div className="mx-auto my-10 flex w-fit flex-col items-center">
-          <p className="text-zinc-200">
-            Productivity Tracker{' '}
-            <span className="ml-4 rounded-[4px] bg-emerald-500 px-3 py-1 text-xs font-semibold">
-              BETA
-            </span>
-          </p>
-          <p className="mt-6 font-light text-zinc-500">
-            © 2023 CarboxyDev . All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

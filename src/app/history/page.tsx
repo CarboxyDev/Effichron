@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { Toaster } from 'react-hot-toast';
 import { SessionHistoryContainer } from './components';
@@ -17,6 +18,7 @@ export default function HistoryPage() {
         </div>
       </div>
       <div className="mt-24"></div>
+      <Footer />
     </main>
   );
 }

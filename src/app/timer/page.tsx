@@ -1,5 +1,6 @@
 'use client';
 
+import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
@@ -24,6 +25,7 @@ export default function TimerPage() {
           <ActionButton />
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

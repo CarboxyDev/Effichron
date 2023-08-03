@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { Toaster } from 'react-hot-toast';
 import { CreateTaskButton, TaskListView } from './components';
@@ -20,6 +21,7 @@ export default function TasksPage() {
       <div className="fixed bottom-4 right-4">
         <CreateTaskButton />
       </div>
+      <Footer />
     </main>
   );
 }
