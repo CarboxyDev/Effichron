@@ -6,6 +6,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { BetaBadge } from './Other';
 
 const ProfileDropdownMenu = (): JSX.Element => {
   return (
@@ -61,7 +62,7 @@ const Navbar = (props: NavbarProps) => {
         {variant === 'with-branding' && (
           <div>
             <h2 className="text-md font-semibold text-zinc-200 md:text-lg">
-              Productivity Tracker
+              Productivity Tracker <BetaBadge />
             </h2>
           </div>
         )}

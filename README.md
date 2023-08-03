@@ -4,10 +4,11 @@ An opinionated productivity tracking app meant for tracking the duration of your
 
 ## Tech stack
 
-Built using NextJS 13, Tailwind, Prisma, NextAuth and more.
+Built using Next 13, Tailwind, Prisma, NextAuth, RadixUI and more.
 
 ## Features
 
+- Mobile support
 - Sign in using oAuth (Google, Discord and Github )
 - Create tasks which you want to track
 - Track the time you spend on tasks using the timer
