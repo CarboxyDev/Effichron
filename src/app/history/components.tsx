@@ -21,6 +21,10 @@ interface SessionLog {
   sessionSnapshot: SessionSnapshot[];
 }
 
+const totalDurationReducer = (total: number, task: any) => {
+  return total + task.duration;
+};
+
 export const SessionHistoryContainer = () => {
   const { data, status, error } = useQuery({
     queryKey: ['session-history'],
@@ -28,15 +32,18 @@ export const SessionHistoryContainer = () => {
       const { data } = await axios.get('/api/session');
       return data as SessionLog[];
     },
-    staleTime: 5 * (60 * 1000), // 5 minutes
   });
 
   if (status === 'loading') {
-    return <>Loading...</>;
+    return <span className="text-zinc-400">Loading...</span>;
   }
 
   if (status === 'error' && error instanceof Error) {
-    return <>Unable to fetch history: {error.message}</>;
+    return (
+      <span className="text-zinc-400">
+        Unable to fetch history: {error.message}
+      </span>
+    );
   }
 
   const todaySessions: SessionLog[] = [];
@@ -95,10 +102,6 @@ export const SessionHistoryContainer = () => {
       </div>
     </>
   );
-};
-
-const totalDurationReducer = (total: number, task: any) => {
-  return total + task.duration;
 };
 
 export const SessionLogCard = (props: { session: SessionLog }) => {
