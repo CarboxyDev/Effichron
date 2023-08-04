@@ -14,7 +14,6 @@ export const Task = z.object({
   isTimerRunning: z.boolean(),
   duration: z.number(),
   timerTimestamps: z.array(timerTimestamp),
-  lastStartTime: z.coerce.date().nullable(),
   sortPriority: z.number(),
 });
 

@@ -1,4 +1,9 @@
-import { getActiveTask, getDefaultTasks, getTasks } from '@/lib/store/useTasks';
+import {
+  addTimestampToTask,
+  getActiveTask,
+  getDefaultTasks,
+  getTasks,
+} from '@/lib/store/useTasks';
 import { Task, TimerTimestamp } from '@/lib/types';
 import { notify } from '@/utils/notify';
 import { dateDifferenceInSeconds, sleep } from '@/utils/util';
@@ -52,6 +57,7 @@ export const pauseAllTasks = () => {
   const tasks = getTasks();
   tasks.forEach((task) => {
     if (task.isTimerRunning) {
+      addTimestampToTask(task.id, 'pause', new Date());
       task.isTimerRunning = false;
     }
   });
@@ -74,6 +80,13 @@ export const calculateTimerDuration = (
           const miniDuration = dateDifferenceInSeconds(
             timestamp.time,
             timestamps[index + 1].time as Date
+          );
+          totalDuration += miniDuration;
+        }
+        if (timestamps[index + 1].type === 'play') {
+          const miniDuration = dateDifferenceInSeconds(
+            timestamp.time,
+            new Date()
           );
           totalDuration += miniDuration;
         }

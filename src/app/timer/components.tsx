@@ -99,10 +99,12 @@ export const Timer = () => {
       return;
     }
 
+    const currentTime = new Date();
+    console.log(currentTime);
     if (activeTask.isTimerRunning) {
-      addTimestampToActiveTask('pause', new Date());
+      addTimestampToActiveTask('pause', currentTime);
     } else if (!activeTask.isTimerRunning) {
-      addTimestampToActiveTask('play', new Date());
+      addTimestampToActiveTask('play', currentTime);
     }
     // Finally change the timer to its complementary state
     taskStore.changeIfTimerRunning(activeTask.id, !activeTask.isTimerRunning);

@@ -25,7 +25,6 @@ const defaultTasks: Task[] = [
     color: '#06b6d4',
     isTimerRunning: false,
     duration: 0,
-    lastStartTime: null,
     sortPriority: 0,
     timerTimestamps: [],
   },
@@ -35,7 +34,6 @@ const defaultTasks: Task[] = [
     color: '#a78bfa',
     isTimerRunning: false,
     duration: 0,
-    lastStartTime: null,
     sortPriority: 1,
     timerTimestamps: [],
   },
@@ -98,7 +96,9 @@ export const useTasks = create<TaskListStore>()(
       resetActiveTask: () => {
         set((state) => ({
           tasks: state.tasks.map((t) =>
-            t.id === state.activeTask ? { ...t, duration: 0 } : t
+            t.id === state.activeTask
+              ? { ...t, duration: 0, timerTimestamps: [] }
+              : t
           ),
         }));
       },
@@ -200,4 +200,16 @@ export const getActiveTask = () => {
 
 export const getDefaultTasks = () => {
   return defaultTasks;
+};
+
+export const addTimestampToTask = (
+  id: string,
+  type: TimerTimestampTypes,
+  timestamp: Date
+) => {
+  useTasks.getState().tasks.forEach((task) => {
+    if (task.id === id) {
+      task.timerTimestamps.push({ type, time: timestamp });
+    }
+  });
 };
