@@ -76,16 +76,11 @@ export const calculateTimerDuration = (
         if (timestamps[index + 1].time === null)
           throw new Error('Timestamp + 1 time is null');
         if (timestamps[index + 1].type === 'pause') {
-          // ! This has the issue
           const miniDuration = dateDifferenceInSeconds(
             timestamp.time,
             timestamps[index + 1].time
           );
-          if (isNaN(miniDuration)) {
-            console.log(timestamp.time);
-            console.log(timestamps[index + 1].time);
-          }
-          console.log('Mini duration 1: ', miniDuration);
+
           totalDuration += miniDuration;
         }
         if (timestamps[index + 1].type === 'play') {
@@ -93,7 +88,6 @@ export const calculateTimerDuration = (
             timestamp.time,
             new Date()
           );
-          console.log('Mini duration 2: ', miniDuration);
           totalDuration += miniDuration;
         }
       }
@@ -102,12 +96,10 @@ export const calculateTimerDuration = (
           timestamp.time,
           new Date()
         );
-        console.log('Mini duration 3: ', miniDuration);
         totalDuration += miniDuration;
       }
     }
   });
 
-  console.log('Total duration: ', totalDuration);
-  return Math.ceil(totalDuration);
+  return Math.floor(totalDuration);
 };
