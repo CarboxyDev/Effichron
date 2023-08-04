@@ -5,12 +5,12 @@ import Navbar from '@/components/Navbar';
 import { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { ActionButton, TaskList, Timer } from './components';
-import { pauseAllTasks, validateTaskStructure } from './helpers';
+import { validateTaskStructure } from './helpers';
 
 export default function TimerPage() {
   useEffect(() => {
     validateTaskStructure();
-    pauseAllTasks();
+    //pauseAllTasks();
   }, []);
 
   return (
