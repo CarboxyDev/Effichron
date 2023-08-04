@@ -36,6 +36,7 @@ export const CreateTaskDialog = (props: {
       color: color,
       isTimerRunning: false,
       duration: 0,
+      timerTimestamps: [],
       lastStartTime: null,
       sortPriority: 1,
     };
@@ -140,6 +141,7 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
       isTimerRunning: false,
       duration: task.duration, // For now, not resetting the task timer's duration. Maybe ask the user in the future if they want to reset it when editing?
       lastStartTime: null,
+      timerTimestamps: [],
       sortPriority: task.sortPriority,
     };
 
