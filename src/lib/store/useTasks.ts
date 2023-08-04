@@ -9,7 +9,6 @@ export interface TaskListStore {
   addTask: (task: Task) => void;
   deleteTask: (id: string) => void;
   updateTask: (task: Task) => void;
-  incrementDuration: (id: string, amount: number) => void;
   setDuration: (id: string, duration: number) => void;
   changeIfTimerRunning: (id: string, isActive: boolean) => void;
   addTimestamp: (type: TimerTimestampTypes, timestamp: Date) => void; // add a timestamp record (start/pause) to active task
@@ -58,12 +57,6 @@ export const useTasks = create<TaskListStore>()(
         set((state) => ({
           tasks: state.tasks.map((t) => (t.id === task.id ? task : t)),
         })),
-      incrementDuration: (id: string, amount: number) =>
-        set((state) => ({
-          tasks: state.tasks.map((t) =>
-            t.id === id ? { ...t, duration: t.duration + amount } : t
-          ),
-        })),
       setDuration: (id: string, duration: number) =>
         set((state) => ({
           tasks: state.tasks.map((t) => (t.id === id ? { ...t, duration } : t)),
@@ -92,7 +85,14 @@ export const useTasks = create<TaskListStore>()(
       refreshTasks: () =>
         set((state) => ({
           tasks: state.tasks.map((t) =>
-            true ? { ...t, duration: 0, isTimerRunning: false } : t
+            true
+              ? {
+                  ...t,
+                  duration: 0,
+                  isTimerRunning: false,
+                  timerTimestamps: [],
+                }
+              : t
           ),
         })),
       resetActiveTask: () => {

@@ -1,8 +1,8 @@
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../auth/[...nextauth]/authOptions';
-import { z } from 'zod';
-import { Task } from '@/lib/types';
 import { prisma } from '@/lib/prisma';
+import { Task } from '@/lib/types';
+import { getServerSession } from 'next-auth/next';
+import { z } from 'zod';
+import { authOptions } from '../auth/[...nextauth]/authOptions';
 
 const SessionSnapshotSchema = z.object({
   session: z.any(),
@@ -64,7 +64,7 @@ export async function POST(req: Request, res: Response) {
     const diff = now.getTime() - latestLog.createdAt.getTime();
     const diffInMins = Math.floor(diff / 1000 / 60);
 
-    if (diffInMins < 5) {
+    if (diffInMins < 5 && process.env.DEV !== 'true') {
       console.log('[!] User tried to save session too soon');
       return new Response(
         JSON.stringify('You must wait 5 minutes before saving another session'),

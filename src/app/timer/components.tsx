@@ -86,6 +86,7 @@ export const Timer = () => {
         const currentDuration = calculateTimerDuration(
           activeTask.timerTimestamps
         );
+        console.log(activeTask.timerTimestamps);
         setDuration(activeTask.id, currentDuration);
       }
     }, 1000);
