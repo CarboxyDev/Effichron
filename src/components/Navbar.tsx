@@ -60,11 +60,11 @@ const Navbar = (props: NavbarProps) => {
     <>
       <div className="flex w-full select-none flex-row items-center px-4 py-4">
         {variant === 'with-branding' && (
-          <div>
+          <Link href="/">
             <h2 className="text-md font-semibold text-zinc-200 md:text-lg">
               Productivity Tracker <BetaBadge />
             </h2>
-          </div>
+          </Link>
         )}
         <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 hover:cursor-pointer">
           {status === 'unauthenticated' && (

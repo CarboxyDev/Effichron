@@ -1,4 +1,4 @@
-import { Task } from '@/lib/types';
+import { Task, TimerTimestampTypes } from '@/lib/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -10,7 +10,9 @@ export interface TaskListStore {
   deleteTask: (id: string) => void;
   updateTask: (task: Task) => void;
   incrementDuration: (id: string, amount: number) => void;
+  setDuration: (id: string, duration: number) => void;
   changeIfTimerRunning: (id: string, isActive: boolean) => void;
+  addTimestamp: (type: TimerTimestampTypes, timestamp: Date) => void; // add a timestamp record (start/pause) to active task
   refreshTasks: () => void; // Sets duration and isTimerRunning of Task to default (0 and false)
   resetActiveTask: () => void;
   pauseActiveTask: () => void;
@@ -26,6 +28,7 @@ const defaultTasks: Task[] = [
     duration: 0,
     lastStartTime: null,
     sortPriority: 0,
+    timerTimestamps: [],
   },
   {
     id: '2',
@@ -35,6 +38,7 @@ const defaultTasks: Task[] = [
     duration: 0,
     lastStartTime: null,
     sortPriority: 1,
+    timerTimestamps: [],
   },
 ];
 
@@ -60,10 +64,29 @@ export const useTasks = create<TaskListStore>()(
             t.id === id ? { ...t, duration: t.duration + amount } : t
           ),
         })),
+      setDuration: (id: string, duration: number) =>
+        set((state) => ({
+          tasks: state.tasks.map((t) => (t.id === id ? { ...t, duration } : t)),
+        })),
       changeIfTimerRunning: (id: string, isTimerRunning: boolean) =>
         set((state) => ({
           tasks: state.tasks.map((t) =>
             t.id === id ? { ...t, isTimerRunning } : t
+          ),
+        })),
+      // ! NOTE: This only adds timestamps to the active task so the active task's id is not needed
+      addTimestamp: (type: TimerTimestampTypes, timestamp: Date) =>
+        set((state) => ({
+          tasks: state.tasks.map((t) =>
+            t.id === state.activeTask
+              ? {
+                  ...t,
+                  timerTimestamps: [
+                    ...t.timerTimestamps,
+                    { type, time: timestamp },
+                  ],
+                }
+              : t
           ),
         })),
       refreshTasks: () =>
@@ -121,6 +144,11 @@ export const useChangeIfTimerRunning = () => {
   return changeFn;
 };
 
+export const useAddTimestamp = () => {
+  const addTimestamp = useTasks((state) => state.addTimestamp);
+  return addTimestamp;
+};
+
 export const useSetActiveTask = () => {
   const setActiveTask = useTasks((state) => state.setActiveTask);
   return setActiveTask;
@@ -151,6 +179,11 @@ export const useDeleteTask = () => {
   return _deleteTask;
 };
 
+export const useSetDuration = () => {
+  const _setDuration = useTasks((state) => state.setDuration);
+  return _setDuration;
+};
+
 /* Non-reactive states, do not use as hooks */
 
 export const getTasks = () => {
@@ -169,7 +202,8 @@ export const getActiveTask = () => {
   Potentially destructive action, use with caution.
   This clears all the tasks in the user's localstorage and replaces them with the default tasks
 */
-
 export const fixTaskStructure = () => {
+  useTasks.getState().clear();
   useTasks.getState().tasks = defaultTasks;
+  console.log(useTasks.getState().tasks);
 };

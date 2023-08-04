@@ -82,3 +82,8 @@ export const dateDifference = (date1: Date, date2: Date): number => {
   const diffInMs = Math.abs(+date1 - +date2); // weird typescript hack because typescript hates type coercion
   return diffInMs / (1000 * 60 * 60 * 24);
 };
+
+export const dateDifferenceInSeconds = (date1: Date, date2: Date): number => {
+  const diffInMs = Math.abs(+date1 - +date2); // weird typescript hack because typescript hates type coercion
+  return diffInMs / 1000;
+};

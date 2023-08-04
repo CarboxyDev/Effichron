@@ -4,8 +4,10 @@ import { useStore } from '@/lib/store/useStore';
 import {
   getTasks,
   useActiveTaskId,
+  useAddTimestamp,
   useChangeIfTimerRunning,
   useSetActiveTask,
+  useSetDuration,
   useTasks,
 } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
@@ -23,6 +25,7 @@ import {
   ResetActiveTaskConfirmationDialog,
   SaveSessionConfirmationDialog,
 } from './dialogs';
+import { calculateTimerDuration } from './helpers';
 
 const timerFont = IBM_Plex_Mono({ weight: '400', subsets: ['latin'] });
 
@@ -61,6 +64,8 @@ const TimeDisplay = (props: TimeDisplayProps) => {
 export const Timer = () => {
   const taskStore = useStore(useTasks, (state) => state);
   const [activeTask, setActiveTask] = useState<Task | undefined>(undefined);
+  const addTimestampToActiveTask = useAddTimestamp();
+  const setDuration = useSetDuration();
 
   useEffect(() => {
     const tasks = taskStore?.tasks;
@@ -78,18 +83,27 @@ export const Timer = () => {
 
     const clientCalculateTime = setInterval(() => {
       if (activeTask?.isTimerRunning) {
-        taskStore?.incrementDuration(activeTask.id, 1);
+        const currentDuration = calculateTimerDuration(
+          activeTask.timerTimestamps
+        );
+        setDuration(activeTask.id, currentDuration);
       }
     }, 1000);
 
     return () => clearInterval(clientCalculateTime);
-  }, [taskStore, activeTask]);
+  }, [taskStore, activeTask, setDuration]);
 
   const toggleTaskTimer = (): void => {
     if (activeTask == undefined || taskStore == undefined) {
       return;
     }
 
+    if (activeTask.isTimerRunning) {
+      addTimestampToActiveTask('pause', new Date());
+    } else if (!activeTask.isTimerRunning) {
+      addTimestampToActiveTask('play', new Date());
+    }
+    // Finally change the timer to its complementary state
     taskStore.changeIfTimerRunning(activeTask.id, !activeTask.isTimerRunning);
   };
 
@@ -119,6 +133,7 @@ const TaskCard = (props: { task: Task }) => {
   const activeTaskID = useActiveTaskId();
   const changeTaskActiveState = useChangeIfTimerRunning();
   const setActiveTask = useSetActiveTask();
+  const addTimestampToActiveTask = useAddTimestamp();
 
   const switchTask = () => {
     if (activeTaskID === undefined) {
@@ -127,6 +142,7 @@ const TaskCard = (props: { task: Task }) => {
     if (activeTaskID != task.id) {
       if (activeTaskID != undefined) {
         changeTaskActiveState(activeTaskID, false);
+        addTimestampToActiveTask('pause', new Date());
       }
       setActiveTask(task.id);
     }
