@@ -84,6 +84,13 @@ export const dateDifference = (date1: Date, date2: Date): number => {
 };
 
 export const dateDifferenceInSeconds = (date1: Date, date2: Date): number => {
-  const diffInMs = Math.abs(+date1 - +date2); // weird typescript hack because typescript hates type coercion
+  // ! WARNING: The new Date() constructors have to be used otherwise the date formats somehow get mismatched and result in a NaN value
+  const diffInMs = Math.abs(+new Date(date1) - +new Date(date2));
+  if (isNaN(diffInMs)) {
+    console.log('Fault in dateDiff');
+    console.log(date1.getTime());
+    console.log(date2.getTime());
+    console.log('----------');
+  }
   return diffInMs / 1000;
 };

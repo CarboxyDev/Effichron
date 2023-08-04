@@ -48,6 +48,7 @@ export const validateTaskStructure = async () => {
       notify('Your tasks are not up to date', 'failure');
       await sleep(3000);
       notify('Resetting to default tasks. Please refresh.', 'warning');
+      pauseAllTasks();
       fixTaskStucture();
     }
   }
@@ -64,8 +65,6 @@ export const pauseAllTasks = () => {
 };
 
 // ! This needs to handle all the corner cases
-// Assume for now that the first occurence is a play and then all the occurences are in order like pause->play->pause->play
-// This assumption breaks down in certain corner cases so handle them asap
 export const calculateTimerDuration = (
   timestamps: TimerTimestamp[]
 ): number => {
@@ -77,10 +76,16 @@ export const calculateTimerDuration = (
         if (timestamps[index + 1].time === null)
           throw new Error('Timestamp + 1 time is null');
         if (timestamps[index + 1].type === 'pause') {
+          // ! This has the issue
           const miniDuration = dateDifferenceInSeconds(
             timestamp.time,
-            timestamps[index + 1].time as Date
+            timestamps[index + 1].time
           );
+          if (isNaN(miniDuration)) {
+            console.log(timestamp.time);
+            console.log(timestamps[index + 1].time);
+          }
+          console.log('Mini duration 1: ', miniDuration);
           totalDuration += miniDuration;
         }
         if (timestamps[index + 1].type === 'play') {
@@ -88,6 +93,7 @@ export const calculateTimerDuration = (
             timestamp.time,
             new Date()
           );
+          console.log('Mini duration 2: ', miniDuration);
           totalDuration += miniDuration;
         }
       }
@@ -96,10 +102,12 @@ export const calculateTimerDuration = (
           timestamp.time,
           new Date()
         );
+        console.log('Mini duration 3: ', miniDuration);
         totalDuration += miniDuration;
       }
     }
   });
 
-  return totalDuration;
+  console.log('Total duration: ', totalDuration);
+  return Math.ceil(totalDuration);
 };

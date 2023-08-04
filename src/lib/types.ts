@@ -4,7 +4,7 @@ const timerTimestampTypes = z.enum(['play', 'pause']);
 
 export const timerTimestamp = z.object({
   type: timerTimestampTypes,
-  time: z.coerce.date().nullable(),
+  time: z.coerce.date(),
 });
 
 export const Task = z.object({
