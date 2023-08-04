@@ -1,15 +1,20 @@
-import {
-  fixTaskStructure,
-  getActiveTask,
-  getTasks,
-} from '@/lib/store/useTasks';
+import { getActiveTask, getDefaultTasks, getTasks } from '@/lib/store/useTasks';
 import { Task, TimerTimestamp } from '@/lib/types';
 import { notify } from '@/utils/notify';
 import { dateDifferenceInSeconds, sleep } from '@/utils/util';
 import { ZodError } from 'zod';
 
+/*
+  Potentially destructive action, use with caution.
+  This clears all the tasks in the user's localstorage and replaces them with the default tasks
+*/
+export const fixTaskStucture = () => {
+  const defaultTasks = getDefaultTasks();
+  localStorage.setItem('tasks', JSON.stringify(defaultTasks));
+};
+
 export const validateTaskStructure = async () => {
-  await sleep(2000);
+  await sleep(1000);
   console.log(
     '[!] Validating structure of client tasks stored in localstorage. The structure of these tasks may differ from the latest updated structure'
   );
@@ -38,7 +43,7 @@ export const validateTaskStructure = async () => {
       notify('Your tasks are not up to date', 'failure');
       await sleep(3000);
       notify('Resetting to default tasks. Please refresh.', 'warning');
-      fixTaskStructure();
+      fixTaskStucture();
     }
   }
 };

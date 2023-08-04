@@ -198,12 +198,6 @@ export const getActiveTask = () => {
   return activeTask;
 };
 
-/*
-  Potentially destructive action, use with caution.
-  This clears all the tasks in the user's localstorage and replaces them with the default tasks
-*/
-export const fixTaskStructure = () => {
-  useTasks.getState().clear();
-  useTasks.getState().tasks = defaultTasks;
-  console.log(useTasks.getState().tasks);
+export const getDefaultTasks = () => {
+  return defaultTasks;
 };
