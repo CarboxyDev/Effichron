@@ -100,7 +100,10 @@ export async function GET(req: Request, res: Response) {
   const user = session.user;
 
   if (user === null || user === undefined) {
-    return SendResponse('Unauthorized', 401);
+    return SendResponse(
+      'You have to be logged in to view your session history',
+      401
+    );
   }
 
   const prismaUser = await prisma.user.findUnique({

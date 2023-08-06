@@ -1,5 +1,6 @@
 'use client';
 
+import { getErrorMessage } from '@/utils/api';
 import {
   cn,
   dateDifference,
@@ -7,7 +8,7 @@ import {
   secondsToAlphaTimeFormat,
 } from '@/utils/util';
 import { useQuery } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useState } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 
@@ -48,14 +49,12 @@ export const SessionHistoryContainer = () => {
     );
   }
 
-  if (status === 'error' && error instanceof AxiosError) {
-    if (error.response) {
-      return (
-        <span className="text-zinc-400">
-          Unable to fetch history: {error.response.data}
-        </span>
-      );
-    }
+  if (status === 'error') {
+    return (
+      <span className="text-zinc-400">
+        Unable to fetch history: {getErrorMessage(error as Error)}
+      </span>
+    );
   }
 
   const todaySessions: SessionLog[] = [];

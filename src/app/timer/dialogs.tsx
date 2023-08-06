@@ -6,9 +6,10 @@ import {
   useResetActiveTask,
 } from '@/lib/store/useTasks';
 import { SessionSnapshot } from '@/lib/types';
+import { getErrorMessage } from '@/utils/api';
 import { notify, notifyPromise } from '@/utils/notify';
 import { useMutation } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import Link from 'next/link';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -24,11 +25,14 @@ export const SaveSessionConfirmationDialog = (props: {
           'Content-Type': 'application/json',
         },
       });
+      console.log('Save', save);
 
       notifyPromise(save, {
         loading: 'Saving session...',
         success: 'Saved your session',
-        error: 'Unable to save your session',
+        error: (await save.catch((error) => {
+          return getErrorMessage(error as Error);
+        })) as string,
       });
 
       // Close the Action buttons menu
@@ -38,14 +42,6 @@ export const SaveSessionConfirmationDialog = (props: {
     },
     onSuccess: () => {
       refreshTasks();
-    },
-    onError: (error) => {
-      if (error instanceof AxiosError) {
-        if (error.response) {
-          console.log(error.response.data);
-          notify(error.response.data, 'failure');
-        }
-      }
     },
   });
 
