@@ -1,10 +1,10 @@
+import { prisma } from '@/lib/prisma';
+import { PrismaAdapter } from '@auth/prisma-adapter';
 import { NextAuthOptions } from 'next-auth';
+import { Adapter } from 'next-auth/adapters';
 import DiscordProvider from 'next-auth/providers/discord';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import { Adapter } from 'next-auth/adapters';
-import { prisma } from '@/lib/prisma';
 
 const adapter = PrismaAdapter(prisma) as Adapter;
 
@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     async redirect({ url, baseUrl }) {
-      return baseUrl;
+      return baseUrl + '/timer';
     },
   },
   session: {
