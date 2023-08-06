@@ -25,14 +25,11 @@ export const SaveSessionConfirmationDialog = (props: {
           'Content-Type': 'application/json',
         },
       });
-      console.log('Save', save);
 
-      notifyPromise(save, {
+      const sessionToast = notifyPromise(save, {
         loading: 'Saving session...',
         success: 'Saved your session',
-        error: (await save.catch((error) => {
-          return getErrorMessage(error as Error);
-        })) as string,
+        error: (error) => getErrorMessage(error),
       });
 
       // Close the Action buttons menu

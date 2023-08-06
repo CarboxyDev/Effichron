@@ -2,8 +2,8 @@ import { toast } from 'react-hot-toast';
 
 type notifType = 'success' | 'failure' | 'warning';
 interface NotifyPromiseStatesMessage {
-  success: string;
-  error: string;
+  success: string | ((result: any) => string);
+  error: string | ((error: Error) => string);
   loading: string;
 }
 
