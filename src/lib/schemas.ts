@@ -11,6 +11,12 @@ export const TaskSchema = z.object({
   color: z.string(),
 });
 
+export const TaskStrictSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  color: z.string(),
+});
+
 // validSchema is the schema against which the body is checked
 export function isValidBody(body: any, validSchema: z.ZodObject<any>) {
   type Body = z.infer<typeof validSchema>;

@@ -19,7 +19,7 @@ export const CreateTaskDialog = (props: {
   const [taskName, setTaskName] = useState('Untitled');
   const [openColorPicker, setOpenColorPicker] = useState(false);
 
-  const taskCreateMutation = useMutation({
+  const createTaskMutation = useMutation({
     mutationFn: async (newTask: Task) => {
       const taskToCreate = {
         name: newTask.name,
@@ -75,7 +75,7 @@ export const CreateTaskDialog = (props: {
       sortPriority: 1,
     };
 
-    taskCreateMutation.mutate(newTask);
+    createTaskMutation.mutate(newTask);
   }
 
   return (
@@ -146,13 +146,56 @@ type EditTaskDialogProps = {
 export const EditTaskDialog = (props: EditTaskDialogProps) => {
   const { task, setOpen, open, trigger } = props;
 
-  const updateTaskFn = useUpdateTask();
-
   const [color, setColor] = useState(task.color);
   const [taskName, setTaskName] = useState(task.name);
   const [openColorPicker, setOpenColorPicker] = useState(false);
 
+  const updateTaskFn = useUpdateTask();
+
+  const editTaskMutation = useMutation({
+    mutationFn: async (requiredData: {
+      taskid: string;
+      name: string;
+      color: string;
+    }) => {
+      const { taskid, name, color } = requiredData;
+      const editData = {
+        id: taskid,
+        name,
+        color,
+      };
+
+      const editPromise = axios.put('/api/task', editData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const editToast = notifyPromise(editPromise, {
+        loading: 'Editing the task...',
+        success: 'Edited the task',
+        error: (error) => getErrorMessage(error),
+      });
+
+      return editPromise;
+    },
+    onSuccess: () => {
+      const newTask: Task = {
+        id: task.id,
+        name: taskName,
+        color: color,
+        isTimerRunning: false,
+        duration: task.duration, // For now, not resetting the task timer's duration. Maybe ask the user in the future if they want to reset it when editing?
+        timerTimestamps: task.timerTimestamps,
+        sortPriority: task.sortPriority,
+      };
+
+      updateTaskFn(newTask);
+    },
+  });
+
   const editTask = () => {
+    // These checks are also implemented server side
     if (taskName.length === 0) {
       setTaskName('Untitled');
     }
@@ -163,20 +206,16 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
       notify('Try to shorten the task name', 'warning');
       return;
     }
+    // Client side check only
+    if (taskName === task.name && task.color === color) {
+      notify('You are trying to edit nothing', 'warning');
+      return;
+    }
 
-    const newTask: Task = {
-      id: task.id,
-      name: taskName,
-      color: color,
-      isTimerRunning: false,
-      duration: task.duration, // For now, not resetting the task timer's duration. Maybe ask the user in the future if they want to reset it when editing?
-      timerTimestamps: [],
-      sortPriority: task.sortPriority,
-    };
-
-    updateTaskFn(newTask);
-    if (setOpen) setOpen(false);
-    notify('Edited task ' + task.name, 'success');
+    editTaskMutation.mutate({ taskid: task.id, name: taskName, color: color });
+    if (setOpen) {
+      setOpen(false);
+    }
   };
 
   return (
