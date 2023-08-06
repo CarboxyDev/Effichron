@@ -7,7 +7,7 @@ import {
   dateToAlphaDayFormat,
   secondsToAlphaTimeFormat,
 } from '@/utils/util';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRef, useState } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -34,6 +34,7 @@ const totalDurationReducer = (total: number, task: any) => {
 
 export const SessionHistoryContainer = () => {
   const fetchSessionLogsCount = useRef(5);
+  const queryClient = useQueryClient();
 
   const { data, status, error } = useQuery({
     queryKey: ['session-history'],
@@ -146,12 +147,13 @@ export const SessionHistoryContainer = () => {
         {data?.length >= fetchSessionLogsCount.current && (
           <div className="mx-auto mt-24">
             <button
-              className="flex items-center justify-center rounded-lg bg-zinc-700 px-4 py-2 text-base text-zinc-300 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-violet-600"
+              className="flex select-none items-center justify-center rounded-lg border border-zinc-500 bg-transparent px-4 py-2 text-base text-zinc-500 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-zinc-700 hover:text-zinc-200"
               onClick={() => {
                 fetchSessionLogsCount.current += 5;
+                queryClient.invalidateQueries(['session-history']);
               }}
             >
-              Load more
+              View more
             </button>
           </div>
         )}
