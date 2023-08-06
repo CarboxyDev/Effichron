@@ -249,13 +249,30 @@ type DeleteTaskDialogProps = {
 
 export const DeleteTaskDialog = (props: DeleteTaskDialogProps) => {
   const { task, setOpen, open, trigger } = props;
-
   const deleteTaskFn = useDeleteTask();
 
+  const deleteTaskMutation = useMutation({
+    mutationFn: async (taskid: string) => {
+      const deleteTaskPromise = axios.delete('/api/task?id=' + taskid);
+
+      const deleteTaskToast = notifyPromise(deleteTaskPromise, {
+        loading: 'Deleting the task...',
+        success: 'Deleted the task',
+        error: (error) => getErrorMessage(error),
+      });
+
+      return deleteTaskPromise;
+    },
+    onSuccess: (result, taskid) => {
+      deleteTaskFn(taskid);
+    },
+  });
+
   const deleteTask = () => {
-    deleteTaskFn(task.id);
-    if (setOpen) setOpen(false);
-    notify('Deleted task ' + task.name, 'warning');
+    deleteTaskMutation.mutate(task.id);
+    if (setOpen) {
+      setOpen(false);
+    }
   };
 
   return (
