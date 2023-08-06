@@ -32,7 +32,7 @@ export default function HomePage() {
               them to figure out your main time wasters.
             </p>
             <Link href="/timer">
-              <button className="mt-12 rounded-lg bg-purple-500 px-8 py-3 text-lg font-medium transition delay-200 duration-300 ease-in-out hover:scale-105 hover:cursor-pointer hover:bg-purple-500/90 active:scale-95 md:mt-20">
+              <button className="mt-12 rounded-lg bg-violet-500 px-8 py-3 text-lg font-medium transition delay-200 duration-300 ease-in-out hover:scale-105 hover:cursor-pointer hover:bg-purple-500/90 active:scale-95 md:mt-20">
                 Get started
               </button>
             </Link>
