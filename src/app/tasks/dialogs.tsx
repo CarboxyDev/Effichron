@@ -8,7 +8,6 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
-import { v4 as uuidv4 } from 'uuid';
 
 export const CreateTaskDialog = (props: {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -42,6 +41,10 @@ export const CreateTaskDialog = (props: {
       return addTaskPromise;
     },
     onSuccess: (result, task) => {
+      // ! This taskid is important and must be provided ONLY by the server.
+      const res = JSON.parse(result.data);
+      const taskid = res.taskid;
+      task.id = taskid;
       addTask(task);
       setColor('#0ea5e9');
       setTaskName('Untitled');
@@ -49,7 +52,6 @@ export const CreateTaskDialog = (props: {
   });
 
   async function createTask(name: string, color: string) {
-    console.log('Create Task');
     if (name.length === 0) {
       name = 'Untitled';
     }
@@ -64,7 +66,7 @@ export const CreateTaskDialog = (props: {
     setOpen(false); // Close the create task modal
 
     const newTask: Task = {
-      id: uuidv4(),
+      id: '',
       name: name,
       color: color,
       isTimerRunning: false,
@@ -253,7 +255,8 @@ export const DeleteTaskDialog = (props: DeleteTaskDialogProps) => {
 
   const deleteTaskMutation = useMutation({
     mutationFn: async (taskid: string) => {
-      const deleteTaskPromise = axios.delete('/api/task?id=' + taskid);
+      const url = `/api/task?id=${encodeURIComponent(taskid)}`;
+      const deleteTaskPromise = axios.delete(url.toString());
 
       const deleteTaskToast = notifyPromise(deleteTaskPromise, {
         loading: 'Deleting the task...',

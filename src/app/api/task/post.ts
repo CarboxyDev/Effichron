@@ -43,15 +43,24 @@ export async function POST_TASK(req: Request, res: Response) {
   if (color.length === 0) {
     return SendResponse('You must provide a color for the task', 403);
   }
+  try {
+    const newTask = await prisma.task.create({
+      data: {
+        userId: user.id,
+        name: name,
+        color: color,
+      },
+    });
 
-  await prisma.task.create({
-    data: {
-      userId: user.id,
-      name: name,
-      color: color,
-    },
-  });
+    console.log('[DB] Created task');
 
-  console.log('[DB] Created task');
-  return SendResponse('Created the task', 200);
+    // Necessary to send the taskid to the user as they will require that to interact with the database.
+    return SendResponse(
+      JSON.stringify({ message: 'Created the task', taskid: newTask.id }),
+      200
+    );
+  } catch (error) {
+    console.log('[DB] Unable to create task');
+    return SendResponse('Failed to create task', 500);
+  }
 }

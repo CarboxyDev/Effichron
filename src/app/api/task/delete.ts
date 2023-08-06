@@ -29,7 +29,7 @@ export async function DELETE_TASK(req: Request, res: Response) {
     console.log('[DB] Deleted task');
     return SendResponse('Deleted the task', 200);
   } catch (e) {
-    console.log('[DB] Failed to delete task. Task not found.');
+    console.log('[DB] Failed to delete task. Task not found -> ', taskid);
     return SendResponse('Task not found', 404);
   }
 }
