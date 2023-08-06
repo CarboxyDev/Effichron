@@ -20,13 +20,13 @@ interface GetUserFromSessionReturn {
 // ! This method uses the user's email to find the user in the database. It is possible (although rare) that the user may not have a linked email, handle that case if possible.
 export const getUserFromSession = async (
   session: Session | null,
-  errorMessages: GetUserErrorMessages
+  errorMessages?: GetUserErrorMessages
 ): Promise<GetUserFromSessionReturn> => {
   if (!session || !session.user) {
     return {
       user: null,
       errorResponse: SendResponse(
-        errorMessages.notLoggedIn || 'You have to be logged in to do this',
+        errorMessages?.notLoggedIn || 'You have to be logged in to do this',
         401
       ),
     };
@@ -44,7 +44,7 @@ export const getUserFromSession = async (
     return {
       user: null,
       errorResponse: SendResponse(
-        errorMessages.invalidAccount || 'You do not have a valid account',
+        errorMessages?.invalidAccount || 'You do not have a valid account',
         403
       ),
     };

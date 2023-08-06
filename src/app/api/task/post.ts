@@ -1,3 +1,4 @@
+import { getUserFromSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { TaskSchema } from '@/lib/schemas';
 import { SendResponse } from '@/utils/api';
@@ -6,18 +7,18 @@ import { authOptions } from '../auth/[...nextauth]/authOptions';
 
 export async function POST_TASK(req: Request, res: Response) {
   const session = await getServerSession(authOptions);
+  const getUser = await getUserFromSession(session, {
+    notLoggedIn: 'You have to be logged in to create tasks',
+    invalidAccount: 'You do not have a valid account',
+  });
 
-  if (!session) {
-    return SendResponse('You have to be logged in to create tasks', 401);
+  const user = getUser.user;
+  if (!user) {
+    return getUser.errorResponse;
   }
 
-  const user = session.user;
   const json = await req.json();
   const body = TaskSchema.safeParse(json);
-
-  if (user === null || user === undefined) {
-    return SendResponse('You have to be logged in to create tasks', 401);
-  }
 
   if (!body.success) {
     return SendResponse('You tried to create an invalid task.', 400);
@@ -25,24 +26,9 @@ export async function POST_TASK(req: Request, res: Response) {
 
   const { name, color } = body.data;
 
-  const prismaUser = await prisma.user.findUnique({
-    where: {
-      email: user.email as string,
-    },
-  });
-
-  if (!prismaUser) {
-    return SendResponse(
-      'You do not have a valid account for creating tasks',
-      403
-    );
-  }
-
-  const userId = prismaUser?.id;
-
   const userTaskCount = await prisma.task.count({
     where: {
-      userId: userId,
+      userId: user.id,
     },
   });
 
@@ -60,7 +46,7 @@ export async function POST_TASK(req: Request, res: Response) {
 
   await prisma.task.create({
     data: {
-      userId: userId,
+      userId: user.id,
       name: name,
       color: color,
     },

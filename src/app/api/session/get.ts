@@ -1,48 +1,27 @@
+import { getUserFromSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { SendResponse } from '@/utils/api';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/authOptions';
 
 export async function GET_SESSION(req: Request, res: Response) {
   const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return SendResponse(
-      'You have to be logged in to view your session history',
-      401
-    );
-  }
-
-  const user = session.user;
-
-  if (user === null || user === undefined) {
-    return SendResponse(
-      'You have to be logged in to view your session history',
-      401
-    );
-  }
-
-  const prismaUser = await prisma.user.findUnique({
-    where: {
-      email: user.email as string,
-    },
+  const getUser = await getUserFromSession(session, {
+    notLoggedIn: 'You have to be logged in to view your sessions',
+    invalidAccount: 'You do not have a valid account',
   });
 
-  if (!prismaUser) {
-    return SendResponse(
-      'You have to be logged in to view your session history',
-      401
-    );
+  const user = getUser.user;
+  if (!user) {
+    return getUser.errorResponse;
   }
 
-  const userId = prismaUser?.id;
   const { searchParams } = new URL(req.url);
   const fetchCount = parseInt(searchParams.get('count') || '');
 
   // TODO This might be a bit inefficient as this sends all the previously sent sessions as well which the client already has. Use a cursor to send only the missing sessions
   const sessionLogs = await prisma.sessionLog.findMany({
     where: {
-      userId: userId,
+      userId: user.id,
     },
     orderBy: {
       createdAt: 'desc',
