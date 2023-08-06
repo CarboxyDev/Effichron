@@ -120,6 +120,8 @@ export async function GET(req: Request, res: Response) {
   }
 
   const userId = prismaUser?.id;
+  const { searchParams } = new URL(req.url);
+  const fetchCount = parseInt(searchParams.get('count') || '');
 
   const sessionLogs = await prisma.sessionLog.findMany({
     where: {
@@ -128,7 +130,7 @@ export async function GET(req: Request, res: Response) {
     orderBy: {
       createdAt: 'desc',
     },
-    take: 15, // hard limit of 15 for now
+    take: fetchCount ? fetchCount : 7,
   });
 
   const sessionLogsJSON = sessionLogs.map((log) => {

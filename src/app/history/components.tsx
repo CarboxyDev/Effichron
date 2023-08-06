@@ -9,7 +9,7 @@ import {
 } from '@/utils/util';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 /*
@@ -33,11 +33,17 @@ const totalDurationReducer = (total: number, task: any) => {
 };
 
 export const SessionHistoryContainer = () => {
+  const fetchSessionLogsCount = useRef(5);
+
   const { data, status, error } = useQuery({
     queryKey: ['session-history'],
     queryFn: async () => {
-      const { data } = await axios.get('/api/session');
-      return data as SessionLog[];
+      const { data } = await axios.get(
+        `/api/session?count=` + fetchSessionLogsCount.current
+      );
+      console.log(`Fetch ${fetchSessionLogsCount.current} session logs`);
+      const sessionLogs = data as SessionLog[];
+      return sessionLogs;
     },
   });
 
@@ -87,12 +93,15 @@ export const SessionHistoryContainer = () => {
         )}
         {todaySessions?.map((session) => {
           return (
-            <div key={session.id as string} className="">
+            <div key={session.id as string}>
               <div className="hidden md:block">
-                <SessionLogCard session={session} />
+                <SessionLogCard key={session.id as string} session={session} />
               </div>
               <div className="block md:hidden">
-                <SessionLogCardMobile session={session} />
+                <SessionLogCardMobile
+                  key={session.id as string}
+                  session={session}
+                />
               </div>
             </div>
           );
@@ -133,6 +142,19 @@ export const SessionHistoryContainer = () => {
             </div>
           );
         })}
+
+        {data?.length >= fetchSessionLogsCount.current && (
+          <div className="mx-auto mt-24">
+            <button
+              className="flex items-center justify-center rounded-lg bg-zinc-700 px-4 py-2 text-base text-zinc-300 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-violet-600"
+              onClick={() => {
+                fetchSessionLogsCount.current += 5;
+              }}
+            >
+              Load more
+            </button>
+          </div>
+        )}
       </div>
     </>
   );
