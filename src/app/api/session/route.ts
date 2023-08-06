@@ -1,13 +1,9 @@
 import { prisma } from '@/lib/prisma';
+import { SessionSnapshotSchema } from '@/lib/schemas';
 import { Task } from '@/lib/types';
 import { SendResponse } from '@/utils/api';
 import { getServerSession } from 'next-auth/next';
-import { z } from 'zod';
 import { authOptions } from '../auth/[...nextauth]/authOptions';
-
-const SessionSnapshotSchema = z.object({
-  session: z.any(),
-});
 
 export async function POST(req: Request, res: Response) {
   const session = await getServerSession(authOptions);

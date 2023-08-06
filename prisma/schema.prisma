@@ -68,5 +68,4 @@ model Task {
   name      String
   color     String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }

@@ -1,8 +1,11 @@
 import DialogTemplate from '@/components/Dialog';
 import { useAddTask, useDeleteTask, useUpdateTask } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
-import { notify } from '@/utils/notify';
+import { getErrorMessage } from '@/utils/api';
+import { notify, notifyPromise } from '@/utils/notify';
 import * as Dialog from '@radix-ui/react-dialog';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { v4 as uuidv4 } from 'uuid';
@@ -17,7 +20,35 @@ export const CreateTaskDialog = (props: {
   const [taskName, setTaskName] = useState('Untitled');
   const [openColorPicker, setOpenColorPicker] = useState(false);
 
-  function createTask(name: string, color: string) {
+  const taskCreateMutation = useMutation({
+    mutationFn: async (newTask: Task) => {
+      const taskToCreate = {
+        name: newTask.name,
+        color: newTask.color,
+      };
+
+      const addTaskPromise = axios.post('/api/task', taskToCreate, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const addTaskToast = notifyPromise(addTaskPromise, {
+        loading: 'Creating task...',
+        success: 'Created the task',
+        error: (error) => getErrorMessage(error),
+      });
+
+      return addTaskPromise;
+    },
+    onSuccess: (result, task) => {
+      addTask(task);
+      setColor('#0ea5e9');
+      setTaskName('Untitled');
+    },
+  });
+
+  async function createTask(name: string, color: string) {
     console.log('Create Task');
     if (name.length === 0) {
       name = 'Untitled';
@@ -26,9 +57,11 @@ export const CreateTaskDialog = (props: {
       color = '#0ea5e9';
     }
     if (name.length > 20) {
-      notify('Try to shorten the task name', 'warning');
+      notify('Task name is too long', 'warning');
       return;
     }
+
+    setOpen(false); // Close the create task modal
 
     const newTask: Task = {
       id: uuidv4(),
@@ -40,11 +73,7 @@ export const CreateTaskDialog = (props: {
       sortPriority: 1,
     };
 
-    addTask(newTask);
-    notify('Created a new task', 'success');
-    setOpen(false);
-    setColor('#0ea5e9');
-    setTaskName('Untitled');
+    taskCreateMutation.mutate(newTask);
   }
 
   return (

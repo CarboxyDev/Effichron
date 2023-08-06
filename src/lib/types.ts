@@ -7,6 +7,8 @@ export const timerTimestamp = z.object({
   time: z.coerce.date(),
 });
 
+// ! This type is linked to the Task Schema in schemas.ts
+// ! If you edit this task, the Task Schema might also need to be updated depending upon what you want to store on the database
 export const Task = z.object({
   id: z.string(),
   name: z.string(),
