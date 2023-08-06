@@ -7,7 +7,7 @@ import {
   secondsToAlphaTimeFormat,
 } from '@/utils/util';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 
 /*
@@ -43,12 +43,14 @@ export const SessionHistoryContainer = () => {
     return <span className="text-zinc-400">Loading...</span>;
   }
 
-  if (status === 'error' && error instanceof Error) {
-    return (
-      <span className="text-zinc-400">
-        Unable to fetch history: {error.message}
-      </span>
-    );
+  if (status === 'error' && error instanceof AxiosError) {
+    if (error.response) {
+      return (
+        <span className="text-zinc-400">
+          Unable to fetch history: {error.response.data}
+        </span>
+      );
+    }
   }
 
   const todaySessions: SessionLog[] = [];

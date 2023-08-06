@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { Task } from '@/lib/types';
+import { SendResponse } from '@/utils/api';
 import { getServerSession } from 'next-auth/next';
 import { z } from 'zod';
 import { authOptions } from '../auth/[...nextauth]/authOptions';
@@ -12,19 +13,19 @@ export async function POST(req: Request, res: Response) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return new Response('Unauthorized', { status: 401 });
+    return SendResponse('You have to be logged in to save sessions', 401);
   }
 
   const user = session.user;
   const json = await req.json();
   const body = SessionSnapshotSchema.safeParse(json);
 
-  if (!body.success) {
-    return new Response('Bad Request', { status: 400 });
+  if (user === null || user === undefined) {
+    return SendResponse('You have to be logged in to save sessions', 401);
   }
 
-  if (user === null || user === undefined) {
-    return new Response('Unauthorized', { status: 401 });
+  if (!body.success) {
+    return SendResponse('You tried to save an invalid session', 400);
   }
 
   const sessionSnapshot = body.data.session;
@@ -41,7 +42,10 @@ export async function POST(req: Request, res: Response) {
   });
 
   if (!prismaUser) {
-    return new Response('Unauthorized', { status: 401 });
+    return SendResponse(
+      'You do not have a valid account for saving sessions',
+      403
+    );
   }
 
   const userId = prismaUser?.id;
@@ -64,11 +68,10 @@ export async function POST(req: Request, res: Response) {
     const diff = now.getTime() - latestLog.createdAt.getTime();
     const diffInMins = Math.floor(diff / 1000 / 60);
 
-    if (diffInMins < 5 && process.env.DEV !== 'true') {
-      console.log('[!] User tried to save session too soon');
-      return new Response(
-        JSON.stringify('You must wait 5 minutes before saving another session'),
-        { status: 429 }
+    if (diffInMins < 5) {
+      return SendResponse(
+        'You must wait 5 minutes before saving another session',
+        403
       );
     }
   }
@@ -76,25 +79,28 @@ export async function POST(req: Request, res: Response) {
   await prisma.sessionLog.create({
     data: {
       userId: userId,
-      sessionSnapshot: JSON.stringify(cleanSnapshot), // This is mandatory, the DB will only store strings
+      sessionSnapshot: JSON.stringify(cleanSnapshot), // ! The database can only store strings so this conversion is necessary
     },
   });
 
   console.log('[DB] Saved session snapshot');
-  return new Response('OK', { status: 200 });
+  return SendResponse('Successfully saved latest session', 200);
 }
 
 export async function GET(req: Request, res: Response) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return new Response('Unauthorized', { status: 401 });
+    return SendResponse(
+      'You have to be logged in to view your session history',
+      401
+    );
   }
 
   const user = session.user;
 
   if (user === null || user === undefined) {
-    return new Response('Unauthorized', { status: 401 });
+    return SendResponse('Unauthorized', 401);
   }
 
   const prismaUser = await prisma.user.findUnique({
@@ -104,7 +110,10 @@ export async function GET(req: Request, res: Response) {
   });
 
   if (!prismaUser) {
-    return new Response('Unauthorized', { status: 401 });
+    return SendResponse(
+      'You have to be logged in to view your session history',
+      401
+    );
   }
 
   const userId = prismaUser?.id;

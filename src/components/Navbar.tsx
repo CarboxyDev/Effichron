@@ -3,6 +3,7 @@
 import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -48,12 +49,18 @@ const ProfileDropdownMenu = (): JSX.Element => {
   );
 };
 
+type userSessionStatus = 'authenticated' | 'loading' | 'unauthenticated';
+
 interface NavbarProps {
   variant?: 'with-branding';
+  userSession?: {
+    session: Session | null;
+    status: userSessionStatus;
+  };
 }
 
 const Navbar = (props: NavbarProps) => {
-  const variant = props.variant;
+  const { variant } = props;
   const { data: session, status } = useSession();
 
   return (
