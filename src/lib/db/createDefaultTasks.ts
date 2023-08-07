@@ -1,6 +1,6 @@
-/* This method is used to provide new users with two default tasks.
- * For non-new users, this method refuses to create new default tasks.
- * Referenced in @/app/api/task/get.ts
+/*
+ * This method is used to provide new users with two default tasks. Also works for users which have deleted all their tasks
+ * For users with at least one task in database, this method refuses to create new default tasks and instead sends them their existing tasks
  */
 
 import { SendResponse } from '@/utils/api';

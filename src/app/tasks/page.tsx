@@ -1,7 +1,7 @@
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { Toaster } from 'react-hot-toast';
-import { CreateTaskButton, TaskListView } from './components';
+import { TaskListView } from './components';
 
 export default function TasksPage() {
   return (
@@ -18,9 +18,6 @@ export default function TasksPage() {
         </div>
       </div>
       <div className="mt-24"></div>
-      <div className="fixed bottom-4 right-4">
-        <CreateTaskButton />
-      </div>
       <Footer />
     </main>
   );

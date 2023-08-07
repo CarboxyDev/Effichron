@@ -23,7 +23,7 @@ export const TaskListView = () => {
           <div
             key={task.id}
             className={cn(
-              'group h-24 w-full rounded-lg border border-zinc-800 bg-zinc-900 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:cursor-pointer hover:border-zinc-700 md:mx-0 md:h-28 md:w-160'
+              'group h-24 w-full rounded-lg border border-zinc-800 bg-zinc-900 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:border-zinc-700 md:mx-0 md:h-28 md:w-160'
             )}
           >
             <div className="ml-5 flex h-full flex-row items-center md:ml-7">
@@ -44,6 +44,7 @@ export const TaskListView = () => {
           </div>
         );
       })}
+      <CreateTaskButton />
     </>
   );
 };
@@ -74,12 +75,14 @@ export const CreateTaskButton = () => {
     <>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Trigger asChild>
-          <button
+          <div
             title="Create task"
-            className="group flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-500 text-zinc-200 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-emerald-600 active:scale-105"
+            className={cn(
+              'group flex h-24 w-full items-center justify-center rounded-lg border border-emerald-500 bg-emerald-500 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:scale-105 hover:cursor-pointer hover:bg-emerald-600 md:mx-0 md:h-28 md:w-160'
+            )}
           >
-            <Icon icon="ph:plus-bold" className="h-7 w-7 text-zinc-200" />
-          </button>
+            <span className="text-lg font-semibold">CREATE TASK</span>
+          </div>
         </Dialog.Trigger>
         <CreateTaskDialog setOpen={setOpen} />
       </Dialog.Root>
