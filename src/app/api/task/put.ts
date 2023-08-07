@@ -7,7 +7,9 @@ import { authOptions } from '../auth/[...nextauth]/authOptions';
 
 export async function PUT_TASK(req: Request, res: Response) {
   const session = await getServerSession(authOptions);
-  const getUser = await getUserFromSession(session);
+  const getUser = await getUserFromSession(session, {
+    notLoggedIn: 'You have to be logged in to edit tasks',
+  });
 
   const user = getUser.user;
   if (!user) {

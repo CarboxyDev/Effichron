@@ -4,6 +4,10 @@ export const getErrorMessage = (error: Error): string => {
   if (error instanceof AxiosError && error.response) {
     return error.response.data;
   }
+  if (error.message) {
+    return error.message;
+  }
+
   return "An error occurred. That's about all we know.";
 };
 
