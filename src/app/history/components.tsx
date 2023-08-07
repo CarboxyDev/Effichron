@@ -1,6 +1,5 @@
 'use client';
 
-import { LoadingSpinner } from '@/components/Loading';
 import { getErrorMessage } from '@/utils/api';
 import {
   cn,
@@ -11,6 +10,7 @@ import {
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRef, useState } from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 /*
   CAUTION: This file contains two component versions of a component for mobile and non-mobile support. CSS only support was not feasible.
@@ -51,7 +51,7 @@ export const SessionHistoryContainer = () => {
   if (status === 'loading') {
     return (
       <div>
-        <LoadingSpinner />
+        <ClipLoader color="#8b5cf6" size={48} />
       </div>
     );
   }

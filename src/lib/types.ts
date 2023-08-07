@@ -19,14 +19,6 @@ export const Task = z.object({
   sortPriority: z.number(),
 });
 
-export interface TaskInfo {
-  id: string;
-  color: string;
-  userId: string;
-  name: string;
-  createdAt: Date;
-}
-
 export type Task = z.infer<typeof Task>;
 export type TimerTimestamp = z.infer<typeof timerTimestamp>;
 export type TimerTimestampTypes = z.infer<typeof timerTimestampTypes>;
