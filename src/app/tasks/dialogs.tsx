@@ -1,4 +1,5 @@
 import DialogTemplate from '@/components/Dialog';
+import { latestTaskVersion } from '@/lib/config';
 import { useAddTask, useDeleteTask, useUpdateTask } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
 import { getErrorMessage } from '@/utils/api';
@@ -73,6 +74,7 @@ export const CreateTaskDialog = (props: {
       duration: 0,
       timerTimestamps: [],
       sortPriority: 1,
+      version: latestTaskVersion,
     };
 
     createTaskMutation.mutate(newTask);
@@ -188,6 +190,7 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
         duration: task.duration, // For now, not resetting the task timer's duration. Maybe ask the user in the future if they want to reset it when editing?
         timerTimestamps: task.timerTimestamps,
         sortPriority: task.sortPriority,
+        version: latestTaskVersion,
       };
 
       updateTaskFn(newTask);

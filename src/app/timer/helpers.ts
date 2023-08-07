@@ -1,3 +1,4 @@
+import { latestTaskVersion } from '@/lib/config';
 import {
   addTimestampToTask,
   clearTasks,
@@ -23,16 +24,25 @@ export const validateTaskStructure = async () => {
     '[!] Validating structure of client tasks stored in localstorage. The structure of these tasks may differ from the latest updated structure'
   );
   let activeTask = getActiveTask();
+  let tasks = getTasks();
   if (activeTask == undefined) {
-    activeTask = getTasks()[0];
-    if (activeTask == undefined) {
+    const allTasks = getTasks()[0];
+    if (allTasks == undefined) {
       console.log('[!] No tasks found in localstorage');
       return;
     }
   }
 
   try {
-    Task.parse(activeTask);
+    tasks.forEach((task) => {
+      Task.parse(activeTask);
+      if (task.version !== latestTaskVersion) {
+        throw new Error(
+          `Version mismatch. Client is ${task.version}, latest is ${latestTaskVersion}`
+        );
+      }
+    });
+
     console.log(
       '[!] Structure of local tasks is up-to-date with latest structure.'
     );
@@ -47,10 +57,18 @@ export const validateTaskStructure = async () => {
       console.log(
         '[!] Found mismatch in local task structure and latest task structure.'
       );
-      console.log('Your task structure: ', activeTask);
       notify('Your tasks are not up to date', 'failure');
       await sleep(3000);
-      notify('Resetting to default tasks. Please refresh.', 'warning');
+      notify('Fetching your tasks from the server. Please refresh', 'warning');
+      fixTaskStucture();
+    } else {
+      console.log(error);
+      console.log(
+        '[!] Found mismatch in local task version and latest task version.'
+      );
+      notify('Your tasks are not up to date', 'failure');
+      await sleep(3000);
+      notify('Fetching your tasks from the server. Please refresh', 'warning');
       fixTaskStucture();
     }
   }
@@ -87,6 +105,7 @@ export const convertServerTasksToClientTasks = (
       duration: 0,
       timerTimestamps: [],
       sortPriority: 0,
+      version: latestTaskVersion,
     });
   });
   return tasks;

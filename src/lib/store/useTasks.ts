@@ -18,12 +18,10 @@ export interface TaskListStore {
   clear: () => void;
 }
 
-const defaultTasks: Task[] = [];
-
 export const useTasks = create<TaskListStore>()(
   persist(
     (set) => ({
-      tasks: defaultTasks,
+      tasks: [],
       activeTask: '1',
       setActiveTask: (id: string) => set({ activeTask: id }),
       addTask: (task: Task) =>
@@ -165,7 +163,7 @@ export const useSetDuration = () => {
   return _setDuration;
 };
 
-/* Non-reactive states, do not use as hooks */
+// ! Non-reactive states, do not use as hooks
 
 export const getTasks = () => {
   const _tasks = useTasks.getState().tasks;
@@ -177,10 +175,6 @@ export const getActiveTask = () => {
     .getState()
     .tasks.find((task) => task.id === useTasks.getState().activeTask);
   return activeTask;
-};
-
-export const getDefaultTasks = () => {
-  return defaultTasks;
 };
 
 export const clearTasks = () => {

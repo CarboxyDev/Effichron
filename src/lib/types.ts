@@ -17,6 +17,7 @@ export const Task = z.object({
   duration: z.number(),
   timerTimestamps: z.array(timerTimestamp),
   sortPriority: z.number(),
+  version: z.number(), // ! This is being used to force the client user to have the latest version of the task and also have it in sync with server. Mostly used as a fix for legacy users
 });
 
 // ! This type is linked to the TaskStrict Schema in schemas.ts
