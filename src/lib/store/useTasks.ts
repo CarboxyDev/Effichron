@@ -183,6 +183,10 @@ export const getDefaultTasks = () => {
   return defaultTasks;
 };
 
+export const clearTasks = () => {
+  useTasks.setState({ tasks: [] });
+};
+
 export const addTimestampToTask = (
   id: string,
   type: TimerTimestampTypes,

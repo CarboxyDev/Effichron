@@ -1,7 +1,7 @@
 import {
   addTimestampToTask,
+  clearTasks,
   getActiveTask,
-  getDefaultTasks,
   getTasks,
 } from '@/lib/store/useTasks';
 import { Task, TaskOnServer, TimerTimestamp } from '@/lib/types';
@@ -11,11 +11,10 @@ import { ZodError } from 'zod';
 
 /*
   Potentially destructive action, use with caution.
-  This clears all the tasks in the user's localstorage and replaces them with the default tasks
+  This clears all the tasks in the user's local stores which could result in loss of progress
 */
 export const fixTaskStucture = () => {
-  const defaultTasks = getDefaultTasks();
-  //localStorage.setItem('tasks', JSON.stringify(defaultTasks));
+  clearTasks();
 };
 
 export const validateTaskStructure = async () => {
@@ -51,9 +50,8 @@ export const validateTaskStructure = async () => {
       console.log('Your task structure: ', activeTask);
       notify('Your tasks are not up to date', 'failure');
       await sleep(3000);
-      //notify('Resetting to default tasks. Please refresh.', 'warning');
-      //pauseAllTasks();
-      //fixTaskStucture();
+      notify('Resetting to default tasks. Please refresh.', 'warning');
+      fixTaskStucture();
     }
   }
 };
