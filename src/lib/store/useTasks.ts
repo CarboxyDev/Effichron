@@ -18,26 +18,7 @@ export interface TaskListStore {
   clear: () => void;
 }
 
-const defaultTasks: Task[] = [
-  {
-    id: '1',
-    name: 'Work',
-    color: '#06b6d4',
-    isTimerRunning: false,
-    duration: 0,
-    sortPriority: 0,
-    timerTimestamps: [],
-  },
-  {
-    id: '2',
-    name: 'Learn',
-    color: '#a78bfa',
-    isTimerRunning: false,
-    duration: 0,
-    sortPriority: 1,
-    timerTimestamps: [],
-  },
-];
+const defaultTasks: Task[] = [];
 
 export const useTasks = create<TaskListStore>()(
   persist(

@@ -4,7 +4,7 @@ import {
   getDefaultTasks,
   getTasks,
 } from '@/lib/store/useTasks';
-import { Task, TimerTimestamp } from '@/lib/types';
+import { Task, TaskOnServer, TimerTimestamp } from '@/lib/types';
 import { notify } from '@/utils/notify';
 import { dateDifferenceInSeconds, sleep } from '@/utils/util';
 import { ZodError } from 'zod';
@@ -15,7 +15,7 @@ import { ZodError } from 'zod';
 */
 export const fixTaskStucture = () => {
   const defaultTasks = getDefaultTasks();
-  localStorage.setItem('tasks', JSON.stringify(defaultTasks));
+  //localStorage.setItem('tasks', JSON.stringify(defaultTasks));
 };
 
 export const validateTaskStructure = async () => {
@@ -26,6 +26,10 @@ export const validateTaskStructure = async () => {
   let activeTask = getActiveTask();
   if (activeTask == undefined) {
     activeTask = getTasks()[0];
+    if (activeTask == undefined) {
+      console.log('[!] No tasks found in localstorage');
+      return;
+    }
   }
 
   try {
@@ -47,9 +51,9 @@ export const validateTaskStructure = async () => {
       console.log('Your task structure: ', activeTask);
       notify('Your tasks are not up to date', 'failure');
       await sleep(3000);
-      notify('Resetting to default tasks. Please refresh.', 'warning');
-      pauseAllTasks();
-      fixTaskStucture();
+      //notify('Resetting to default tasks. Please refresh.', 'warning');
+      //pauseAllTasks();
+      //fixTaskStucture();
     }
   }
 };
@@ -61,6 +65,47 @@ export const pauseAllTasks = () => {
       addTimestampToTask(task.id, 'pause', new Date());
       task.isTimerRunning = false;
     }
+  });
+};
+
+export const checkIfUserLacksTasks = () => {
+  const tasks = getTasks();
+  if (tasks.length === 0) {
+    return true;
+  }
+  return false;
+};
+
+export const convertServerTasksToClientTasks = (
+  tasksFromServer: TaskOnServer[]
+): Task[] => {
+  const tasks: Task[] = [];
+  tasksFromServer.forEach((task) => {
+    tasks.push({
+      id: task.id,
+      name: task.name,
+      color: task.color,
+      isTimerRunning: false,
+      duration: 0,
+      timerTimestamps: [],
+      sortPriority: 0,
+    });
+  });
+  return tasks;
+};
+
+export const createLocalTasks = async (
+  newTasks: Task[],
+  addTaskToStore: (taskToAdd: Task) => void,
+  setActiveTask: (id: string) => void
+) => {
+  let markedActiveTask = false;
+  newTasks.forEach((task) => {
+    if (!markedActiveTask) {
+      markedActiveTask = true;
+      setActiveTask(task.id);
+    }
+    addTaskToStore(task);
   });
 };
 

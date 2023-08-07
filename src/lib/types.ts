@@ -19,7 +19,16 @@ export const Task = z.object({
   sortPriority: z.number(),
 });
 
+// ! This type is linked to the TaskStrict Schema in schemas.ts
+export const TaskOnServer = z.object({
+  userId: z.string(),
+  id: z.string(),
+  name: z.string(),
+  color: z.string(),
+});
+
 export type Task = z.infer<typeof Task>;
+export type TaskOnServer = z.infer<typeof TaskOnServer>;
 export type TimerTimestamp = z.infer<typeof timerTimestamp>;
 export type TimerTimestampTypes = z.infer<typeof timerTimestampTypes>;
 
