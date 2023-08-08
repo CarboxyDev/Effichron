@@ -3,7 +3,7 @@
 import Footer from '@/components/Footer';
 import { LoadingPropagateSpinner, LoadingSpinner } from '@/components/Loading';
 import Navbar from '@/components/Navbar';
-import { SIGN_IN_URL } from '@/lib/config';
+import { CONFIG } from '@/lib/config';
 import { useAddTask, useSetActiveTask } from '@/lib/store/useTasks';
 import { TaskOnServer } from '@/lib/types';
 import { getErrorMessage } from '@/utils/api';
@@ -58,7 +58,7 @@ export default function TimerPage() {
             setNewUserJoined(true);
             try {
               await sleep(5000);
-              router.push(SIGN_IN_URL);
+              router.push(CONFIG.SIGN_IN_URL);
             } catch (error) {
               console.log(error);
             }

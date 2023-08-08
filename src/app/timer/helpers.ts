@@ -1,4 +1,4 @@
-import { latestTaskVersion } from '@/lib/config';
+import { CONFIG } from '@/lib/config';
 import {
   addTimestampToTask,
   clearTasks,
@@ -36,9 +36,9 @@ export const validateTaskStructure = async () => {
   try {
     tasks.forEach((task) => {
       Task.parse(activeTask);
-      if (task.version !== latestTaskVersion) {
+      if (task.version !== CONFIG.LATEST_TASK_VERSION) {
         throw new Error(
-          `Version mismatch. Client is ${task.version}, latest is ${latestTaskVersion}`
+          `Version mismatch. Client is ${task.version}, latest is ${CONFIG.LATEST_TASK_VERSION}`
         );
       }
     });
@@ -105,7 +105,7 @@ export const convertServerTasksToClientTasks = (
       duration: 0,
       timerTimestamps: [],
       sortPriority: 0,
-      version: latestTaskVersion,
+      version: CONFIG.LATEST_TASK_VERSION,
     });
   });
   return tasks;

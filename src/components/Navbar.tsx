@@ -1,5 +1,6 @@
 'use client';
 
+import { CONFIG } from '@/lib/config';
 import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
@@ -78,7 +79,7 @@ const Navbar = (props: NavbarProps) => {
         )}
         <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 hover:cursor-pointer">
           {status === 'unauthenticated' && (
-            <Link href="/api/auth/signin">
+            <Link href={CONFIG.SIGN_IN_URL}>
               <div className="flex h-10 w-10 items-center justify-center rounded-full">
                 <Icon
                   icon="ep:user-filled"
