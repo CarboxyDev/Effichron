@@ -1,5 +1,6 @@
 import { getUserFromSession } from '@/lib/auth';
 import { createDefaultTasks } from '@/lib/db/createDefaultTasks';
+import { prisma } from '@/lib/prisma';
 import { SendResponse } from '@/utils/api';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/authOptions';
@@ -21,5 +22,14 @@ export async function GET_TASK(req: Request, res: Response) {
     return await createDefaultTasks(user.id);
   }
 
-  return SendResponse('Not functioning yet', 404);
+  try {
+    const tasks = await prisma.task.findMany({
+      where: {
+        userId: user.id,
+      },
+    });
+    return SendResponse(JSON.stringify(tasks), 200);
+  } catch (error) {
+    return SendResponse('Unable to fetch your tasks', 500);
+  }
 }

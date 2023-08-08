@@ -1,22 +1,14 @@
 import { CONFIG } from '@/lib/config';
 import {
   addTimestampToTask,
-  clearTasks,
   getActiveTask,
   getTasks,
 } from '@/lib/store/useTasks';
+import { clearLocalTasks } from '@/lib/tasks/tasks';
 import { Task, TaskOnServer, TimerTimestamp } from '@/lib/types';
 import { notify } from '@/utils/notify';
 import { dateDifferenceInSeconds, sleep } from '@/utils/util';
 import { ZodError } from 'zod';
-
-/*
-  Potentially destructive action, use with caution.
-  This clears all the tasks in the user's local stores which could result in loss of progress
-*/
-export const fixTaskStucture = () => {
-  clearTasks();
-};
 
 export const validateTaskStructure = async () => {
   await sleep(1000);
@@ -60,7 +52,7 @@ export const validateTaskStructure = async () => {
       notify('Your tasks are not up to date', 'failure');
       await sleep(3000);
       notify('Fetching your tasks from the server. Please refresh', 'warning');
-      fixTaskStucture();
+      clearLocalTasks();
     } else {
       console.log(error);
       console.log(
@@ -69,7 +61,7 @@ export const validateTaskStructure = async () => {
       notify('Your tasks are not up to date', 'failure');
       await sleep(3000);
       notify('Fetching your tasks from the server. Please refresh', 'warning');
-      fixTaskStucture();
+      clearLocalTasks();
     }
   }
 };

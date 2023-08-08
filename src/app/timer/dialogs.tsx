@@ -1,17 +1,21 @@
 import DialogTemplate from '@/components/Dialog';
 import {
   getTasks,
+  useAddTask,
   usePauseActiveTask,
   useRefreshTasks,
   useResetActiveTask,
+  useSetActiveTask,
 } from '@/lib/store/useTasks';
+import { clearLocalTasks, retainTaskProgress } from '@/lib/tasks/tasks';
 import { SessionSnapshot } from '@/lib/types';
 import { getErrorMessage } from '@/utils/api';
 import { notify, notifyPromise } from '@/utils/notify';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import Link from 'next/link';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { convertServerTasksToClientTasks, createLocalTasks } from './helpers';
 
 export const SaveSessionConfirmationDialog = (props: {
   setActionMenuOpen: Dispatch<SetStateAction<boolean>>;
@@ -33,8 +37,7 @@ export const SaveSessionConfirmationDialog = (props: {
         error: (error) => getErrorMessage(error),
       });
 
-      // Close the Action buttons menu
-      props.setActionMenuOpen(false);
+      setActionMenuOpen(false);
 
       return save;
     },
@@ -158,12 +161,57 @@ export const ResetActiveTaskConfirmationDialog = (props: {
 
 export const SyncTasksConfirmationDialog = (props: {
   setActionMenuOpen: Dispatch<SetStateAction<boolean>>;
+  setDialogOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { setActionMenuOpen } = props;
+  const { setActionMenuOpen, setDialogOpen } = props;
+  const addTaskToStore = useAddTask();
+  const setActiveTask = useSetActiveTask();
+  const [startSync, setStartSync] = useState(false);
 
-  const syncTasks = () => {
-    // wip
-  };
+  useEffect(() => {
+    const syncTasks = async () => {
+      /**
+       * ! Sync process
+       * Save all the local tasks' data by id
+       * Fetch all latest user tasks from server
+       * Match the server tasks and local tasks
+       * Remove all local tasks, then create them again but only the matched tasks
+       * Restore the new local tasks' data
+       */
+      try {
+        const syncRequest = axios.get('/api/task');
+        const syncToast = notifyPromise(syncRequest, {
+          loading: 'Attempting to sync...',
+          success: 'Synced your tasks',
+          error: (error) => getErrorMessage(error),
+        });
+        const data = (await syncRequest).data;
+        console.log('Sync request successful');
+        const tasksFromServer = JSON.parse(data);
+        const partialSyncedClientTasks =
+          convertServerTasksToClientTasks(tasksFromServer);
+        const syncedClientTasks = retainTaskProgress(partialSyncedClientTasks);
+        clearLocalTasks();
+        const syncTasksLocally = await createLocalTasks(
+          syncedClientTasks,
+          addTaskToStore,
+          setActiveTask
+        );
+      } catch (error) {}
+    };
+
+    if (startSync) {
+      syncTasks();
+      setDialogOpen(false);
+      setActionMenuOpen(false);
+    }
+  }, [
+    addTaskToStore,
+    setActiveTask,
+    startSync,
+    setDialogOpen,
+    setActionMenuOpen,
+  ]);
 
   return (
     <>
@@ -195,7 +243,8 @@ export const SyncTasksConfirmationDialog = (props: {
             <button
               className="flex h-11 items-center justify-center rounded-lg bg-zinc-600 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:bg-zinc-700"
               onClick={() => {
-                props.setActionMenuOpen(false);
+                setActionMenuOpen(false);
+                setDialogOpen(false);
               }}
             >
               Cancel
@@ -204,11 +253,10 @@ export const SyncTasksConfirmationDialog = (props: {
               className="flex h-11 items-center justify-center rounded-lg bg-sky-500 text-lg font-medium text-zinc-100 transition delay-200 duration-200 ease-in-out hover:bg-sky-600"
               type="submit"
               onClick={() => {
-                syncTasks();
-                props.setActionMenuOpen(false);
+                setStartSync(true);
               }}
             >
-              Reset
+              Sync
             </button>
           </div>
         </div>

@@ -1,0 +1,2 @@
+- For api errors, I'm using (error as AxiosError).response.data for the error message when I should
+probably be using error.message

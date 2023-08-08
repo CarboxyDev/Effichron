@@ -20,7 +20,7 @@ import {
 import { Icon } from '@iconify/react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IBM_Plex_Mono } from 'next/font/google';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   ResetActiveTaskConfirmationDialog,
   SaveSessionConfirmationDialog,
@@ -259,20 +259,33 @@ export const ActionButton = () => {
             <ResetActiveTaskConfirmationDialog setActionMenuOpen={setOpen} />
           </Dialog.Root>
         )}
-        {open && (
-          <Dialog.Root>
-            <Dialog.Trigger asChild>
-              <button
-                title="Sync tasks"
-                className="group absolute bottom-14 right-14 flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-sky-500 active:scale-105"
-              >
-                <Icon icon="mdi:sync" className="h-7 w-7 text-zinc-300" />
-              </button>
-            </Dialog.Trigger>
-            <SyncTasksConfirmationDialog setActionMenuOpen={setOpen} />
-          </Dialog.Root>
-        )}
+        {open && <SyncTasksButton setActionMenuOpen={setOpen} />}
       </div>
+    </>
+  );
+};
+
+interface syncTasksButtonProps {
+  setActionMenuOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+const SyncTasksButton = (props: syncTasksButtonProps) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  return (
+    <>
+      {' '}
+      <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
+        <Dialog.Trigger asChild>
+          <button
+            title="Sync tasks"
+            className="group absolute bottom-14 right-14 flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-sky-500 active:scale-105"
+          >
+            <Icon icon="mdi:sync" className="h-7 w-7 text-zinc-300" />
+          </button>
+        </Dialog.Trigger>
+        <SyncTasksConfirmationDialog {...props} setDialogOpen={setDialogOpen} />
+      </Dialog.Root>
     </>
   );
 };
