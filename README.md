@@ -1,5 +1,7 @@
 # Productivity Tracker
 
+## About
+
 A productivity tracking app meant for tracking the duration of your personal tasks and saving their progress online as sessions.
 
 ## Features
