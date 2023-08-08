@@ -8,9 +8,17 @@ import { Session } from 'next-auth';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { LoadingSpinner } from './Loading';
 import { BetaBadge } from './Other';
 
-const ProfileDropdownMenu = (): JSX.Element => {
+interface ProfileDropdownMenuProps {
+  setUserIsSigningOut: Dispatch<SetStateAction<boolean>>;
+}
+
+const ProfileDropdownMenu = (props: ProfileDropdownMenuProps) => {
+  const { setUserIsSigningOut } = props;
+
   return (
     <DropdownMenu.Portal>
       <DropdownMenu.Content
@@ -42,6 +50,7 @@ const ProfileDropdownMenu = (): JSX.Element => {
         <DropdownMenu.Item
           onClick={async () => {
             signOut({ callbackUrl: '/signout' });
+            setUserIsSigningOut(true);
           }}
           className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none"
         >
@@ -67,6 +76,8 @@ const Navbar = (props: NavbarProps) => {
   const { variant } = props;
   const { data: session, status } = useSession();
 
+  const [userIsSigningOut, setUserIsSigningOut] = useState(false);
+
   return (
     <>
       <div className="flex w-full select-none flex-row items-center px-4 py-4">
@@ -91,16 +102,23 @@ const Navbar = (props: NavbarProps) => {
           {status === 'loading' && <></>}
           {status === 'authenticated' && (
             <DropdownMenu.Root>
-              <DropdownMenu.Trigger asChild>
-                <Image
-                  width={40}
-                  height={40}
-                  src={session.user?.image || ''}
-                  alt={'pfp'}
-                  className="h-full w-full rounded-full"
-                />
+              <DropdownMenu.Trigger className="focus:outline-none">
+                {!userIsSigningOut && (
+                  <Image
+                    width={40}
+                    height={40}
+                    src={session.user?.image || ''}
+                    alt={'pfp'}
+                    className="h-full w-full rounded-full"
+                  />
+                )}
+                {userIsSigningOut && (
+                  <div className="flex items-center justify-center">
+                    <LoadingSpinner size={40} />
+                  </div>
+                )}
               </DropdownMenu.Trigger>
-              <ProfileDropdownMenu />
+              <ProfileDropdownMenu setUserIsSigningOut={setUserIsSigningOut} />
             </DropdownMenu.Root>
           )}
         </div>
