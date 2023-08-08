@@ -15,7 +15,11 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import Link from 'next/link';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { convertServerTasksToClientTasks, createLocalTasks } from './helpers';
+import {
+  convertServerTasksToClientTasks,
+  createLocalTasks,
+  pauseAllTasks,
+} from './helpers';
 
 export const SaveSessionConfirmationDialog = (props: {
   setActionMenuOpen: Dispatch<SetStateAction<boolean>>;
@@ -191,6 +195,7 @@ export const SyncTasksConfirmationDialog = (props: {
         const partialSyncedClientTasks =
           convertServerTasksToClientTasks(tasksFromServer);
         const syncedClientTasks = retainTaskProgress(partialSyncedClientTasks);
+        pauseAllTasks();
         clearLocalTasks();
         const syncTasksLocally = await createLocalTasks(
           syncedClientTasks,
