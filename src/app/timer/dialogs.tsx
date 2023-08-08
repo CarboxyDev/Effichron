@@ -139,3 +139,55 @@ export const ResetActiveTaskConfirmationDialog = (props: {
     </>
   );
 };
+
+export const SyncTasksConfirmationDialog = (props: {
+  setActionMenuOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const syncTasks = () => {
+    // wip
+  };
+
+  return (
+    <>
+      <DialogTemplate title="Sync Tasks">
+        <div className="mx-auto mt-12 flex flex-col">
+          <h3 className="text-center text-[22px] font-medium text-zinc-300">
+            Are you sure you want to sync your tasks?
+          </h3>
+          <div className="mx-6 mt-16 text-zinc-500">
+            <ul className="list-outside list-disc">
+              <li className="mb-4">
+                This will fetch all the tasks that you have created.
+              </li>
+              <li className="mb-4">
+                You may sync if you are missing some of your tasks or if you use
+                this app on multiple devices.
+              </li>
+              <li>Your tasks&apos; progress will be retained.</li>
+            </ul>
+          </div>
+          <div className="mt-12 grid grid-cols-2 gap-x-4">
+            <button
+              className="flex h-11 items-center justify-center rounded-lg bg-zinc-600 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:bg-zinc-700"
+              onClick={() => {
+                props.setActionMenuOpen(false);
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="flex h-11 items-center justify-center rounded-lg bg-sky-500 text-lg font-medium text-zinc-100 transition delay-200 duration-200 ease-in-out hover:bg-sky-600"
+              type="submit"
+              onClick={() => {
+                syncTasks();
+                props.setActionMenuOpen(false);
+              }}
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      </DialogTemplate>
+    </>
+  );
+};

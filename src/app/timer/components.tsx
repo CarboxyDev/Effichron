@@ -24,6 +24,7 @@ import { useEffect, useState } from 'react';
 import {
   ResetActiveTaskConfirmationDialog,
   SaveSessionConfirmationDialog,
+  SyncTasksConfirmationDialog,
 } from './dialogs';
 import { calculateTimerDuration } from './helpers';
 
@@ -234,7 +235,7 @@ export const ActionButton = () => {
             <Dialog.Trigger asChild>
               <button
                 title="Save session"
-                className="group absolute bottom-14 right-0 flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-emerald-400 active:scale-105"
+                className="group absolute bottom-14 right-0 flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-emerald-500 active:scale-105"
               >
                 <Icon icon="mdi:success" className="h-7 w-7 text-zinc-300" />
               </button>
@@ -256,6 +257,19 @@ export const ActionButton = () => {
               </button>
             </Dialog.Trigger>
             <ResetActiveTaskConfirmationDialog setActionMenuOpen={setOpen} />
+          </Dialog.Root>
+        )}
+        {open && (
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <button
+                title="Sync tasks"
+                className="group absolute bottom-14 right-14 flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-sky-500 active:scale-105"
+              >
+                <Icon icon="mdi:sync" className="h-7 w-7 text-zinc-300" />
+              </button>
+            </Dialog.Trigger>
+            <SyncTasksConfirmationDialog setActionMenuOpen={setOpen} />
           </Dialog.Root>
         )}
       </div>
