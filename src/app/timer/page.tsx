@@ -5,6 +5,12 @@ import { LoadingPropagateSpinner, LoadingSpinner } from '@/components/Loading';
 import Navbar from '@/components/Navbar';
 import { CONFIG } from '@/lib/config';
 import { useAddTask, useSetActiveTask } from '@/lib/store/useTasks';
+import {
+  checkIfUserLacksTasks,
+  convertServerTasksToClientTasks,
+  createLocalTasks,
+  validateTaskStructure,
+} from '@/lib/tasks/tasks';
 import { TaskOnServer } from '@/lib/types';
 import { getErrorMessage } from '@/utils/api';
 import { notify } from '@/utils/notify';
@@ -13,12 +19,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { ActionButton, TaskList, Timer } from './components';
-import {
-  checkIfUserLacksTasks,
-  convertServerTasksToClientTasks,
-  createLocalTasks,
-  validateTaskStructure,
-} from './helpers';
 
 export default function TimerPage() {
   const [loading, setLoading] = useState(false);

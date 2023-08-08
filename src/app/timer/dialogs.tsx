@@ -7,7 +7,13 @@ import {
   useResetActiveTask,
   useSetActiveTask,
 } from '@/lib/store/useTasks';
-import { clearLocalTasks, retainTaskProgress } from '@/lib/tasks/tasks';
+import {
+  clearLocalTasks,
+  convertServerTasksToClientTasks,
+  createLocalTasks,
+  pauseAllTasks,
+  retainTaskProgress,
+} from '@/lib/tasks/tasks';
 import { SessionSnapshot } from '@/lib/types';
 import { getErrorMessage } from '@/utils/api';
 import { notify, notifyPromise } from '@/utils/notify';
@@ -15,11 +21,6 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import Link from 'next/link';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import {
-  convertServerTasksToClientTasks,
-  createLocalTasks,
-  pauseAllTasks,
-} from './helpers';
 
 export const SaveSessionConfirmationDialog = (props: {
   setActionMenuOpen: Dispatch<SetStateAction<boolean>>;

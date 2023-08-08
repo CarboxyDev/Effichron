@@ -17,6 +17,7 @@ import {
   secondsToTimeFormat,
 } from '@/utils/util';
 
+import { calculateTimerDuration } from '@/lib/timer/timer';
 import { Icon } from '@iconify/react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IBM_Plex_Mono } from 'next/font/google';
@@ -26,7 +27,6 @@ import {
   SaveSessionConfirmationDialog,
   SyncTasksConfirmationDialog,
 } from './dialogs';
-import { calculateTimerDuration } from './helpers';
 
 const timerFont = IBM_Plex_Mono({ weight: '400', subsets: ['latin'] });
 
@@ -191,7 +191,6 @@ const TaskCard = (props: { task: Task }) => {
 };
 
 export const TaskList = (): JSX.Element => {
-  console.log('Render Tasklist');
   const tasks = useStore(getTasks, (state) => state) as Task[];
   const activeTaskID = useStore(useActiveTaskId, (state) => state) as string;
 
