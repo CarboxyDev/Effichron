@@ -1,19 +1,15 @@
 # Productivity Tracker
 
-An opinionated productivity tracking app meant for tracking the duration of your personal sessions for any task. Loaded with features to help you increase your productivity.
-
-## Tech stack
-
-Built using Next 13, Tailwind, Prisma, NextAuth, RadixUI and more.
+A productivity tracking app meant for tracking the duration of your personal tasks and saving their progress online as sessions.
 
 ## Features
 
-- Mobile support
-- Sign in using oAuth (Google, Discord and Github )
-- Create tasks which you want to track
-- Track the time you spend on tasks using the timer
-- User interface for viewing and modifying your tasks
-- Save your progress as sessions
-- Sessions are saved in a database
-- User interface for viewing your saved sessions
-- More features coming rapidly..
+- Track all your important tasks and save your progress as sessions
+- Sync your data between different devices
+- Fast and easy sign-in using OAuth (Google, Discord and Github)
+- Complete mobile and desktop support
+- More features coming soon
+
+## Tech stack
+
+Built using Next 13, Tailwind, Prisma, NextAuth, RadixUI and other cool technologies.
