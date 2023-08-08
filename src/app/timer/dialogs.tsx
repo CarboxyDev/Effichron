@@ -16,6 +16,7 @@ import { Dispatch, SetStateAction } from 'react';
 export const SaveSessionConfirmationDialog = (props: {
   setActionMenuOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { setActionMenuOpen } = props;
   const refreshTasks = useRefreshTasks();
 
   const sessionMutation = useMutation({
@@ -51,7 +52,14 @@ export const SaveSessionConfirmationDialog = (props: {
 
   return (
     <>
-      <DialogTemplate title="Save session">
+      <DialogTemplate
+        title="Save session"
+        dialogContentMethods={{
+          onInteractOutside: () => {
+            setActionMenuOpen(false);
+          },
+        }}
+      >
         <div className="mx-auto mt-12 flex flex-col">
           <h3 className="text-center text-[22px] font-medium text-zinc-300">
             Are you sure you want to save the current session?
@@ -90,6 +98,7 @@ export const SaveSessionConfirmationDialog = (props: {
 export const ResetActiveTaskConfirmationDialog = (props: {
   setActionMenuOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { setActionMenuOpen } = props;
   const resetActiveTask = useResetActiveTask();
   const pauseActiveTask = usePauseActiveTask();
 
@@ -101,7 +110,14 @@ export const ResetActiveTaskConfirmationDialog = (props: {
 
   return (
     <>
-      <DialogTemplate title="Reset Task">
+      <DialogTemplate
+        title="Reset Task"
+        dialogContentMethods={{
+          onInteractOutside: () => {
+            setActionMenuOpen(false);
+          },
+        }}
+      >
         <div className="mx-auto mt-12 flex flex-col">
           <h3 className="text-center text-[22px] font-medium text-zinc-300">
             Are you sure you want to reset the active task?
@@ -143,13 +159,22 @@ export const ResetActiveTaskConfirmationDialog = (props: {
 export const SyncTasksConfirmationDialog = (props: {
   setActionMenuOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { setActionMenuOpen } = props;
+
   const syncTasks = () => {
     // wip
   };
 
   return (
     <>
-      <DialogTemplate title="Sync Tasks">
+      <DialogTemplate
+        title="Sync Tasks"
+        dialogContentMethods={{
+          onInteractOutside: () => {
+            setActionMenuOpen(false);
+          },
+        }}
+      >
         <div className="mx-auto mt-12 flex flex-col">
           <h3 className="text-center text-[22px] font-medium text-zinc-300">
             Are you sure you want to sync your tasks?

@@ -84,7 +84,9 @@ export const CreateTaskDialog = (props: {
     <>
       <DialogTemplate
         title="New Task"
-        contentMethods={{ onCloseAutoFocus: () => setOpenColorPicker(false) }}
+        dialogContentMethods={{
+          onCloseAutoFocus: () => setOpenColorPicker(false),
+        }}
       >
         <div className="mx-auto mt-12 flex flex-col">
           <div>
@@ -227,7 +229,7 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
         <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
         <DialogTemplate
           title="Edit Task"
-          contentMethods={{
+          dialogContentMethods={{
             onCloseAutoFocus: () => {
               setOpenColorPicker(false);
             },
