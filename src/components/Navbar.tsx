@@ -4,7 +4,7 @@ import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Session } from 'next-auth';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BetaBadge } from './Other';
@@ -38,12 +38,15 @@ const ProfileDropdownMenu = (): JSX.Element => {
             <div className="text-zinc-300">History</div>
           </DropdownMenu.Item>
         </Link>
-        <Link href={'/api/auth/signout'}>
-          <DropdownMenu.Item className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none">
-            <Icon icon="mdi:sign-out" className="h-5 w-5 text-zinc-600"></Icon>
-            <div className="text-zinc-500">Sign out</div>
-          </DropdownMenu.Item>
-        </Link>
+        <DropdownMenu.Item
+          onClick={async () => {
+            signOut({ callbackUrl: '/signout' });
+          }}
+          className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none"
+        >
+          <Icon icon="mdi:sign-out" className="h-5 w-5 text-zinc-600"></Icon>
+          <div className="text-zinc-500">Sign out</div>
+        </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Portal>
   );
@@ -76,10 +79,12 @@ const Navbar = (props: NavbarProps) => {
         <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 hover:cursor-pointer">
           {status === 'unauthenticated' && (
             <Link href="/api/auth/signin">
-              <Icon
-                icon="ep:user-filled"
-                className={cn('h-5 w-5 text-zinc-400')}
-              />
+              <div className="flex h-10 w-10 items-center justify-center rounded-full">
+                <Icon
+                  icon="ep:user-filled"
+                  className={cn('h-5 w-5 text-zinc-400')}
+                />
+              </div>
             </Link>
           )}
           {status === 'loading' && <></>}

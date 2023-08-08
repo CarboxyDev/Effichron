@@ -36,7 +36,11 @@ export const authOptions: NextAuthOptions = {
       console.log('[AUTH] Sign in');
       return true;
     },
+
     async redirect({ url, baseUrl }) {
+      if (url == '/signout') {
+        return baseUrl;
+      }
       return baseUrl + '/timer';
     },
   },
