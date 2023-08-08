@@ -1,14 +1,15 @@
 'use client';
 
 import Footer from '@/components/Footer';
-import { LoadingSpinner } from '@/components/Loading';
+import { LoadingPropagateSpinner, LoadingSpinner } from '@/components/Loading';
 import Navbar from '@/components/Navbar';
+import { SIGN_IN_URL } from '@/lib/config';
 import { useAddTask, useSetActiveTask } from '@/lib/store/useTasks';
 import { TaskOnServer } from '@/lib/types';
 import { getErrorMessage } from '@/utils/api';
 import { notify } from '@/utils/notify';
 import { sleep } from '@/utils/util';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { ActionButton, TaskList, Timer } from './components';
@@ -24,6 +25,7 @@ export default function TimerPage() {
   const [newUserJoined, setNewUserJoined] = useState(false);
   const addTaskToStore = useAddTask();
   const setActiveTask = useSetActiveTask();
+  const router = useRouter();
 
   useEffect(() => {
     validateTaskStructure();
@@ -54,6 +56,12 @@ export default function TimerPage() {
              */
             setLoading(false);
             setNewUserJoined(true);
+            try {
+              await sleep(5000);
+              router.push(SIGN_IN_URL);
+            } catch (error) {
+              console.log(error);
+            }
           } else {
             notify(errorMessage, 'failure');
             await sleep(2000);
@@ -66,37 +74,37 @@ export default function TimerPage() {
     if (noTasks) {
       fetchDefaultTasks();
     }
-  }, [addTaskToStore, setActiveTask]);
+  }, [addTaskToStore, setActiveTask, router]);
 
   return (
     <main className="flex flex-col">
       <Toaster position="top-left" />
       <Navbar />
       <div className="mt-24 md:mt-40">
-        <Timer />
-        <div className="mt-24"></div>
-        {loading && !newUserJoined && (
-          <div className="flex justify-center">
-            <LoadingSpinner />
+        {newUserJoined && (
+          <div className="flex flex-col items-center justify-center">
+            <div className="mb-24 text-3xl text-zinc-200">
+              Redirecting you to sign in..
+            </div>
+            <LoadingPropagateSpinner size={16} />
           </div>
         )}
-        {!loading && !newUserJoined && <TaskList />}
-        {newUserJoined && (
+        {!newUserJoined && (
           <>
-            <div className="flex justify-center text-lg text-zinc-300">
-              <Link
-                href={'/api/auth/signin'}
-                className="text-violet-500 underline"
-              >
-                Please sign in to use the timer
-              </Link>
+            <Timer />
+            <div className="mt-24"></div>
+            {loading && !newUserJoined && (
+              <div className="flex justify-center">
+                <LoadingSpinner />
+              </div>
+            )}
+            {!loading && !newUserJoined && <TaskList />}
+            <div className="mt-24"></div>
+            <div className="fixed bottom-4 right-4">
+              <ActionButton />
             </div>
           </>
         )}
-        <div className="mt-24"></div>
-        <div className="fixed bottom-4 right-4">
-          <ActionButton />
-        </div>
       </div>
       <Footer />
     </main>
