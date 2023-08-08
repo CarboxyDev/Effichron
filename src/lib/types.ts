@@ -28,11 +28,16 @@ export const TaskOnServer = z.object({
   color: z.string(),
 });
 
+/** Type of the tasks stored client side */
 export type Task = z.infer<typeof Task>;
+/** Type of the tasks stored on the server */
 export type TaskOnServer = z.infer<typeof TaskOnServer>;
+/** Type of the timestamp property inside the Task type */
 export type TimerTimestamp = z.infer<typeof timerTimestamp>;
+
 export type TimerTimestampTypes = z.infer<typeof timerTimestampTypes>;
 
+/** Type of the session snapshot sent to the server for saving progress */
 export interface SessionSnapshot {
   session: Task[] | null;
 }

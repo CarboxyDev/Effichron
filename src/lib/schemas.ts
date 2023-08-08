@@ -1,3 +1,7 @@
+/**
+ * This file contains all the schemas used for zod validation inside api routes
+ * This files must contain only zod objects and should not contain any raw typescript types
+ */
 import { z } from 'zod';
 
 export const SessionSnapshotSchema = z.object({
@@ -18,8 +22,13 @@ export const TaskStrictSchema = z.object({
 });
 
 // validSchema is the schema against which the body is checked
-export function isValidBody(body: any, validSchema: z.ZodObject<any>) {
-  type Body = z.infer<typeof validSchema>;
-  const isValid = validSchema.safeParse(body).success;
+/**
+ * This method is used to validate request bodies against zod objects (schemas)
+ *  @param {any} body - The request body to be validated
+ *  @param {z.ZodObject<any>} schema - The zod object against which the body is to be validated
+ */
+export const isValidBody = (body: any, schema: z.ZodObject<any>) => {
+  type Body = z.infer<typeof schema>;
+  const isValid = schema.safeParse(body).success;
   return isValid;
-}
+};
