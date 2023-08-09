@@ -175,7 +175,7 @@ const Navbar = (props: NavbarProps) => {
           )}
         </div>
       </div>
-      {drawDivider && <div className="mt-2 h-px bg-zinc-900 md:mt-6"></div>}
+      {drawDivider && <div className="mt-4 h-px bg-zinc-900 md:mt-8"></div>}
     </>
   );
 };

@@ -71,7 +71,7 @@ export default function TimerPage() {
 
   return (
     <PageWrapper
-      navbarProps={{ variant: 'with-minimal-branding', drawDivider: false }}
+      navbarProps={{ variant: 'with-minimal-branding', drawDivider: true }}
     >
       <div className="mt-24 md:mt-48"></div>
       <Timer />
