@@ -88,7 +88,7 @@ const ProfileDropdownMenu = (props: ProfileDropdownMenuProps) => {
 type userSessionStatus = 'authenticated' | 'loading' | 'unauthenticated';
 
 interface NavbarProps {
-  variant?: 'with-branding';
+  variant?: 'with-branding' | 'with-minimal-branding';
   userSession?: {
     session: Session | null;
     status: userSessionStatus;
@@ -116,6 +116,17 @@ const Navbar = (props: NavbarProps) => {
               />{' '}
               Effichron <BetaBadge />
             </h2>
+          </Link>
+        )}
+        {variant === 'with-minimal-branding' && (
+          <Link href="/">
+            <Image
+              height={36}
+              width={36}
+              className="inline"
+              src={'/logo.png'}
+              alt={'logo'}
+            />
           </Link>
         )}
         <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 hover:cursor-pointer">

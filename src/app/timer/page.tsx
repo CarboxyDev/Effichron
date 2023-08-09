@@ -74,7 +74,7 @@ export default function TimerPage() {
   return (
     <main className="flex flex-col">
       <Toaster position="top-left" />
-      <Navbar />
+      <Navbar variant="with-minimal-branding" />
       <div className="mt-24 md:mt-40">
         <Timer />
         <div className="mt-24"></div>

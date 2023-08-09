@@ -7,7 +7,7 @@ export default function TasksPage() {
   return (
     <main className="flex flex-col">
       <Toaster position="top-left" />
-      <Navbar />
+      <Navbar variant="with-minimal-branding" />
       <div className="mx-6 mt-14 md:mx-25">
         <h2 className="text-3xl font-semibold text-zinc-200 md:text-5xl">
           My Tasks
