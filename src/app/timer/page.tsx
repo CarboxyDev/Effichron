@@ -83,7 +83,7 @@ export default function TimerPage() {
       )}
       {loading && newUserJoined && (
         <div className="flex flex-col items-center justify-center">
-          <span className="text-2xl text-violet-100">
+          <span className="text-2xl text-primary-100">
             Generating demo tasks...
           </span>
           <div className="mt-12">
@@ -92,9 +92,11 @@ export default function TimerPage() {
         </div>
       )}
       {!loading && <TaskList />}
-      <div className="fixed bottom-4 right-4">
+
+      <div className="fixed bottom-4 right-4 md:right-16 lg:right-25">
         <ActionButton />
       </div>
     </PageWrapper>
   );
 }
+// mx-4 md:mx-16 lg:mx-25

@@ -34,27 +34,27 @@ const ProfileDropdownMenu = (props: ProfileDropdownMenuProps) => {
       <DropdownMenu.Content
         sideOffset={12}
         collisionPadding={16}
-        className="flex min-w-[120px] flex-col rounded-lg border border-zinc-800 bg-zinc-900 text-sm shadow-2xl"
+        className="flex min-w-[120px] flex-col rounded-lg border border-dark-800 bg-dark-900 text-sm shadow-2xl"
       >
         <Link href={'/timer'}>
-          <DropdownMenu.Item className="flex flex-row items-center gap-x-2 rounded-t-lg pb-3 pl-3 pt-4 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none">
+          <DropdownMenu.Item className="flex flex-row items-center gap-x-2 rounded-t-lg pb-3 pl-3 pt-4 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-dark-800 hover:outline-none">
             <Icon
               icon="ic:round-timer"
-              className="h-5 w-5 text-zinc-400"
+              className="h-5 w-5 text-dark-400"
             ></Icon>
-            <div className="text-zinc-300">Timer</div>
+            <div className="text-dark-300">Timer</div>
           </DropdownMenu.Item>
         </Link>
         <Link href={'/tasks'}>
-          <DropdownMenu.Item className="flex flex-row items-center gap-x-2 py-3 pl-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none">
-            <Icon icon="ic:round-task" className="h-5 w-5 text-zinc-400"></Icon>
-            <div className="text-zinc-300">Tasks</div>
+          <DropdownMenu.Item className="flex flex-row items-center gap-x-2 py-3 pl-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-dark-800 hover:outline-none">
+            <Icon icon="ic:round-task" className="h-5 w-5 text-dark-400"></Icon>
+            <div className="text-dark-300">Tasks</div>
           </DropdownMenu.Item>
         </Link>
         <Link href={'/history'}>
-          <DropdownMenu.Item className="flex flex-row items-center gap-x-2 py-3 pl-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none">
-            <Icon icon="mdi:history" className="h-5 w-5 text-zinc-400"></Icon>
-            <div className="text-zinc-300">History</div>
+          <DropdownMenu.Item className="flex flex-row items-center gap-x-2 py-3 pl-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-dark-800 hover:outline-none">
+            <Icon icon="mdi:history" className="h-5 w-5 text-dark-400"></Icon>
+            <div className="text-dark-300">History</div>
           </DropdownMenu.Item>
         </Link>
         {userIsSignedIn && (
@@ -63,10 +63,10 @@ const ProfileDropdownMenu = (props: ProfileDropdownMenuProps) => {
               signOut({ callbackUrl: '/signout' });
               setUserIsSigningOut(true);
             }}
-            className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none"
+            className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-dark-800 hover:outline-none"
           >
-            <Icon icon="mdi:sign-out" className="h-5 w-5 text-zinc-600"></Icon>
-            <div className="text-zinc-500">Sign out</div>
+            <Icon icon="mdi:sign-out" className="h-5 w-5 text-dark-600"></Icon>
+            <div className="text-dark-500">Sign out</div>
           </DropdownMenu.Item>
         )}
         {!userIsSignedIn && (
@@ -74,10 +74,10 @@ const ProfileDropdownMenu = (props: ProfileDropdownMenuProps) => {
             onClick={async () => {
               setRedirectUser(true);
             }}
-            className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none"
+            className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-dark-800 hover:outline-none"
           >
-            <Icon icon="mdi:sign-in" className="h-5 w-5 text-zinc-300"></Icon>
-            <div className="text-zinc-300">Sign in</div>
+            <Icon icon="mdi:sign-in" className="h-5 w-5 text-dark-300"></Icon>
+            <div className="text-dark-300">Sign in</div>
           </DropdownMenu.Item>
         )}
       </DropdownMenu.Content>
@@ -108,7 +108,7 @@ const Navbar = (props: NavbarProps) => {
       <div className="mt-4 flex w-full select-none flex-row items-center">
         {variant === 'with-branding' && (
           <Link href="/">
-            <h2 className="text-md font-semibold text-zinc-200 md:text-lg">
+            <h2 className="text-md font-semibold text-dark-200 md:text-lg">
               <Image
                 height={36}
                 width={36}
@@ -131,14 +131,14 @@ const Navbar = (props: NavbarProps) => {
             />
           </Link>
         )}
-        <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 hover:cursor-pointer">
+        <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-dark-900 hover:cursor-pointer">
           {status === 'unauthenticated' && (
             <DropdownMenu.Root>
               <DropdownMenu.Trigger className="focus:outline-none">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full">
                   <Icon
                     icon="ep:user-filled"
-                    className={cn('h-5 w-5 text-zinc-400')}
+                    className={cn('h-5 w-5 text-dark-400')}
                   />
                 </div>
               </DropdownMenu.Trigger>{' '}
@@ -175,7 +175,7 @@ const Navbar = (props: NavbarProps) => {
           )}
         </div>
       </div>
-      {drawDivider && <div className="mt-4 h-px bg-zinc-900 md:mt-8"></div>}
+      {drawDivider && <div className="mt-4 h-px bg-dark-900 md:mt-8"></div>}
     </>
   );
 };

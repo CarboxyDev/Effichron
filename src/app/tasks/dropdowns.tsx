@@ -20,7 +20,7 @@ export const TaskDropdownMenu = (props: TaskDropdownMenuProps) => {
       <DropdownMenu.Portal>
         <DropdownMenu.Content
           sideOffset={0}
-          className="flex w-30 select-none flex-col items-center rounded-lg border border-zinc-800 bg-zinc-900 shadow-xl"
+          className="flex w-30 select-none flex-col items-center rounded-lg border border-dark-800 bg-dark-900 shadow-xl"
         >
           <EditTaskDialog
             task={task}
@@ -28,7 +28,7 @@ export const TaskDropdownMenu = (props: TaskDropdownMenuProps) => {
             setOpen={setEditTaskOpen}
             trigger={
               <DropdownMenu.Item
-                className="w-full flex-1 rounded-t-lg border-b border-b-zinc-800 py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 focus:outline-none"
+                className="w-full flex-1 rounded-t-lg border-b border-b-dark-800 py-3 text-center text-dark-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-dark-800 focus:outline-none"
                 onSelect={(event) => {
                   event.preventDefault();
                   setEditTaskOpen(true);
@@ -44,7 +44,7 @@ export const TaskDropdownMenu = (props: TaskDropdownMenuProps) => {
             setOpen={setDeleteTaskOpen}
             trigger={
               <DropdownMenu.Item
-                className="w-full flex-1 rounded-b-lg  py-3 text-center text-zinc-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-red-500 focus:outline-none"
+                className="w-full flex-1 rounded-b-lg  py-3 text-center text-dark-300 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:bg-red-500 focus:outline-none"
                 onSelect={(event) => {
                   event.preventDefault();
                   setDeleteTaskOpen(true);

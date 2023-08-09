@@ -26,7 +26,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         className={cn(
           inter.className,
           process.env.DEV == 'true' && 'debug-screens',
-          'bg-zinc-950 text-zinc-100'
+          'bg-dark-950 text-dark-100'
         )}
       >
         <Providers>{children}</Providers>

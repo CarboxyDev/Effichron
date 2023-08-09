@@ -69,17 +69,17 @@ export const SaveSessionConfirmationDialog = (props: {
         }}
       >
         <div className="mx-auto mt-12 flex flex-col">
-          <h3 className="text-center text-[22px] font-medium text-zinc-300">
+          <h3 className="text-center text-[22px] font-medium text-dark-300">
             Are you sure you want to save the current session?
           </h3>
-          <div className="mx-6 mt-12 text-zinc-500">
+          <div className="mx-6 mt-12 text-dark-500">
             <ul className="list-outside list-disc">
               <li className="mb-4">
                 The current session will be saved in our database.
               </li>
               <li className="mb-4">
                 You may access all your saved sessions by going to the{' '}
-                <Link href="/history" className="text-violet-400">
+                <Link href="/history" className="text-primary-400">
                   History
                 </Link>{' '}
                 page.
@@ -89,7 +89,7 @@ export const SaveSessionConfirmationDialog = (props: {
           </div>
 
           <button
-            className="mt-12 flex h-11 items-center justify-center rounded-lg bg-violet-500 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-violet-600"
+            className="mt-12 flex h-11 items-center justify-center rounded-lg bg-primary-500 text-lg font-medium text-dark-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-primary-600"
             type="submit"
             onClick={() => {
               saveSession();
@@ -127,10 +127,10 @@ export const ResetActiveTaskConfirmationDialog = (props: {
         }}
       >
         <div className="mx-auto mt-12 flex flex-col">
-          <h3 className="text-center text-[22px] font-medium text-zinc-300">
+          <h3 className="text-center text-[22px] font-medium text-dark-300">
             Are you sure you want to reset the active task?
           </h3>
-          <div className="mx-6 mt-16 text-zinc-500">
+          <div className="mx-6 mt-16 text-dark-500">
             <ul className="list-outside list-disc">
               <li className="mb-4">
                 This will reset the currently active task&apos;s timer.
@@ -140,7 +140,7 @@ export const ResetActiveTaskConfirmationDialog = (props: {
           </div>
           <div className="mt-12 grid grid-cols-2 gap-x-4">
             <button
-              className="flex h-11 items-center justify-center rounded-lg bg-zinc-600 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:bg-zinc-700"
+              className="flex h-11 items-center justify-center rounded-lg bg-dark-600 text-lg font-medium text-dark-200 transition delay-200 duration-200 ease-in-out hover:bg-dark-700"
               onClick={() => {
                 props.setActionMenuOpen(false);
               }}
@@ -148,7 +148,7 @@ export const ResetActiveTaskConfirmationDialog = (props: {
               Cancel
             </button>
             <button
-              className="flex h-11 items-center justify-center rounded-lg bg-red-500 text-lg font-medium text-zinc-100 transition delay-200 duration-200 ease-in-out hover:bg-red-600"
+              className="flex h-11 items-center justify-center rounded-lg bg-red-500 text-lg font-medium text-dark-100 transition delay-200 duration-200 ease-in-out hover:bg-red-600"
               type="submit"
               onClick={() => {
                 resetActiveTaskTimer();
@@ -230,10 +230,10 @@ export const SyncTasksConfirmationDialog = (props: {
         }}
       >
         <div className="mx-auto mt-12 flex flex-col">
-          <h3 className="text-center text-[22px] font-medium text-zinc-300">
+          <h3 className="text-center text-[22px] font-medium text-dark-300">
             Are you sure you want to sync your tasks?
           </h3>
-          <div className="mx-6 mt-16 text-zinc-500">
+          <div className="mx-6 mt-16 text-dark-500">
             <ul className="list-outside list-disc">
               <li className="mb-4">
                 This will fetch all the tasks that you have created.
@@ -247,7 +247,7 @@ export const SyncTasksConfirmationDialog = (props: {
           </div>
           <div className="mt-12 grid grid-cols-2 gap-x-4">
             <button
-              className="flex h-11 items-center justify-center rounded-lg bg-zinc-600 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:bg-zinc-700"
+              className="flex h-11 items-center justify-center rounded-lg bg-dark-600 text-lg font-medium text-dark-200 transition delay-200 duration-200 ease-in-out hover:bg-dark-700"
               onClick={() => {
                 setActionMenuOpen(false);
                 setDialogOpen(false);
@@ -256,7 +256,7 @@ export const SyncTasksConfirmationDialog = (props: {
               Cancel
             </button>
             <button
-              className="flex h-11 items-center justify-center rounded-lg bg-sky-500 text-lg font-medium text-zinc-100 transition delay-200 duration-200 ease-in-out hover:bg-sky-600"
+              className="flex h-11 items-center justify-center rounded-lg bg-sky-500 text-lg font-medium text-dark-100 transition delay-200 duration-200 ease-in-out hover:bg-sky-600"
               type="submit"
               onClick={() => {
                 setStartSync(true);

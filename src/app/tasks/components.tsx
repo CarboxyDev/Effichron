@@ -28,7 +28,7 @@ export const TaskListView = () => {
           <div
             key={task.id}
             className={cn(
-              'group h-24 w-full rounded-lg border border-zinc-800 bg-zinc-900 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:border-zinc-700 md:mx-0 md:h-28 md:w-160'
+              'group h-24 w-full rounded-lg border border-dark-800 bg-dark-900 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:border-dark-700 md:mx-0 md:h-28 md:w-160'
             )}
           >
             <div className="ml-5 flex h-full flex-row items-center md:ml-7">
@@ -37,7 +37,7 @@ export const TaskListView = () => {
                   className="h-9 w-9 rounded-full group-hover:animate-pulse md:h-12 md:w-12"
                   style={{ backgroundColor: task.color }}
                 ></div>
-                <div className="flex items-center text-base text-zinc-300 md:text-lg">
+                <div className="flex items-center text-base text-dark-300 md:text-lg">
                   {task.name}
                   {isDemoTask && (
                     <span className="ml-4">
@@ -69,7 +69,7 @@ const TaskMoreOptionsButton = (props: TaskDropdownMenuProps) => {
         <DropdownMenu.Trigger asChild>
           <Icon
             icon="material-symbols:more-vert"
-            className="ml-auto mr-5 h-6 w-6 text-zinc-600 hover:cursor-pointer hover:text-zinc-700 md:mr-7"
+            className="ml-auto mr-5 h-6 w-6 text-dark-600 hover:cursor-pointer hover:text-dark-700 md:mr-7"
           ></Icon>
         </DropdownMenu.Trigger>
         <TaskDropdownMenu task={task} actions={{ deleteFn: deleteTaskFn }} />

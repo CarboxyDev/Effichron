@@ -90,18 +90,18 @@ export const CreateTaskDialog = (props: {
       >
         <div className="mx-auto mt-12 flex flex-col">
           <div>
-            <label className="mx-1 text-lg font-medium text-zinc-500">
+            <label className="mx-1 text-lg font-medium text-dark-500">
               Name
             </label>
             <input
               type="text"
-              className="mt-3 h-12 w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:border-zinc-700 focus:outline-none"
+              className="mt-3 h-12 w-full rounded-lg border border-dark-800 bg-dark-900 px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:border-dark-700 focus:outline-none"
               placeholder={taskName || 'Untitled'}
               onChange={(e) => setTaskName(e.target.value)}
             />
           </div>
           <div className="mt-8">
-            <label className="mx-1 text-lg font-medium text-zinc-500">
+            <label className="mx-1 text-lg font-medium text-dark-500">
               Color
             </label>
             <div className="mt-3 flex flex-row items-center">
@@ -112,7 +112,7 @@ export const CreateTaskDialog = (props: {
               ></div>
               <input
                 type="text"
-                className="flex h-12 flex-grow rounded-lg border border-zinc-800 bg-transparent bg-zinc-900 px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:border-zinc-700 focus:outline-none"
+                className="flex h-12 flex-grow rounded-lg border border-dark-800 bg-dark-900 bg-transparent px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:border-dark-700 focus:outline-none"
                 placeholder={(color || '#8b5cf6').toUpperCase()}
                 onChange={(e) => {
                   setColor(e.target.value);
@@ -121,7 +121,7 @@ export const CreateTaskDialog = (props: {
             </div>
           </div>
           <button
-            className="mt-12 flex h-11 items-center justify-center rounded-lg bg-violet-500 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-violet-600"
+            className="mt-12 flex h-11 items-center justify-center rounded-lg bg-primary-500 text-lg font-medium text-dark-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-primary-600"
             type="submit"
             onClick={() => {
               createTask(taskName, color);
@@ -245,18 +245,18 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
         >
           <div className="mx-auto mt-12 flex flex-col">
             <div>
-              <label className="mx-1 text-lg font-medium text-zinc-500">
+              <label className="mx-1 text-lg font-medium text-dark-500">
                 Name
               </label>
               <input
                 type="text"
-                className="mt-3 h-12 w-full rounded-lg bg-zinc-900 px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:outline-violet-500"
+                className="mt-3 h-12 w-full rounded-lg bg-dark-900 px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:outline-primary-500"
                 placeholder={task.name}
                 onChange={(e) => setTaskName(e.target.value)}
               />
             </div>
             <div className="mt-8">
-              <label className="mx-1 text-lg font-medium text-zinc-500">
+              <label className="mx-1 text-lg font-medium text-dark-500">
                 Color
               </label>
               <div className="mt-3 flex flex-row items-center">
@@ -267,7 +267,7 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
                 ></div>
                 <input
                   type="text"
-                  className="flex h-12 flex-grow rounded-lg bg-transparent bg-zinc-900 px-3 py-3 text-lg text-zinc-500 selection:bg-violet-500 selection:text-zinc-200 placeholder:text-zinc-600 focus:outline-violet-500"
+                  className="flex h-12 flex-grow rounded-lg bg-dark-900 bg-transparent px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:outline-primary-500"
                   placeholder={color.toUpperCase()}
                   onChange={(e) => {
                     setColor(e.target.value);
@@ -276,7 +276,7 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
               </div>
             </div>
             <button
-              className="mt-12 flex h-11 items-center justify-center rounded-lg bg-violet-500 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-violet-600"
+              className="mt-12 flex h-11 items-center justify-center rounded-lg bg-primary-500 text-lg font-medium text-dark-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-primary-600"
               type="submit"
               onClick={() => editTask()}
             >
@@ -343,14 +343,14 @@ export const DeleteTaskDialog = (props: DeleteTaskDialogProps) => {
         <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
         <DialogTemplate title="Delete Task">
           <div className="mx-auto mt-12 flex flex-col">
-            <h3 className="text-center text-[22px] font-medium text-zinc-300">
+            <h3 className="text-center text-[22px] font-medium text-dark-300">
               Are you sure you want to delete this task?
             </h3>
-            <div className="mx-6 mt-16 text-zinc-500">
+            <div className="mx-6 mt-16 text-dark-500">
               <ul className="list-outside list-disc">
                 <li>
                   You are deleting the task{' '}
-                  <span className="text-violet-400">{task.name}</span>.
+                  <span className="text-primary-400">{task.name}</span>.
                 </li>
                 <li>
                   This task and it&apos;s associated timer will be deleted
@@ -364,7 +364,7 @@ export const DeleteTaskDialog = (props: DeleteTaskDialogProps) => {
             </div>
 
             <button
-              className="mt-12 flex h-11 items-center justify-center rounded-lg bg-violet-500 text-lg font-medium text-zinc-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-violet-600"
+              className="mt-12 flex h-11 items-center justify-center rounded-lg bg-primary-500 text-lg font-medium text-dark-200 transition delay-200 duration-200 ease-in-out hover:scale-105 hover:bg-primary-600"
               type="submit"
               onClick={() => deleteTask()}
             >

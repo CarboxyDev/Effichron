@@ -21,7 +21,7 @@ export const Badge = (props: BadgeProps) => {
 
   return (
     <>
-      <span className="rounded-[4px] border border-transparent bg-violet-500 px-3 py-1 text-xs font-light transition delay-300 duration-300 ease-in hover:border-violet-500 hover:bg-transparent hover:text-violet-500">
+      <span className="rounded-[4px] border border-transparent bg-primary-500 px-3 py-1 text-xs font-light transition delay-300 duration-300 ease-in hover:border-primary-500 hover:bg-transparent hover:text-primary-500">
         {text}
       </span>
     </>
