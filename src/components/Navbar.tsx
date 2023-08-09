@@ -8,16 +8,26 @@ import { Session } from 'next-auth';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { redirect, useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { LoadingSpinner } from './Loading';
 import { BetaBadge } from './Other';
 
 interface ProfileDropdownMenuProps {
   setUserIsSigningOut: Dispatch<SetStateAction<boolean>>;
+  userIsSignedIn: boolean;
 }
 
 const ProfileDropdownMenu = (props: ProfileDropdownMenuProps) => {
-  const { setUserIsSigningOut } = props;
+  const { setUserIsSigningOut, userIsSignedIn } = props;
+  const router = useRouter();
+  const [redirectUser, setRedirectUser] = useState(false);
+
+  useEffect(() => {
+    if (redirectUser) {
+      redirect(CONFIG.SIGN_IN_URL);
+    }
+  }, [router, redirectUser]);
 
   return (
     <DropdownMenu.Portal>
@@ -47,16 +57,29 @@ const ProfileDropdownMenu = (props: ProfileDropdownMenuProps) => {
             <div className="text-zinc-300">History</div>
           </DropdownMenu.Item>
         </Link>
-        <DropdownMenu.Item
-          onClick={async () => {
-            signOut({ callbackUrl: '/signout' });
-            setUserIsSigningOut(true);
-          }}
-          className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none"
-        >
-          <Icon icon="mdi:sign-out" className="h-5 w-5 text-zinc-600"></Icon>
-          <div className="text-zinc-500">Sign out</div>
-        </DropdownMenu.Item>
+        {userIsSignedIn && (
+          <DropdownMenu.Item
+            onClick={async () => {
+              signOut({ callbackUrl: '/signout' });
+              setUserIsSigningOut(true);
+            }}
+            className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none"
+          >
+            <Icon icon="mdi:sign-out" className="h-5 w-5 text-zinc-600"></Icon>
+            <div className="text-zinc-500">Sign out</div>
+          </DropdownMenu.Item>
+        )}
+        {!userIsSignedIn && (
+          <DropdownMenu.Item
+            onClick={async () => {
+              setRedirectUser(true);
+            }}
+            className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-800 hover:outline-none"
+          >
+            <Icon icon="mdi:sign-in" className="h-5 w-5 text-zinc-300"></Icon>
+            <div className="text-zinc-300">Sign in</div>
+          </DropdownMenu.Item>
+        )}
       </DropdownMenu.Content>
     </DropdownMenu.Portal>
   );
@@ -90,14 +113,20 @@ const Navbar = (props: NavbarProps) => {
         )}
         <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 hover:cursor-pointer">
           {status === 'unauthenticated' && (
-            <Link href={CONFIG.SIGN_IN_URL}>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full">
-                <Icon
-                  icon="ep:user-filled"
-                  className={cn('h-5 w-5 text-zinc-400')}
-                />
-              </div>
-            </Link>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger className="focus:outline-none">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full">
+                  <Icon
+                    icon="ep:user-filled"
+                    className={cn('h-5 w-5 text-zinc-400')}
+                  />
+                </div>
+              </DropdownMenu.Trigger>{' '}
+              <ProfileDropdownMenu
+                userIsSignedIn={false}
+                setUserIsSigningOut={setUserIsSigningOut}
+              />
+            </DropdownMenu.Root>
           )}
           {status === 'loading' && <></>}
           {status === 'authenticated' && (
@@ -118,7 +147,10 @@ const Navbar = (props: NavbarProps) => {
                   </div>
                 )}
               </DropdownMenu.Trigger>
-              <ProfileDropdownMenu setUserIsSigningOut={setUserIsSigningOut} />
+              <ProfileDropdownMenu
+                userIsSignedIn={true}
+                setUserIsSigningOut={setUserIsSigningOut}
+              />
             </DropdownMenu.Root>
           )}
         </div>
