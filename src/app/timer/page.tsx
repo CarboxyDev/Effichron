@@ -1,8 +1,7 @@
 'use client';
 
-import Footer from '@/components/Footer';
 import { LoadingPropagateSpinner, LoadingSpinner } from '@/components/Loading';
-import Navbar from '@/components/Navbar';
+import { PageWrapper } from '@/components/PageWrapper';
 import { useAddTask, useSetActiveTask } from '@/lib/store/useTasks';
 import {
   checkIfUserLacksTasks,
@@ -16,7 +15,6 @@ import { getErrorMessage } from '@/utils/api';
 import { notify } from '@/utils/notify';
 import { sleep } from '@/utils/util';
 import { useEffect, useState } from 'react';
-import { Toaster } from 'react-hot-toast';
 import { ActionButton, TaskList, Timer } from './components';
 
 export default function TimerPage() {
@@ -72,34 +70,31 @@ export default function TimerPage() {
   }, [addTaskToStore, setActiveTask]);
 
   return (
-    <main className="flex flex-col">
-      <Toaster position="top-left" />
-      <Navbar variant="with-minimal-branding" />
-      <div className="mt-24 md:mt-40">
-        <Timer />
-        <div className="mt-24"></div>
-        {loading && !newUserJoined && (
-          <div className="flex items-center justify-center">
-            <LoadingSpinner />
-          </div>
-        )}
-        {loading && newUserJoined && (
-          <div className="flex flex-col items-center justify-center">
-            <span className="text-2xl text-violet-100">
-              Generating demo tasks...
-            </span>
-            <div className="mt-12">
-              <LoadingPropagateSpinner size={16} />
-            </div>
-          </div>
-        )}
-        {!loading && <TaskList />}
-        <div className="mt-24"></div>
-        <div className="fixed bottom-4 right-4">
-          <ActionButton />
+    <PageWrapper
+      navbarProps={{ variant: 'with-minimal-branding', drawDivider: false }}
+    >
+      <div className="mt-24 md:mt-48"></div>
+      <Timer />
+      <div className="mt-24"></div>
+      {loading && !newUserJoined && (
+        <div className="flex items-center justify-center">
+          <LoadingSpinner />
         </div>
+      )}
+      {loading && newUserJoined && (
+        <div className="flex flex-col items-center justify-center">
+          <span className="text-2xl text-violet-100">
+            Generating demo tasks...
+          </span>
+          <div className="mt-12">
+            <LoadingPropagateSpinner size={16} />
+          </div>
+        </div>
+      )}
+      {!loading && <TaskList />}
+      <div className="fixed bottom-4 right-4">
+        <ActionButton />
       </div>
-      <Footer />
-    </main>
+    </PageWrapper>
   );
 }

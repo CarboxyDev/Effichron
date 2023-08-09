@@ -86,9 +86,11 @@ const ProfileDropdownMenu = (props: ProfileDropdownMenuProps) => {
 };
 
 type userSessionStatus = 'authenticated' | 'loading' | 'unauthenticated';
+export type NavbarVariants = 'with-branding' | 'with-minimal-branding';
 
 interface NavbarProps {
-  variant?: 'with-branding' | 'with-minimal-branding';
+  variant?: NavbarVariants;
+  drawDivider?: boolean;
   userSession?: {
     session: Session | null;
     status: userSessionStatus;
@@ -96,14 +98,14 @@ interface NavbarProps {
 }
 
 const Navbar = (props: NavbarProps) => {
-  const { variant } = props;
+  const { variant, drawDivider } = props;
   const { data: session, status } = useSession();
 
   const [userIsSigningOut, setUserIsSigningOut] = useState(false);
 
   return (
     <>
-      <div className="flex w-full select-none flex-row items-center px-4 py-4">
+      <div className="mt-4 flex w-full select-none flex-row items-center">
         {variant === 'with-branding' && (
           <Link href="/">
             <h2 className="text-md font-semibold text-zinc-200 md:text-lg">
@@ -173,6 +175,7 @@ const Navbar = (props: NavbarProps) => {
           )}
         </div>
       </div>
+      {drawDivider && <div className="mt-2 h-px bg-zinc-900 md:mt-6"></div>}
     </>
   );
 };
