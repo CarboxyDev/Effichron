@@ -13,7 +13,6 @@ import { CreateTaskDialog } from './dialogs';
 import { TaskDropdownMenu, TaskDropdownMenuProps } from './dropdowns';
 
 export const TaskListView = () => {
-  console.log('Render TaskListView');
   const tasks = useStore(useGetTasks, (state) => state) as Task[];
   const deleteTaskFn = useDeleteTask();
 
@@ -54,7 +53,10 @@ export const TaskListView = () => {
           </div>
         );
       })}
-      <CreateTaskButton />
+      {
+        /* This is done to prevent layout shift when the tasks are loaded */
+        tasks && <CreateTaskButton />
+      }
     </>
   );
 };
