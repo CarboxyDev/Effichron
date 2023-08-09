@@ -133,6 +133,34 @@ export const retainTaskProgress = (serverTasks: Task[]): Task[] => {
   return updatedTasks;
 };
 
+/** This method returns two local demo tasks for the user. These demo tasks have limited interaction with the server */
+export const getDemoTasks = (): Task[] => {
+  const demoTasks: Task[] = [
+    {
+      id: 'demo-1',
+      name: 'Writing',
+      color: '#0ea5e9',
+      isTimerRunning: false,
+      duration: 0,
+      timerTimestamps: [],
+      sortPriority: 0,
+      version: CONFIG.LATEST_TASK_VERSION,
+    },
+    {
+      id: 'demo-2',
+      name: 'Reading',
+      color: '#ec4899',
+      isTimerRunning: false,
+      duration: 0,
+      timerTimestamps: [],
+      sortPriority: 0,
+      version: CONFIG.LATEST_TASK_VERSION,
+    },
+  ];
+
+  return demoTasks;
+};
+
 /**
   ! Potentially destructive action, use with caution.
   This clears all the tasks in the user's local stores which could result in loss of progress if not handled properly.

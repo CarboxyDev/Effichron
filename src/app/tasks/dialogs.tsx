@@ -200,6 +200,14 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
   });
 
   const editTask = () => {
+    const isDemoTask = task.id.includes('demo');
+    if (isDemoTask) {
+      notify('You cannot edit a demo task', 'warning');
+      if (setOpen) {
+        setOpen(false);
+      }
+      return;
+    }
     // These checks are also implemented server side
     if (taskName.length === 0) {
       setTaskName('Untitled');
@@ -316,7 +324,14 @@ export const DeleteTaskDialog = (props: DeleteTaskDialogProps) => {
   });
 
   const deleteTask = () => {
-    deleteTaskMutation.mutate(task.id);
+    const isDemoTask = task.id.includes('demo');
+    if (isDemoTask) {
+      deleteTaskFn(task.id);
+      notify('Deleted the demo task', 'success');
+    } else {
+      deleteTaskMutation.mutate(task.id);
+    }
+
     if (setOpen) {
       setOpen(false);
     }

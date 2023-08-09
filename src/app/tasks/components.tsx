@@ -1,5 +1,6 @@
 'use client';
 
+import { Badge } from '@/components/Other';
 import { useStore } from '@/lib/store/useStore';
 import { useDeleteTask, useGetTasks } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
@@ -19,6 +20,10 @@ export const TaskListView = () => {
   return (
     <>
       {tasks?.map((task) => {
+        let isDemoTask = false;
+        if (task.id.includes('demo')) {
+          isDemoTask = true;
+        }
         return (
           <div
             key={task.id}
@@ -32,8 +37,13 @@ export const TaskListView = () => {
                   className="h-9 w-9 rounded-full group-hover:animate-pulse md:h-12 md:w-12"
                   style={{ backgroundColor: task.color }}
                 ></div>
-                <div className="text-base text-zinc-300 md:text-lg">
+                <div className="flex items-center text-base text-zinc-300 md:text-lg">
                   {task.name}
+                  {isDemoTask && (
+                    <span className="ml-4">
+                      <Badge text="DEMO" />
+                    </span>
+                  )}
                 </div>
               </div>
               <TaskMoreOptionsButton
