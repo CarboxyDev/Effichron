@@ -107,6 +107,13 @@ const Navbar = (props: NavbarProps) => {
         {variant === 'with-branding' && (
           <Link href="/">
             <h2 className="text-md font-semibold text-zinc-200 md:text-lg">
+              <Image
+                height={36}
+                width={36}
+                className="mr-1 inline"
+                src={'/logo.png'}
+                alt={'logo'}
+              />{' '}
               Effichron <BetaBadge />
             </h2>
           </Link>
