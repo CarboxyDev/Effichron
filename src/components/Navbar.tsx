@@ -107,7 +107,7 @@ const Navbar = (props: NavbarProps) => {
         {variant === 'with-branding' && (
           <Link href="/">
             <h2 className="text-md font-semibold text-zinc-200 md:text-lg">
-              Productivity Tracker <BetaBadge />
+              Effichron <BetaBadge />
             </h2>
           </Link>
         )}

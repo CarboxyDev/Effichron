@@ -8,13 +8,13 @@ import '../styles/globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Productivity Tracker',
+  title: 'Effichron',
   description:
     'An opinionated productivity tracking app meant for tracking the duration of your personal sessions for any task. Loaded with features to help you increase your productivity.',
   authors: [{ name: 'CarboxyDev', url: 'https://carboxy.me' }],
   category: 'Productivity tool',
   colorScheme: 'dark',
-  keywords: ['productivity', 'tool', 'improve', 'tasks'],
+  keywords: ['productivity', 'tool', 'timer', 'tasks'],
 };
 
 export default function RootLayout(props: { children: React.ReactNode }) {

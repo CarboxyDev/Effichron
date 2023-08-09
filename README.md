@@ -1,8 +1,9 @@
-# Productivity Tracker
+# Effichron
 
 ## About
 
 A productivity tracking app meant for tracking the duration of your personal tasks and saving their progress online as sessions.
+The name is derived from the words Efficiency and Chron which means time in greek.
 
 ## Features
 

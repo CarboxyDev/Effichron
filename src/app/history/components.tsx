@@ -58,8 +58,8 @@ export const SessionHistoryContainer = () => {
 
   if (status === 'error') {
     return (
-      <span className="text-zinc-400">
-        Unable to fetch history: {getErrorMessage(error as Error)}
+      <span className="text-xl text-zinc-200">
+        {getErrorMessage(error as Error)}
       </span>
     );
   }
