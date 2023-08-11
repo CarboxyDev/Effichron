@@ -11,7 +11,24 @@ module.exports = {
     extend: {
       colors: {
         primary: colors.violet,
-        dark: colors.zinc,
+        dark: {
+          ...colors.zinc,
+          950: '#0F0F0F',
+        },
+        /* Potential alternative theme for the whole website */
+        purplegray: {
+          50: '#f2f6fb',
+          100: '#e8eef7',
+          200: '#d5e0f0',
+          300: '#bccbe5',
+          400: '#a0b0d9',
+          500: '#8896cc',
+          600: '#727cbd',
+          700: '#5e66a4',
+          800: '#4e5585',
+          900: '#444a6b',
+          950: '#272a3f',
+        },
       },
       spacing: {
         15: '60px',
