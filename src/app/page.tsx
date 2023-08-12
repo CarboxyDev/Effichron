@@ -1,6 +1,7 @@
 'use client';
 
 import { PageWrapper } from '@/components/PageWrapper';
+import { HowItWorksSection } from '@/components/home/HowItWorksSection';
 import { cn } from '@/utils/util';
 import { Poppins } from 'next/font/google';
 import Link from 'next/link';
@@ -10,7 +11,7 @@ const headingFont = Poppins({ subsets: ['latin'], weight: ['600'] });
 export default function HomePage() {
   return (
     <PageWrapper navbarProps={{ variant: 'with-branding', drawDivider: true }}>
-      <div className="mt-24 flex flex-row md:mt-40">
+      <div className="mt-24 md:mt-40">
         <div className="md:max-w-2xl">
           <h1
             className={cn(
@@ -32,6 +33,7 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
+      <HowItWorksSection />
     </PageWrapper>
   );
 }
