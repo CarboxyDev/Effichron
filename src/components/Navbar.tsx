@@ -108,26 +108,24 @@ const Navbar = (props: NavbarProps) => {
       <div className="mt-4 flex w-full select-none flex-row items-center">
         {variant === 'with-branding' && (
           <Link href="/">
-            <h2 className="text-md font-semibold text-dark-200 md:text-lg">
-              <Image
-                height={36}
-                width={36}
-                className="mr-1 inline"
-                src={'/logo.png'}
-                alt={'logo'}
-              />{' '}
-              Effichron <BetaBadge />
-            </h2>
+            <Image
+              height={32}
+              width={32}
+              className="mr-4 inline"
+              src="/logo.png"
+              alt="logo"
+            />
+            <BetaBadge />
           </Link>
         )}
         {variant === 'with-minimal-branding' && (
           <Link href="/">
             <Image
-              height={36}
-              width={36}
+              height={32}
+              width={32}
               className="inline"
-              src={'/logo.png'}
-              alt={'logo'}
+              src="/logo.png"
+              alt="logo"
             />
           </Link>
         )}
@@ -175,7 +173,7 @@ const Navbar = (props: NavbarProps) => {
           )}
         </div>
       </div>
-      {drawDivider && <div className="mt-4 h-px bg-dark-900 md:mt-8"></div>}
+      {drawDivider && <div className="mt-4 h-px bg-dark-900 md:mt-6"></div>}
     </>
   );
 };
