@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { redirect, useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { LoadingSpinner } from './Loading';
+import { Logo } from './Logo';
 import { BetaBadge } from './Other';
 
 interface ProfileDropdownMenuProps {
@@ -108,25 +109,13 @@ const Navbar = (props: NavbarProps) => {
       <div className="mt-4 flex w-full select-none flex-row items-center">
         {variant === 'with-branding' && (
           <Link href="/">
-            <Image
-              height={32}
-              width={32}
-              className="mr-4 inline"
-              src="/logo.png"
-              alt="logo"
-            />
+            <Logo className="mr-4 inline" />
             <BetaBadge />
           </Link>
         )}
         {variant === 'with-minimal-branding' && (
           <Link href="/">
-            <Image
-              height={32}
-              width={32}
-              className="inline"
-              src="/logo.png"
-              alt="logo"
-            />
+            <Logo className="inline" />
           </Link>
         )}
         <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-dark-900 hover:cursor-pointer">
