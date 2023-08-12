@@ -1,6 +1,7 @@
 'use client';
 
 import { PageWrapper } from '@/components/PageWrapper';
+import { CTA } from '@/components/home/CTA';
 import { HowItWorksSection } from '@/components/home/HowItWorksSection';
 import { cn } from '@/utils/util';
 import { Poppins } from 'next/font/google';
@@ -33,7 +34,12 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
+      <div className="mt-60 md:mt-100"></div>
       <HowItWorksSection />
+      <div className="mt-40 md:mt-60"></div>
+      <div className="mb-20 h-px bg-dark-900"></div>
+      <CTA />
+      <div className="mt-20 h-px bg-dark-900"></div>
     </PageWrapper>
   );
 }

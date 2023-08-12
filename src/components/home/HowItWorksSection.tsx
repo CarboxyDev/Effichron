@@ -87,7 +87,7 @@ const WorkingExplanationGrid = () => {
 export const HowItWorksSection = () => {
   return (
     <>
-      <div className="mt-100">
+      <div>
         <h3 className="magic-text text-3xl font-semibold md:text-[44px]">
           How does it work?
         </h3>
