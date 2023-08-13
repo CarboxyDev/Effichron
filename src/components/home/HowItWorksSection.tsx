@@ -15,8 +15,7 @@ export const ExplanationCard = (props: ExplanationCardProps) => {
     <>
       <div
         className={cn(
-          'w-80 rounded-xl border border-dark-700 bg-dark-900 transition duration-500 ease-in-out hover:scale-105 hover:border-dark-800',
-          order === 4 && 'md:row-start-2'
+          'w-80 rounded-xl border border-dark-700 bg-dark-900 transition duration-500 ease-in-out hover:scale-105 hover:border-dark-800'
         )}
       >
         <div className="flex flex-col p-8">
@@ -67,7 +66,7 @@ const WorkingExplanationGrid = () => {
   ];
   return (
     <>
-      <div className="grid w-fit grid-cols-1 place-items-center gap-16 align-middle md:grid-cols-2 md:gap-50">
+      <div className="grid w-fit grid-cols-1 place-items-center gap-16 align-middle md:grid-cols-4 md:gap-24">
         {explanationCards.map((card) => {
           return (
             <ExplanationCard
