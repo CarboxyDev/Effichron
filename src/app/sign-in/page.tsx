@@ -5,6 +5,7 @@ import { PageWrapper } from '@/components/PageWrapper';
 import { Icon } from '@iconify/react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 const SignInItem = (props: {
   brand: string;
@@ -27,6 +28,9 @@ const SignInItem = (props: {
 };
 
 export default function SignInPage() {
+  const searchParams = useSearchParams();
+  const nextAuthError = searchParams.get('error');
+
   return (
     <PageWrapper navbarProps={null}>
       <div className="mt-50 flex flex-col items-center">
