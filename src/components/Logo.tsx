@@ -16,7 +16,7 @@ export const Logo = (props: LogoProps) => {
         width={size || 32}
         className={cn(
           className,
-          'transition delay-300 duration-1000 ease-in-out hover:rotate-180'
+          'transition delay-300 duration-1000 ease-in-out hover:rotate-180 hover:cursor-pointer'
         )}
         src="/logo.png"
         alt="logo"

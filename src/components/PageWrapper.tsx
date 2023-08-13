@@ -11,7 +11,7 @@ interface WrapperNavbarProps {
 /** This component is used to wrap contents of a page for adjusting the layout spacing in different devices */
 export const PageWrapper = (props: {
   children: React.ReactNode;
-  navbarProps: WrapperNavbarProps;
+  navbarProps: WrapperNavbarProps | null;
 }) => {
   const children = props.children;
   const navbarVariant = props.navbarProps?.variant;
@@ -21,7 +21,9 @@ export const PageWrapper = (props: {
     <>
       <Toaster position="top-left" />
       <div className="mx-4 md:mx-16 lg:mx-25">
-        <Navbar variant={navbarVariant} drawDivider={navbarDrawDivider} />
+        {props.navbarProps != null && (
+          <Navbar variant={navbarVariant} drawDivider={navbarDrawDivider} />
+        )}
         <main className="flex flex-col">{children}</main>
         <div className="mt-24"></div>
         <Footer />
