@@ -48,5 +48,7 @@ export const authOptions: NextAuthOptions = {
     strategy: 'database',
     maxAge: 30 * 24 * 60 * 60,
   },
-  pages: {},
+  pages: {
+    signIn: '/sign-in',
+  },
 };
