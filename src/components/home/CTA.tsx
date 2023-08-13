@@ -4,7 +4,7 @@ export const CTA = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center">
-        <h3 className="text-gradient-1 py-2 text-center text-3xl font-semibold md:text-[46px]">
+        <h3 className="text-gradient-1 md:magic-text py-2 text-center text-3xl font-semibold md:text-[46px]">
           Ready to become more productive?
         </h3>
         <div>

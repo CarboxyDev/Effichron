@@ -88,7 +88,7 @@ export const HowItWorksSection = () => {
   return (
     <>
       <div>
-        <h3 className="magic-text text-3xl font-semibold md:text-[44px]">
+        <h3 className="text-gradient-1 text-3xl font-semibold md:text-[44px]">
           How does it work?
         </h3>
         <div className="mt-30 flex justify-center">
