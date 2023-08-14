@@ -109,7 +109,7 @@ const Navbar = (props: NavbarProps) => {
       <div className="mt-4 flex w-full select-none flex-row items-center">
         {variant === 'with-branding' && (
           <Link href="/">
-            <Logo className="mr-4 inline" />
+            <Logo className="mr-4 inline" hoverAnimation={true} />
             <BetaBadge />
           </Link>
         )}

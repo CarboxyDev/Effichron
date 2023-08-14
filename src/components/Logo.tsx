@@ -4,10 +4,11 @@ import Image from 'next/image';
 interface LogoProps {
   className?: string;
   size?: number;
+  hoverAnimation?: boolean;
 }
 
 export const Logo = (props: LogoProps) => {
-  const { className, size } = props;
+  const { className, size, hoverAnimation } = props;
 
   return (
     <>
@@ -16,7 +17,8 @@ export const Logo = (props: LogoProps) => {
         width={size || 32}
         className={cn(
           className,
-          'transition delay-300 duration-1000 ease-in-out hover:rotate-180 hover:cursor-pointer'
+          hoverAnimation && 'hover:rotate-180',
+          'transition delay-300 duration-1000 ease-in-out hover:cursor-pointer'
         )}
         src="/logo.png"
         alt="logo"

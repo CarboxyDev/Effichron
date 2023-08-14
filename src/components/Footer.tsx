@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="mx-auto my-10 flex w-fit flex-col items-center">
           <p className="text-dark-200">
             <Link href="/">
-              <Logo className="mr-2 inline" />
+              <Logo className="mr-2 inline" hoverAnimation={true} />
             </Link>
             <span className="text-medium mr-2">Effichron</span>
             <BetaBadge />
