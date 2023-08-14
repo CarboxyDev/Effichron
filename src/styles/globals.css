@@ -5,6 +5,7 @@
 :root {
   --blue-400: #76aaff;
   --blue-500: #3b82f6;
+  --sky-500: #0ea5e9;
   --violet-400: #a78bfa;
   --violet-500: #8b5cf6;
   --indigo-500: #6366f1;
@@ -31,17 +32,17 @@ input:focus {
   background: -webkit-linear-gradient(
     to right,
     var(--violet-500) 0%,
-    var(--indigo-500) 100%
+    var(--sky-500) 100%
   );
   background: -moz-linear-gradient(
     to right,
     var(--violet-500) 0%,
-    var(--indigo-500) 100%
+    var(--sky-500) 100%
   );
   background: linear-gradient(
     to right,
     var(--violet-500) 0%,
-    var(--indigo-500) 100%
+    var(--sky-500) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -84,7 +85,7 @@ input:focus {
     to right,
     var(--violet-500),
     var(--violet-400),
-    var(--blue-500),
+    var(--sky-500),
     var(--violet-500)
   );
   background-size: 200%;
@@ -98,7 +99,7 @@ input:focus {
     to right,
     var(--violet-500),
     var(--indigo-500),
-    var(--blue-500),
+    var(--sky-500),
     var(--violet-500)
   );
   background-size: 200%;
