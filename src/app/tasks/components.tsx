@@ -9,6 +9,7 @@ import { Icon } from '@iconify/react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useState } from 'react';
+import { SyncTasksConfirmationDialog } from '../timer/dialogs';
 import { CreateTaskDialog } from './dialogs';
 import { TaskDropdownMenu, TaskDropdownMenuProps } from './dropdowns';
 
@@ -55,7 +56,12 @@ export const TaskListView = () => {
       })}
       {
         /* This is done to prevent layout shift when the tasks are loaded */
-        tasks && <CreateTaskButton />
+        tasks && (
+          <>
+            <CreateTaskButton />
+            <SyncTasksButton />
+          </>
+        )
       }
     </>
   );
@@ -97,6 +103,31 @@ export const CreateTaskButton = () => {
           </div>
         </Dialog.Trigger>
         <CreateTaskDialog setOpen={setOpen} />
+      </Dialog.Root>
+    </>
+  );
+};
+
+export const SyncTasksButton = () => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  return (
+    <>
+      <Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
+        <Dialog.Trigger asChild>
+          <div
+            title="Sync tasks"
+            className={cn(
+              'group flex h-24 w-full items-center justify-center rounded-lg bg-transparent text-sky-500 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:scale-105 hover:cursor-pointer hover:bg-sky-500 hover:text-white md:mx-0 md:h-28 md:w-160'
+            )}
+          >
+            <span className="text-lg font-semibold">SYNC TASKS</span>
+          </div>
+        </Dialog.Trigger>
+        <SyncTasksConfirmationDialog
+          setDialogOpen={setDialogOpen}
+          setActionMenuOpen={null}
+        />
       </Dialog.Root>
     </>
   );

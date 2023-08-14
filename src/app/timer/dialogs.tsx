@@ -165,7 +165,7 @@ export const ResetActiveTaskConfirmationDialog = (props: {
 };
 
 export const SyncTasksConfirmationDialog = (props: {
-  setActionMenuOpen: Dispatch<SetStateAction<boolean>>;
+  setActionMenuOpen: Dispatch<SetStateAction<boolean>> | null;
   setDialogOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { setActionMenuOpen, setDialogOpen } = props;
@@ -209,7 +209,9 @@ export const SyncTasksConfirmationDialog = (props: {
     if (startSync) {
       syncTasks();
       setDialogOpen(false);
-      setActionMenuOpen(false);
+      if (setActionMenuOpen) {
+        setActionMenuOpen(false);
+      }
     }
   }, [
     addTaskToStore,
@@ -225,7 +227,9 @@ export const SyncTasksConfirmationDialog = (props: {
         title="Sync Tasks"
         dialogContentMethods={{
           onInteractOutside: () => {
-            setActionMenuOpen(false);
+            if (setActionMenuOpen) {
+              setActionMenuOpen(false);
+            }
           },
         }}
       >
@@ -249,7 +253,9 @@ export const SyncTasksConfirmationDialog = (props: {
             <button
               className="flex h-11 items-center justify-center rounded-lg bg-dark-600 text-lg font-medium text-dark-200 transition delay-200 duration-200 ease-in-out hover:bg-dark-700"
               onClick={() => {
-                setActionMenuOpen(false);
+                if (setActionMenuOpen) {
+                  setActionMenuOpen(false);
+                }
                 setDialogOpen(false);
               }}
             >
