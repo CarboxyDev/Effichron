@@ -13,7 +13,7 @@ module.exports = {
         primary: colors.violet,
         dark: {
           ...colors.zinc,
-          950: '#0F0F0F',
+          950: '#121212',
         },
         /* Potential alternative theme for the whole website */
         purplegray: {
