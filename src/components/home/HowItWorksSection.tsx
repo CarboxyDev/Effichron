@@ -15,13 +15,17 @@ export const ExplanationCard = (props: ExplanationCardProps) => {
     <>
       <div
         className={cn(
-          'w-80 rounded-xl border border-dark-700 bg-dark-900 transition duration-500 ease-in-out hover:scale-105 hover:border-dark-800',
+          'w-80 rounded-xl border border-dark-800 bg-dark-900 shadow-md transition duration-500 ease-in-out hover:scale-105 hover:border-dark-800',
           order === 4 && 'md:row-start-2 xl:row-auto'
         )}
       >
         <div className="flex flex-col p-8">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-400">
-            <Icon icon={iconName} className="h-8 w-8 text-primary-900" />
+          <div
+            className={cn(
+              'flex h-16 w-16 items-center justify-center rounded-full bg-primary-400'
+            )}
+          >
+            <Icon icon={iconName} className={cn('h-8 w-8 text-primary-900')} />
           </div>
           <div className="mt-10">
             <h4 className="text-xl font-medium text-dark-200">{title}</h4>
@@ -87,8 +91,8 @@ const WorkingExplanationGrid = () => {
 export const HowItWorksSection = () => {
   return (
     <>
-      <div>
-        <h3 className="text-gradient-1 text-3xl font-semibold md:text-[44px]">
+      <div className="flex flex-col">
+        <h3 className="text-gradient-1 mx-auto inline text-3xl font-semibold md:text-6xl">
           How does it work?
         </h3>
         <div className="mt-24 flex justify-center md:mt-30">

@@ -13,13 +13,13 @@ export const HeroSection = () => {
           <h1
             className={cn(
               headingFont.className,
-              'text-[28px] font-semibold leading-tight text-dark-100 md:text-[46px]'
+              'text-3xl font-semibold leading-tight text-dark-100 md:text-4xl xl:text-6xl xl:leading-tight'
             )}
           >
-            The secret recipe for a more{' '}
+            The recipe for a more{' '}
             <span className="magic-text">productive you ✨</span>
           </h1>
-          <p className="mt-3 text-lg leading-tight text-dark-300 md:mt-5 md:leading-8 xl:text-xl">
+          <p className="mt-3 text-base leading-tight text-dark-300 md:mt-5 md:text-lg md:leading-8 xl:text-xl">
             Conveniently track your personal tasks and the time you spend on
             them to figure out your main time wasters.
           </p>
