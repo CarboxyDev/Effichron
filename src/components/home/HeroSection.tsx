@@ -9,7 +9,7 @@ export const HeroSection = () => {
   return (
     <>
       <div className="flex flex-row items-center">
-        <div className="md:max-w-2xl">
+        <div className="md:max-w-lg xl:max-w-2xl">
           <h1
             className={cn(
               headingFont.className,

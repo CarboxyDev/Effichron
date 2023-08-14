@@ -1,9 +1,10 @@
 import Link from 'next/link';
+import { FullWidthContainer } from '../PageWrapper';
 
 export const CTA = () => {
   return (
     <>
-      <div className="flex flex-col items-center justify-center">
+      <FullWidthContainer className="flex flex-col items-center justify-center bg-stone-950 py-20">
         <h3 className="text-gradient-1 md:magic-text py-2 text-center text-3xl font-semibold md:text-[46px]">
           Ready to become more productive?
         </h3>
@@ -14,7 +15,7 @@ export const CTA = () => {
             </button>
           </Link>
         </div>
-      </div>
+      </FullWidthContainer>
     </>
   );
 };

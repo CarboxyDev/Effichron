@@ -1,3 +1,4 @@
+import { cn } from '@/utils/util';
 import { Toaster } from 'react-hot-toast';
 import Footer from './Footer';
 import Navbar, { NavbarVariants } from './Navbar';
@@ -20,13 +21,29 @@ export const PageWrapper = (props: {
   return (
     <>
       <Toaster position="top-left" />
-      <div className="mx-4 md:mx-16 lg:mx-25">
+      <div className="mx-4 md:mx-16 lg:mx-25 2xl:mx-36">
         {props.navbarProps != null && (
           <Navbar variant={navbarVariant} drawDivider={navbarDrawDivider} />
         )}
         <main className="flex flex-col">{children}</main>
         <div className="mt-24"></div>
         <Footer />
+      </div>
+    </>
+  );
+};
+
+export const FullWidthContainer = (props: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  const children = props.children;
+  const className = props.className;
+
+  return (
+    <>
+      <div className={cn('-mx-4 md:-mx-16 lg:-mx-25 2xl:-mx-36', className)}>
+        {children}
       </div>
     </>
   );
