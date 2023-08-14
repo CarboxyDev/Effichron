@@ -23,5 +23,24 @@ export async function GET_ADMIN(req: Request, res: Response) {
     );
   }
 
+  if (queryType === 'taskcount') {
+    const taskCount = await prisma.task.count();
+    return SendResponse(
+      JSON.stringify({ data: taskCount, message: 'Fetched the task count' }),
+      200
+    );
+  }
+
+  if (queryType === 'sessionlogcount') {
+    const sessionLogCount = await prisma.sessionLog.count();
+    return SendResponse(
+      JSON.stringify({
+        data: sessionLogCount,
+        message: 'Fetched the sessionlog count',
+      }),
+      200
+    );
+  }
+
   return SendResponse('API endpoint not working yet', 200);
 }
