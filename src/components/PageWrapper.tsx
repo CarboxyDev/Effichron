@@ -21,7 +21,7 @@ export const PageWrapper = (props: {
   return (
     <>
       <Toaster position="top-left" />
-      <div className="mx-4 md:mx-16 lg:mx-25 2xl:mx-36">
+      <div className="mx-4 md:mx-16 lg:mx-25 2xl:mx-44">
         {props.navbarProps != null && (
           <Navbar variant={navbarVariant} drawDivider={navbarDrawDivider} />
         )}
@@ -42,7 +42,7 @@ export const FullWidthContainer = (props: {
 
   return (
     <>
-      <div className={cn('-mx-4 md:-mx-16 lg:-mx-25 2xl:-mx-36', className)}>
+      <div className={cn('-mx-4 md:-mx-16 lg:-mx-25 2xl:-mx-44', className)}>
         {children}
       </div>
     </>

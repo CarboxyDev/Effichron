@@ -10,7 +10,7 @@ export default function HomePage() {
     <PageWrapper navbarProps={{ variant: 'with-branding', drawDivider: true }}>
       <div className="mt-24 md:mt-40"></div>
       <HeroSection />
-      <div className="mt-60 md:mt-100"></div>
+      <div className="mt-60 md:mt-72"></div>
       <HowItWorksSection />
       <div className="mt-40 md:mt-60"></div>
       <FullWidthContainer>

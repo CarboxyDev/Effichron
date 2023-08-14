@@ -54,8 +54,7 @@ export default function TimerPage() {
         </div>
       )}
       {!loading && <TaskList />}
-
-      <div className="fixed bottom-4 right-4 md:right-16 lg:right-25">
+      <div className="fixed bottom-4 right-4 md:right-16 lg:right-25 2xl:right-44">
         <ActionButton />
       </div>
     </PageWrapper>

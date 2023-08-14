@@ -67,7 +67,7 @@ const WorkingExplanationGrid = () => {
   ];
   return (
     <>
-      <div className="grid w-fit grid-cols-1 place-items-center gap-16 align-middle md:grid-cols-2 md:gap-16 xl:grid-cols-4 xl:gap-25">
+      <div className="grid w-fit grid-cols-1 place-items-center gap-16 align-middle md:gap-16 lg:grid-cols-2 xl:gap-25 2xl:grid-cols-4">
         {explanationCards.map((card) => {
           return (
             <ExplanationCard
@@ -91,7 +91,7 @@ export const HowItWorksSection = () => {
         <h3 className="text-gradient-1 text-3xl font-semibold md:text-[44px]">
           How does it work?
         </h3>
-        <div className="mt-30 flex justify-center md:mt-40">
+        <div className="mt-24 flex justify-center md:mt-30">
           <WorkingExplanationGrid />
         </div>
       </div>
