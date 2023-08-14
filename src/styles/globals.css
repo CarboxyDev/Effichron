@@ -9,6 +9,9 @@
   --violet-400: #a78bfa;
   --violet-500: #8b5cf6;
   --indigo-500: #6366f1;
+  --red-400: #f87171;
+  --red-500: #ef4444;
+  --red-600: #dc2626;
 }
 
 * {
@@ -28,23 +31,24 @@ input:focus {
 }
 
 .text-gradient-1 {
-  background: #3b82f6;
+  background: var(--violet-500);
   background: -webkit-linear-gradient(
     to right,
     var(--violet-500) 0%,
-    var(--sky-500) 100%
+    var(--red-600) 100%
   );
   background: -moz-linear-gradient(
     to right,
     var(--violet-500) 0%,
-    var(--sky-500) 100%
+    var(--red-600) 100%
   );
   background: linear-gradient(
     to right,
     var(--violet-500) 0%,
-    var(--sky-500) 100%
+    var(--red-600) 100%
   );
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -84,12 +88,13 @@ input:focus {
   background: linear-gradient(
     to right,
     var(--violet-500),
-    var(--violet-400),
-    var(--sky-500),
+    var(--indigo-500),
+    var(--red-400),
     var(--violet-500)
   );
   background-size: 200%;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   white-space: nowrap;
 }
@@ -99,11 +104,12 @@ input:focus {
     to right,
     var(--violet-500),
     var(--indigo-500),
-    var(--sky-500),
+    var(--red-400),
     var(--violet-500)
   );
   background-size: 200%;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   white-space: nowrap;
 }
