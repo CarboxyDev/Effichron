@@ -39,7 +39,7 @@ export async function POST_SESSION(req: Request, res: Response) {
     take: 1,
   });
 
-  if (latestSessionLog) {
+  if (latestSessionLog.length > 0) {
     const latestLog = latestSessionLog[0];
     const now = new Date();
     const diff = now.getTime() - latestLog.createdAt.getTime();

@@ -17,7 +17,7 @@ const SignInItem = (props: {
   return (
     <>
       <div
-        className="flex flex-row items-center gap-x-3 rounded-lg border border-dark-800 px-4 py-3 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:border-dark-700 hover:bg-dark-800 md:px-8"
+        className="flex select-none flex-row items-center gap-x-3 rounded-lg border border-dark-800 px-4 py-3 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:border-dark-700 hover:bg-dark-800 md:px-8"
         onClick={() => signIn(brand)}
       >
         <Icon icon={iconName} className="h-10 w-10 text-dark-300" />
