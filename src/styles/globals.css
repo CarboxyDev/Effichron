@@ -52,6 +52,15 @@ input:focus {
   -webkit-text-fill-color: transparent;
 }
 
+.bg-gradient-1 {
+  background: rgb(22, 21, 25);
+  background: linear-gradient(
+    0deg,
+    rgba(22, 21, 25, 1) 0%,
+    rgba(11, 10, 9, 1) 100%
+  );
+}
+
 @keyframes background-pan {
   from {
     background-position: 0% center;

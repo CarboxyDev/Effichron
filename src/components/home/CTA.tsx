@@ -4,7 +4,7 @@ import { FullWidthContainer } from '../PageWrapper';
 export const CTA = () => {
   return (
     <>
-      <FullWidthContainer className="flex flex-col items-center justify-center bg-stone-950 py-20">
+      <FullWidthContainer className="bg-gradient-1 flex flex-col items-center justify-center py-20">
         {/* Had to use this hack due to issues with magic-text not being allowed on md+ screens when coupled with md: */}
         <h3 className="magic-text hidden py-2 text-center text-3xl font-semibold md:block md:text-[46px]">
           Ready to become more productive?
