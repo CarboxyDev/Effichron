@@ -58,5 +58,22 @@ export async function GET_ADMIN(req: Request, res: Response) {
     );
   }
 
-  return SendResponse('API endpoint not working yet', 200);
+  if (queryType === 'recentuserslist') {
+    const recentUsersList = await prisma.user.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 3,
+    });
+
+    return SendResponse(
+      JSON.stringify({
+        data: recentUsersList,
+        message: 'Fetched the most recent users list',
+      }),
+      200
+    );
+  }
+
+  return SendResponse('Invalid query sent to API endpoint', 200);
 }

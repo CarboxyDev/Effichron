@@ -103,6 +103,7 @@ export const SessionLogCountCard = (props: AdminCardProps) => {
 
 interface User {
   name: String;
+  id: String;
   createdAt: Date;
 }
 
@@ -130,6 +131,40 @@ export const RecentUserJoinedCard = (props: AdminCardProps) => {
               dateDifferenceInSeconds(new Date(data.createdAt), new Date()),
               false
             ) + ' ago'}
+          {status === 'loading' && <LoadingSpinner size={32} />}
+          {status === 'error' && 'Error'}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export const RecentUsersListCard = (props: AdminCardProps) => {
+  const { password } = props;
+
+  const { data, error, status } = useQuery({
+    queryKey: ['admin-recentuserslist'],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `/api/admin?password=${password}&type=recentuserslist`
+      );
+
+      return JSON.parse(data).data as User[];
+    },
+  });
+
+  return (
+    <>
+      <div className="flex flex-col items-center justify-center gap-y-14 rounded-lg border border-dark-800 bg-dark-900 px-8 py-8">
+        <div className="text-3xl text-dark-200">Recent Users List</div>
+        <div className="text-1xl text-dark-400">
+          {status === 'success' && (
+            <div className="flex flex-col leading-relaxed">
+              {data.map((user) => {
+                return <span key={user.id as string}>{user.name}</span>;
+              })}
+            </div>
+          )}
           {status === 'loading' && <LoadingSpinner size={32} />}
           {status === 'error' && 'Error'}
         </div>
