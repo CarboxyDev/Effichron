@@ -188,7 +188,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
     <>
       <div
         className={cn(
-          'flex w-full select-none flex-row rounded-lg border border-dark-800 border-transparent bg-dark-900 shadow-md transition delay-200 duration-300 ease-in-out hover:border-dark-700',
+          'flex w-full select-none flex-row rounded-lg border border-dark-800 bg-dark-900 shadow-md transition delay-200 duration-300 ease-in-out hover:border-dark-700',
           isBigLog && 'hover:cursor-pointer'
         )}
         {...(isBigLog
@@ -269,7 +269,7 @@ export const SessionLogCardMobile = (props: { session: SessionLog }) => {
     <>
       <div
         className={cn(
-          'flex w-full select-none flex-row rounded-lg border border-dark-800 border-transparent bg-dark-900 shadow-md transition delay-200 duration-300 ease-in-out hover:border-dark-700',
+          'flex w-full select-none flex-row rounded-lg border border-dark-800 bg-dark-900 shadow-md transition delay-200 duration-300 ease-in-out hover:border-dark-700',
           isBigLog && 'hover:cursor-pointer'
         )}
         {...(isBigLog

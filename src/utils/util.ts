@@ -19,15 +19,14 @@ interface TimeFormat {
 }
 
 export function secondsToTimeFormat(seconds: number): TimeFormat {
-  const date = new Date(0);
-  date.setSeconds(seconds);
-  const dateAsString = date.toISOString().substring(11, 19);
-  let [hr, min, sec] = dateAsString.split(':');
+  const hr = Math.floor(seconds / 3600);
+  const min = Math.floor((seconds % 3600) / 60);
+  const sec = seconds % 60;
 
   return {
-    hours: parseInt(hr),
-    minutes: parseInt(min),
-    seconds: parseInt(sec),
+    hours: hr,
+    minutes: min,
+    seconds: sec,
   };
 }
 
@@ -35,21 +34,23 @@ export function secondsToAlphaTimeFormat(
   seconds: number,
   includeSeconds: boolean
 ): string {
-  const date = new Date(0);
-  date.setSeconds(seconds);
-  const dateAsString = date.toISOString().substring(11, 19);
-  let [hr, min, sec] = dateAsString.split(':');
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
 
-  if (parseInt(hr) === 0 && !includeSeconds) return `${parseInt(min)}m`;
-
-  if (parseInt(hr) === 0 && parseInt(min) != 0 && includeSeconds) {
-    return `${parseInt(min)}m`;
+  if (hours === 0 && !includeSeconds) {
+    return `${minutes}m`;
   }
 
-  if (parseInt(hr) === 0 && parseInt(min) === 0 && includeSeconds)
-    return `${parseInt(sec)}s`;
+  if (hours === 0 && minutes !== 0 && includeSeconds) {
+    return `${minutes}m`;
+  }
 
-  return `${parseInt(hr)}h ${parseInt(min)}m`;
+  if (hours === 0 && minutes === 0 && includeSeconds) {
+    return `${remainingSeconds}s`;
+  }
+
+  return `${hours}h ${minutes}m`;
 }
 
 const months = [
