@@ -172,7 +172,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
     totalDurationReducer,
     0
   );
-  const totalDurationFormatted = secondsToAlphaTimeFormat(totalDuration, true);
+  const totalDurationFormatted = secondsToAlphaTimeFormat(totalDuration, false);
 
   const date = new Date(session.createdAt);
   const dateFormatted = dateToAlphaDayFormat(date);
@@ -211,7 +211,7 @@ export const SessionLogCard = (props: { session: SessionLog }) => {
               // TODO: Maybe hide tasks with duration 0 because they're probably not needed
               // But then again, the user might want to see the tasks which he failed to spend time on
 
-              <div key={task.name} className="w-fit">
+              <div key={idx} className="w-fit">
                 <div className="text-xl text-dark-400">
                   {task.name.slice(0, 8)}
                   {task.name.length >= 9 && task.name.length <= 11 && (
@@ -253,7 +253,7 @@ export const SessionLogCardMobile = (props: { session: SessionLog }) => {
     totalDurationReducer,
     0
   );
-  const totalDurationFormatted = secondsToAlphaTimeFormat(totalDuration, true);
+  const totalDurationFormatted = secondsToAlphaTimeFormat(totalDuration, false);
 
   const date = new Date(session.createdAt);
   const dateFormatted = dateToAlphaDayFormat(date);
@@ -289,7 +289,7 @@ export const SessionLogCardMobile = (props: { session: SessionLog }) => {
               return <></>;
             }
             return (
-              <div key={task.name} className="w-fit">
+              <div key={idx} className="w-fit">
                 <div className="text-base text-dark-400">
                   {task.name.slice(0, 8)}
                   {task.name.length >= 9 && task.name.length <= 11 && (
