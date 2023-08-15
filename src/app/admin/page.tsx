@@ -3,6 +3,7 @@
 import { PageWrapper } from '@/components/PageWrapper';
 import { useSearchParams } from 'next/navigation';
 import {
+  RecentUserJoinedCard,
   SessionLogCountCard,
   TaskCountCard,
   UserCountCard,
@@ -19,10 +20,11 @@ export default function AdminPage() {
   return (
     <PageWrapper navbarProps={{ variant: 'with-branding', drawDivider: true }}>
       <div className="mt-12 md:mt-32">
-        <div className="grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-12 gap-y-8 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3">
           <UserCountCard password={password} />
           <TaskCountCard password={password} />
           <SessionLogCountCard password={password} />
+          <RecentUserJoinedCard password={password} />
         </div>
       </div>
     </PageWrapper>

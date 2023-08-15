@@ -42,5 +42,21 @@ export async function GET_ADMIN(req: Request, res: Response) {
     );
   }
 
+  if (queryType === 'recentuserjoined') {
+    const recentUser = await prisma.user.findFirst({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return SendResponse(
+      JSON.stringify({
+        data: recentUser,
+        message: 'Fetched the most recent user',
+      }),
+      200
+    );
+  }
+
   return SendResponse('API endpoint not working yet', 200);
 }
