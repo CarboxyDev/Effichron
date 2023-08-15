@@ -2,6 +2,7 @@
 
 import { FullWidthContainer, PageWrapper } from '@/components/PageWrapper';
 import { CTA } from '@/components/home/CTA';
+import { FeaturesSection } from '@/components/home/FeaturesSection';
 import { HeroSection } from '@/components/home/HeroSection';
 import { HowItWorksSection } from '@/components/home/HowItWorksSection';
 
@@ -20,6 +21,8 @@ export default function HomePage() {
       <FullWidthContainer>
         <div className="h-px bg-dark-900"></div>
       </FullWidthContainer>
+      <div className="mt-60 md:mt-72"></div>
+      <FeaturesSection />
     </PageWrapper>
   );
 }
