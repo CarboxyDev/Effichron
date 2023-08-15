@@ -71,7 +71,7 @@ const WorkingExplanationGrid = () => {
   ];
   return (
     <>
-      <div className="grid w-fit grid-cols-1 place-items-center gap-16 align-middle md:gap-16 lg:grid-cols-2 xl:gap-25 2xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-4">
         {explanationCards.map((card) => {
           return (
             <ExplanationCard
