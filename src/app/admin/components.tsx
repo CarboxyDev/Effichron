@@ -156,7 +156,7 @@ export const RecentUsersListCard = (props: AdminCardProps) => {
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-y-14 rounded-lg border border-dark-800 bg-dark-900 px-8 py-8">
-        <div className="text-3xl text-dark-200">Recent Users List</div>
+        <div className="text-3xl text-dark-200">Recent users list</div>
         <div className="text-1xl text-dark-400">
           {status === 'success' && (
             <div className="flex flex-col leading-relaxed">
@@ -165,6 +165,47 @@ export const RecentUsersListCard = (props: AdminCardProps) => {
               })}
             </div>
           )}
+          {status === 'loading' && <LoadingSpinner size={32} />}
+          {status === 'error' && 'Error'}
+        </div>
+      </div>
+    </>
+  );
+};
+
+interface Task {
+  id: string;
+  name: string;
+  createdAt: Date;
+}
+
+export const RecentTaskCreatedCard = (props: AdminCardProps) => {
+  const { password } = props;
+
+  const { data, error, status } = useQuery({
+    queryKey: ['admin-recenttaskcreated'],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `/api/admin?password=${password}&type=recenttaskcreated`
+      );
+
+      return JSON.parse(data);
+    },
+  });
+
+  return (
+    <>
+      <div className="flex flex-col items-center justify-center gap-y-14 rounded-lg border border-dark-800 bg-dark-900 px-8 py-8">
+        <div className="text-3xl text-dark-200">Recent task created</div>
+        <div className="text-4xl text-dark-400">
+          {status === 'success' &&
+            secondsToAlphaTimeFormat(
+              dateDifferenceInSeconds(
+                new Date((data.data as Task).createdAt),
+                new Date()
+              ),
+              false
+            ) + ' ago'}
           {status === 'loading' && <LoadingSpinner size={32} />}
           {status === 'error' && 'Error'}
         </div>

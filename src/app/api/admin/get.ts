@@ -1,6 +1,10 @@
 import { prisma } from '@/lib/prisma';
 import { SendResponse } from '@/utils/api';
 
+/**
+ * No need to sanitize the responses from this endpoint as only the admin has access to the confidential data that may be sent
+ */
+
 export async function GET_ADMIN(req: Request, res: Response) {
   const { searchParams } = new URL(req.url);
   const password = searchParams.get('password');
@@ -70,6 +74,22 @@ export async function GET_ADMIN(req: Request, res: Response) {
       JSON.stringify({
         data: recentUsersList,
         message: 'Fetched the most recent users list',
+      }),
+      200
+    );
+  }
+
+  if (queryType === 'recenttaskcreated') {
+    const recentTask = await prisma.task.findFirst({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return SendResponse(
+      JSON.stringify({
+        data: recentTask,
+        message: 'Fetched the most recent task',
       }),
       200
     );

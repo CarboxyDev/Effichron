@@ -3,6 +3,7 @@
 import { PageWrapper } from '@/components/PageWrapper';
 import { useSearchParams } from 'next/navigation';
 import {
+  RecentTaskCreatedCard,
   RecentUserJoinedCard,
   RecentUsersListCard,
   SessionLogCountCard,
@@ -27,6 +28,7 @@ export default function AdminPage() {
           <SessionLogCountCard password={password} />
           <RecentUserJoinedCard password={password} />
           <RecentUsersListCard password={password} />
+          <RecentTaskCreatedCard password={password} />
         </div>
       </div>
     </PageWrapper>
