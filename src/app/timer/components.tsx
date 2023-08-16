@@ -2,13 +2,13 @@
 
 import { useStore } from '@/lib/store/useStore';
 import {
+  useActiveTask,
   useActiveTaskId,
   useAddTimestamp,
   useChangeIfTimerRunning,
   useGetTasks,
   useSetActiveTask,
   useSetDuration,
-  useTasks,
 } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
 import {
@@ -63,25 +63,14 @@ const TimeDisplay = (props: TimeDisplayProps) => {
 };
 
 export const Timer = () => {
-  const taskStore = useStore(useTasks, (state) => state);
-  const [activeTask, setActiveTask] = useState<Task | undefined>(undefined);
+  const tasks = useStore(useGetTasks, (state) => state) as Task[];
+  const activeTask = useStore(useActiveTask, (state) => state) as Task;
+
   const addTimestampToActiveTask = useAddTimestamp();
   const setDuration = useSetDuration();
+  const changeIfTimerRunning = useChangeIfTimerRunning();
 
   useEffect(() => {
-    const tasks = taskStore?.tasks;
-
-    const getActiveTask = (): Task | undefined => {
-      const activeTaskID = taskStore?.activeTask;
-      const _activeTask = tasks?.find((t) => {
-        return t.id === activeTaskID;
-      });
-
-      return _activeTask;
-    };
-
-    setActiveTask(getActiveTask());
-
     const clientCalculateTime = setInterval(() => {
       if (activeTask?.isTimerRunning) {
         const currentDuration = calculateTimerDuration(
@@ -92,21 +81,22 @@ export const Timer = () => {
     }, 1000);
 
     return () => clearInterval(clientCalculateTime);
-  }, [taskStore, activeTask, setDuration]);
+  }, [tasks, activeTask, setDuration]);
 
-  const toggleTaskTimer = (): void => {
-    if (activeTask == undefined || taskStore == undefined) {
+  const toggleTaskTimer = () => {
+    if (!activeTask || !tasks) {
       return;
     }
 
     const currentTime = new Date();
+
     if (activeTask.isTimerRunning) {
       addTimestampToActiveTask('pause', currentTime);
     } else if (!activeTask.isTimerRunning) {
       addTimestampToActiveTask('play', currentTime);
     }
-    // Finally change the timer to its complementary state
-    taskStore.changeIfTimerRunning(activeTask.id, !activeTask.isTimerRunning);
+
+    changeIfTimerRunning(activeTask.id, !activeTask.isTimerRunning);
   };
 
   return (
@@ -223,7 +213,6 @@ export const TaskList = () => {
 };
 
 export const ActionButton = () => {
-  console.log('Render ActionButton');
   const [open, setOpen] = useState(false);
 
   return (
