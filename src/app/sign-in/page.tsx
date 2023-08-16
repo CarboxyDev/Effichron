@@ -3,9 +3,12 @@
 import { IconifyIcon } from '@/components/Icon';
 import { Logo } from '@/components/Logo';
 import { PageWrapper } from '@/components/PageWrapper';
+import { SIGN_IN_ERRORS } from '@/lib/next-auth/sign-in-errors';
+import { notify } from '@/utils/notify';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 const SignInItem = (props: {
   brand: string;
@@ -30,6 +33,16 @@ const SignInItem = (props: {
 export default function SignInPage() {
   const searchParams = useSearchParams();
   const nextAuthError = searchParams.get('error');
+
+  useEffect(() => {
+    if (nextAuthError) {
+      const errorMessage = SIGN_IN_ERRORS[nextAuthError]
+        ? SIGN_IN_ERRORS[nextAuthError]
+        : 'An unexpected problem occured. Please try again.';
+
+      notify(errorMessage, 'failure');
+    }
+  }, [nextAuthError]);
 
   return (
     <PageWrapper navbarProps={null}>
