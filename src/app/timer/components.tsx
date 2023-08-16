@@ -2,10 +2,10 @@
 
 import { useStore } from '@/lib/store/useStore';
 import {
-  getTasks,
   useActiveTaskId,
   useAddTimestamp,
   useChangeIfTimerRunning,
+  useGetTasks,
   useSetActiveTask,
   useSetDuration,
   useTasks,
@@ -130,30 +130,19 @@ export const Timer = () => {
   );
 };
 
-const TaskCard = (props: { task: Task }) => {
-  const task = props.task;
-  const activeTaskID = useActiveTaskId();
-  const changeTaskActiveState = useChangeIfTimerRunning();
-  const setActiveTask = useSetActiveTask();
-  const addTimestampToActiveTask = useAddTimestamp();
+interface TaskCardProps {
+  task: Task;
+  isActive: boolean;
+  switchTask: (taskid: string) => void;
+}
 
-  const switchTask = () => {
-    if (activeTaskID === undefined) {
-      return;
-    }
-    if (activeTaskID != task.id) {
-      if (activeTaskID != undefined) {
-        changeTaskActiveState(activeTaskID, false);
-        addTimestampToActiveTask('pause', new Date());
-      }
-      setActiveTask(task.id);
-    }
-  };
+const TaskCard = (props: TaskCardProps) => {
+  const { task, isActive, switchTask } = props;
 
   return (
     <>
       <div
-        onClick={() => switchTask()}
+        onClick={() => switchTask(task.id)}
         className={cn(
           'group h-24 w-11/12 rounded-lg border border-dark-800 bg-dark-900 shadow-sm transition-all delay-200 duration-300 ease-in-out hover:cursor-pointer hover:border-dark-700 md:mx-0 md:h-28 md:w-160'
         )}
@@ -170,7 +159,7 @@ const TaskCard = (props: { task: Task }) => {
           </div>
           <div
             className={cn(
-              activeTaskID === task.id && 'hidden',
+              isActive && 'hidden',
               'ml-auto mr-5 text-base text-dark-500 md:mr-7 md:text-lg'
             )}
           >
@@ -178,7 +167,7 @@ const TaskCard = (props: { task: Task }) => {
           </div>
           <div
             className={cn(
-              activeTaskID != task.id && 'hidden',
+              !isActive && 'hidden',
               'ml-auto mr-5 h-3 w-3 rounded-full bg-green-500/80 group-hover:animate-none motion-safe:animate-pulse-slow md:mr-7 md:h-4 md:w-4'
             )}
           ></div>
@@ -188,22 +177,45 @@ const TaskCard = (props: { task: Task }) => {
   );
 };
 
-export const TaskList = (): JSX.Element => {
-  const tasks = useStore(getTasks, (state) => state) as Task[];
+export const TaskList = () => {
+  const tasks = useStore(useGetTasks, (state) => state) as Task[];
   const activeTaskID = useStore(useActiveTaskId, (state) => state) as string;
+
+  const changeTaskActiveState = useChangeIfTimerRunning();
+  const setActiveTask = useSetActiveTask();
+  const addTimestampToActiveTask = useAddTimestamp();
+
+  if (!tasks || !activeTaskID) {
+    return <></>;
+  }
+
+  const sortedTasks = tasks
+    .filter((task) => task.id == activeTaskID)
+    .concat(tasks.filter((task) => task.id != activeTaskID));
+
+  const switchTask = (currentTaskId: string) => {
+    if (activeTaskID === undefined) {
+      return;
+    }
+    if (activeTaskID != currentTaskId) {
+      changeTaskActiveState(activeTaskID, false);
+      addTimestampToActiveTask('pause', new Date());
+      setActiveTask(currentTaskId);
+    }
+  };
 
   return (
     <>
       <div className="flex flex-col items-center gap-y-3">
-        {tasks?.map((task) => {
-          if (task.id == activeTaskID) {
-            return <TaskCard key={task.id} task={task} />;
-          }
-        })}
-        {tasks?.map((task) => {
-          if (task.id != activeTaskID) {
-            return <TaskCard key={task.id} task={task} />;
-          }
+        {sortedTasks.map((task) => {
+          return (
+            <TaskCard
+              key={task.id}
+              task={task}
+              switchTask={switchTask}
+              isActive={activeTaskID === task.id}
+            />
+          );
         })}
       </div>
     </>
