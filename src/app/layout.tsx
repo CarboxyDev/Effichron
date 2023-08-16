@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     'productivity-app',
     'timer-app',
   ],
+  metadataBase: new URL('https://effichron.carboxy.me'),
   openGraph: {
     title: 'Effichron',
     description:
