@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react';
+import { IconifyIcon } from '../Icon';
 
 export const FeaturesSection = () => {
   return (
@@ -13,7 +13,10 @@ export const FeaturesSection = () => {
           <div className="h-full w-80 rounded-xl border border-dark-800 bg-dark-900 shadow-md lg:w-72 xl:w-80">
             <div className="flex flex-col p-8">
               <div className="flex h-18 w-18 items-center justify-center rounded-lg bg-blue-500">
-                <Icon icon="ph:hourglass-fill" className="h-9 w-9 text-white" />
+                <IconifyIcon
+                  icon="ph:hourglass-fill"
+                  className="h-9 w-9 text-white"
+                />
               </div>
               <div className="mt-12">
                 <h4 className="text-xl font-medium text-white">
@@ -31,7 +34,7 @@ export const FeaturesSection = () => {
             <div className="w-80 rounded-xl border border-dark-800 bg-dark-900 shadow-md lg:w-72 xl:w-80">
               <div className="flex flex-col p-8">
                 <div className="flex h-18 w-18 items-center justify-center rounded-lg bg-blue-500">
-                  <Icon icon="mdi:sync" className="h-9 w-9 text-white" />
+                  <IconifyIcon icon="mdi:sync" className="h-9 w-9 text-white" />
                 </div>
                 <div className="mt-12">
                   <h4 className="text-xl font-medium text-white">Easy Sync</h4>
@@ -51,7 +54,10 @@ export const FeaturesSection = () => {
           <div className="h-full w-80 rounded-xl border border-dark-800 bg-dark-900 shadow-md lg:w-72 xl:w-80">
             <div className="flex flex-col p-8">
               <div className="flex h-18 w-18 items-center justify-center rounded-lg bg-blue-500">
-                <Icon icon="mdi:history" className="h-9 w-9 text-white" />
+                <IconifyIcon
+                  icon="mdi:history"
+                  className="h-9 w-9 text-white"
+                />
               </div>
               <div className="mt-12">
                 <h4 className="text-xl font-medium text-white">

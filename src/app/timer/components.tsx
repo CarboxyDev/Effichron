@@ -17,8 +17,8 @@ import {
   secondsToTimeFormat,
 } from '@/utils/util';
 
+import { IconifyIcon } from '@/components/Icon';
 import { calculateTimerDuration } from '@/lib/timer/timer';
-import { Icon } from '@iconify/react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -120,9 +120,9 @@ export const Timer = () => {
           onClick={() => toggleTaskTimer()}
         >
           {activeTask?.isTimerRunning ? (
-            <Icon icon="ph:pause-fill" className="h-6 w-6" />
+            <IconifyIcon icon="ph:pause-fill" className="h-6 w-6" />
           ) : (
-            <Icon icon="ph:play-fill" className="h-6 w-6" />
+            <IconifyIcon icon="ph:play-fill" className="h-6 w-6" />
           )}
         </button>
       </div>
@@ -222,7 +222,7 @@ export const ActionButton = () => {
           title="View actions"
           className="group flex h-12 w-12 items-center justify-center rounded-lg bg-primary-500 text-dark-200 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-primary-600 active:scale-105"
         >
-          <Icon
+          <IconifyIcon
             icon="ic:round-timer"
             className={cn(open && '', 'h-7 w-7 text-dark-200')}
           />
@@ -234,7 +234,10 @@ export const ActionButton = () => {
                 title="Save session"
                 className="group absolute bottom-14 right-0 flex h-12 w-12 items-center justify-center rounded-lg bg-dark-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-emerald-500 active:scale-105"
               >
-                <Icon icon="mdi:success" className="h-7 w-7 text-dark-300" />
+                <IconifyIcon
+                  icon="mdi:success"
+                  className="h-7 w-7 text-dark-300"
+                />
               </button>
             </Dialog.Trigger>
             <SaveSessionConfirmationDialog setActionMenuOpen={setOpen} />
@@ -247,7 +250,7 @@ export const ActionButton = () => {
                 title="Reset task"
                 className="group absolute right-14 flex h-12 w-12 items-center justify-center rounded-lg bg-dark-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-red-600 active:scale-105"
               >
-                <Icon
+                <IconifyIcon
                   icon="mdi:trash-outline"
                   className="h-7 w-7 text-dark-300"
                 />
@@ -278,7 +281,7 @@ const SyncTasksButton = (props: syncTasksButtonProps) => {
             title="Sync tasks"
             className="group absolute bottom-14 right-14 flex h-12 w-12 items-center justify-center rounded-lg bg-dark-800 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-sky-500 active:scale-105"
           >
-            <Icon icon="mdi:sync" className="h-7 w-7 text-dark-300" />
+            <IconifyIcon icon="mdi:sync" className="h-7 w-7 text-dark-300" />
           </button>
         </Dialog.Trigger>
         <SyncTasksConfirmationDialog {...props} setDialogOpen={setDialogOpen} />

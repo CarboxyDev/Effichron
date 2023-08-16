@@ -1,5 +1,5 @@
 import { cn } from '@/utils/util';
-import { Icon } from '@iconify/react';
+import { IconifyIcon } from '../Icon';
 
 interface ExplanationCardProps {
   order: number;
@@ -25,7 +25,10 @@ export const ExplanationCard = (props: ExplanationCardProps) => {
               'flex h-16 w-16 items-center justify-center rounded-full bg-primary-400'
             )}
           >
-            <Icon icon={iconName} className={cn('h-8 w-8 text-primary-900')} />
+            <IconifyIcon
+              icon={iconName}
+              className={cn('h-8 w-8 text-primary-900')}
+            />
           </div>
           <div className="mt-10">
             <h4 className="text-xl font-medium text-dark-200">{title}</h4>
@@ -64,7 +67,7 @@ const WorkingExplanationGrid = () => {
     {
       order: 4,
       title: 'Save your progress',
-      iconName: 'material-symbols:save-outline',
+      iconName: 'mingcute:save-line',
       content:
         "When you're done with your tasks for the day, save your progress as a session",
     },

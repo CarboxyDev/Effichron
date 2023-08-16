@@ -1,5 +1,3 @@
-'use client';
-
 import { FullWidthContainer, PageWrapper } from '@/components/PageWrapper';
 import { CTA } from '@/components/home/CTA';
 import { FeaturesSection } from '@/components/home/FeaturesSection';

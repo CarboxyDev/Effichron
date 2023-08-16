@@ -2,7 +2,6 @@
 
 import { CONFIG } from '@/lib/config';
 import { cn } from '@/utils/util';
-import { Icon } from '@iconify/react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Session } from 'next-auth';
 import { signOut, useSession } from 'next-auth/react';
@@ -10,6 +9,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { redirect, useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { IconifyIcon } from './Icon';
 import { LoadingSpinner } from './Loading';
 import { Logo } from './Logo';
 import { BetaBadge } from './Other';
@@ -39,22 +39,25 @@ const ProfileDropdownMenu = (props: ProfileDropdownMenuProps) => {
       >
         <Link href={'/timer'}>
           <DropdownMenu.Item className="flex flex-row items-center gap-x-2 rounded-t-lg pb-3 pl-3 pt-4 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-dark-800 hover:outline-none">
-            <Icon
+            <IconifyIcon
               icon="ic:round-timer"
               className="h-5 w-5 text-dark-400"
-            ></Icon>
+            />
             <div className="text-dark-300">Timer</div>
           </DropdownMenu.Item>
         </Link>
         <Link href={'/tasks'}>
           <DropdownMenu.Item className="flex flex-row items-center gap-x-2 py-3 pl-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-dark-800 hover:outline-none">
-            <Icon icon="ic:round-task" className="h-5 w-5 text-dark-400"></Icon>
+            <IconifyIcon
+              icon="ic:round-task"
+              className="h-5 w-5 text-dark-400"
+            />
             <div className="text-dark-300">Tasks</div>
           </DropdownMenu.Item>
         </Link>
         <Link href={'/history'}>
           <DropdownMenu.Item className="flex flex-row items-center gap-x-2 py-3 pl-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-dark-800 hover:outline-none">
-            <Icon icon="mdi:history" className="h-5 w-5 text-dark-400"></Icon>
+            <IconifyIcon icon="mdi:history" className="h-5 w-5 text-dark-400" />
             <div className="text-dark-300">History</div>
           </DropdownMenu.Item>
         </Link>
@@ -66,7 +69,10 @@ const ProfileDropdownMenu = (props: ProfileDropdownMenuProps) => {
             }}
             className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-dark-800 hover:outline-none"
           >
-            <Icon icon="mdi:sign-out" className="h-5 w-5 text-dark-600"></Icon>
+            <IconifyIcon
+              icon="mdi:sign-out"
+              className="h-5 w-5 text-dark-600"
+            />
             <div className="text-dark-500">Sign out</div>
           </DropdownMenu.Item>
         )}
@@ -77,7 +83,7 @@ const ProfileDropdownMenu = (props: ProfileDropdownMenuProps) => {
             }}
             className="flex flex-row items-center gap-x-2 rounded-b-lg pb-4 pl-3 pt-3 transition duration-300 ease-in-out hover:cursor-pointer hover:bg-dark-800 hover:outline-none"
           >
-            <Icon icon="mdi:sign-in" className="h-5 w-5 text-dark-300"></Icon>
+            <IconifyIcon icon="mdi:sign-in" className="h-5 w-5 text-dark-300" />
             <div className="text-dark-300">Sign in</div>
           </DropdownMenu.Item>
         )}
@@ -123,7 +129,7 @@ const Navbar = (props: NavbarProps) => {
             <DropdownMenu.Root>
               <DropdownMenu.Trigger className="focus:outline-none">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full">
-                  <Icon
+                  <IconifyIcon
                     icon="ep:user-filled"
                     className={cn('h-5 w-5 text-dark-400')}
                   />

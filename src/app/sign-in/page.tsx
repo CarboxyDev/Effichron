@@ -1,8 +1,8 @@
 'use client';
 
+import { IconifyIcon } from '@/components/Icon';
 import { Logo } from '@/components/Logo';
 import { PageWrapper } from '@/components/PageWrapper';
-import { Icon } from '@iconify/react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -20,7 +20,7 @@ const SignInItem = (props: {
         className="flex select-none flex-row items-center gap-x-3 rounded-lg border border-dark-800 px-4 py-3 transition delay-200 duration-300 ease-in-out hover:cursor-pointer hover:border-dark-700 hover:bg-dark-800 md:px-8"
         onClick={() => signIn(brand)}
       >
-        <Icon icon={iconName} className="h-10 w-10 text-dark-300" />
+        <IconifyIcon icon={iconName} className="h-10 w-10 text-dark-300" />
         <span className="text-lg text-dark-300">{text}</span>
       </div>
     </>
