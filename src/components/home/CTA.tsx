@@ -5,11 +5,7 @@ export const CTA = () => {
   return (
     <>
       <FullWidthContainer className="bg-gradient-1 flex flex-col items-center justify-center py-20">
-        {/* Had to use this hack due to issues with magic-text not being allowed on md+ screens when coupled with md: */}
         <h3 className="magic-text hidden py-2 text-center text-3xl font-semibold md:block md:text-[46px]">
-          Ready to become more productive?
-        </h3>
-        <h3 className="text-gradient-1 py-2 text-center text-3xl font-semibold md:hidden md:text-[46px]">
           Ready to become more productive?
         </h3>
         <div>
