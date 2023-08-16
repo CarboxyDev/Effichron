@@ -104,15 +104,15 @@ export const CreateTaskDialog = (props: {
             <label className="mx-1 text-lg font-medium text-dark-500">
               Color
             </label>
-            <div className="mt-3 flex flex-row items-center">
+            <div className="mt-3 flex flex-row items-center gap-x-4">
               <div
-                className="mr-4 h-9 w-9 rounded-full hover:cursor-pointer"
+                className="h-10 w-10 flex-shrink-0 rounded-full hover:cursor-pointer"
                 style={{ backgroundColor: color || '#8b5cf6' }}
                 onClick={() => setOpenColorPicker(!openColorPicker)}
               ></div>
               <input
                 type="text"
-                className="flex h-12 flex-grow rounded-lg border border-dark-800 bg-dark-900 bg-transparent px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:border-dark-700 focus:outline-none"
+                className="flex h-12 min-w-0 flex-grow rounded-lg border border-dark-800 bg-dark-900 bg-transparent px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:border-dark-700 focus:outline-none"
                 placeholder={(color || '#8b5cf6').toUpperCase()}
                 onChange={(e) => {
                   setColor(e.target.value);
@@ -259,15 +259,15 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
               <label className="mx-1 text-lg font-medium text-dark-500">
                 Color
               </label>
-              <div className="mt-3 flex flex-row items-center">
+              <div className="mt-3 flex flex-row items-center gap-x-4">
                 <div
-                  className="mr-4 h-9 w-9 rounded-full hover:cursor-pointer"
+                  className="h-10 w-10 flex-shrink-0 rounded-full hover:cursor-pointer"
                   style={{ backgroundColor: color }}
                   onClick={() => setOpenColorPicker(!openColorPicker)}
                 ></div>
                 <input
                   type="text"
-                  className="flex h-12 flex-grow rounded-lg border border-dark-800 bg-dark-900 bg-transparent px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:border-dark-700 focus:outline-none"
+                  className="flex h-12 min-w-0 flex-grow rounded-lg border border-dark-800 bg-dark-900 bg-transparent px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:border-dark-700 focus:outline-none"
                   placeholder={color.toUpperCase()}
                   onChange={(e) => {
                     setColor(e.target.value);
