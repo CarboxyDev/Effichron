@@ -189,7 +189,7 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
         name: taskName,
         color: color,
         isTimerRunning: false,
-        duration: task.duration, // For now, not resetting the task timer's duration. Maybe ask the user in the future if they want to reset it when editing?
+        duration: task.duration,
         timerTimestamps: task.timerTimestamps,
         sortPriority: task.sortPriority,
         version: CONFIG.LATEST_TASK_VERSION,
@@ -250,7 +250,7 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
               </label>
               <input
                 type="text"
-                className="mt-3 h-12 w-full rounded-lg bg-dark-900 px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:outline-primary-500"
+                className="mt-3 h-12 w-full rounded-lg border border-dark-800 bg-dark-900 px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:border-dark-700 focus:outline-none"
                 placeholder={task.name}
                 onChange={(e) => setTaskName(e.target.value)}
               />
@@ -267,7 +267,7 @@ export const EditTaskDialog = (props: EditTaskDialogProps) => {
                 ></div>
                 <input
                   type="text"
-                  className="flex h-12 flex-grow rounded-lg bg-dark-900 bg-transparent px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:outline-primary-500"
+                  className="flex h-12 flex-grow rounded-lg border border-dark-800 bg-dark-900 bg-transparent px-3 py-3 text-lg text-dark-500 selection:bg-primary-500 selection:text-dark-200 placeholder:text-dark-600 focus:border-dark-700 focus:outline-none"
                   placeholder={color.toUpperCase()}
                   onChange={(e) => {
                     setColor(e.target.value);
