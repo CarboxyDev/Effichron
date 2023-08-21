@@ -1,6 +1,10 @@
 import DialogTemplate from '@/components/Dialog';
 import { CONFIG } from '@/lib/config';
-import { useAddTask, useDeleteTask, useUpdateTask } from '@/lib/store/useTasks';
+import {
+  getDeleteTaskFn,
+  useAddTask,
+  useUpdateTask,
+} from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
 import { getErrorMessage } from '@/utils/api';
 import { notify, notifyPromise } from '@/utils/notify';
@@ -303,7 +307,7 @@ type DeleteTaskDialogProps = {
 
 export const DeleteTaskDialog = (props: DeleteTaskDialogProps) => {
   const { task, setOpen, open, trigger } = props;
-  const deleteTaskFn = useDeleteTask();
+  const deleteTaskFn = getDeleteTaskFn();
 
   const deleteTaskMutation = useMutation({
     mutationFn: async (taskid: string) => {

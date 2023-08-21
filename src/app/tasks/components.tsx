@@ -2,7 +2,7 @@
 
 import { Badge } from '@/components/Other';
 import { useStore } from '@/lib/store/useStore';
-import { useDeleteTask, useGetTasks } from '@/lib/store/useTasks';
+import { useGetTasks } from '@/lib/store/useTasks';
 import { Task } from '@/lib/types';
 import { cn } from '@/utils/util';
 import { Icon } from '@iconify/react';
@@ -14,8 +14,8 @@ import { CreateTaskDialog } from './dialogs';
 import { TaskDropdownMenu, TaskDropdownMenuProps } from './dropdowns';
 
 export const TaskListView = () => {
+  console.log('Render TaskListView');
   const tasks = useStore(useGetTasks, (state) => state) as Task[];
-  const deleteTaskFn = useDeleteTask();
 
   return (
     <>
@@ -46,10 +46,7 @@ export const TaskListView = () => {
                   )}
                 </div>
               </div>
-              <TaskMoreOptionsButton
-                task={task}
-                actions={{ deleteFn: deleteTaskFn }}
-              />
+              <TaskMoreOptionsButton task={task} />
             </div>
           </div>
         );
@@ -68,8 +65,7 @@ export const TaskListView = () => {
 };
 
 const TaskMoreOptionsButton = (props: TaskDropdownMenuProps) => {
-  const { task, actions } = props;
-  const deleteTaskFn = actions.deleteFn;
+  const { task } = props;
 
   return (
     <>
@@ -80,7 +76,7 @@ const TaskMoreOptionsButton = (props: TaskDropdownMenuProps) => {
             className="ml-auto mr-5 h-6 w-6 text-dark-600 hover:cursor-pointer hover:text-dark-700 md:mr-7"
           ></Icon>
         </DropdownMenu.Trigger>
-        <TaskDropdownMenu task={task} actions={{ deleteFn: deleteTaskFn }} />
+        <TaskDropdownMenu task={task} />
       </DropdownMenu.Root>
     </>
   );

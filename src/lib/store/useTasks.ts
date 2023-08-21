@@ -177,6 +177,11 @@ export const getActiveTask = () => {
   return activeTask;
 };
 
+export const getDeleteTaskFn = () => {
+  const _deleteTask = useTasks.getState().deleteTask;
+  return _deleteTask;
+};
+
 export const clearTasks = () => {
   useTasks.setState({ tasks: [] });
 };

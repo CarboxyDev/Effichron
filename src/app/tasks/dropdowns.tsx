@@ -5,9 +5,6 @@ import { DeleteTaskDialog, EditTaskDialog } from './dialogs';
 
 export interface TaskDropdownMenuProps {
   task: Task;
-  actions: {
-    deleteFn: (id: string) => void;
-  };
 }
 
 export const TaskDropdownMenu = (props: TaskDropdownMenuProps) => {
