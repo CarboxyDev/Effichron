@@ -9,7 +9,7 @@ import GoogleProvider from 'next-auth/providers/google';
 const adapter = PrismaAdapter(prisma) as Adapter;
 
 // Using this to fix the Github oauth w/ prisma adapter issue
-const _linkAccount = adapter.linkAccount;
+const _linkAccount = adapter.linkAccount || (() => Promise.resolve());
 adapter.linkAccount = (account) => {
   const { refresh_token_expires_in, ...data } = account;
   return _linkAccount(data);
