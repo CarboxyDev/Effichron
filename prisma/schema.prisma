@@ -3,14 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 // NOTE: Use userId to scope all queries to the current user
 
-model Account {
+model EFFICHRON_Account {
   id                String  @id @default(cuid())
   userId            String
   type              String
@@ -24,34 +24,34 @@ model Account {
   id_token          String? @db.Text
   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user EFFICHRON_User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
+model EFFICHRON_Session {
+  id           String         @id @default(cuid())
+  sessionToken String         @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         EFFICHRON_User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
-model User {
-  id            String    @id @default(cuid())
+model EFFICHRON_User {
+  id            String              @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?             @unique
   emailVerified DateTime?
   image         String?
-  createdAt     DateTime  @default(now())
-  accounts      Account[]
-  sessions      Session[]
+  createdAt     DateTime            @default(now())
+  accounts      EFFICHRON_Account[]
+  sessions      EFFICHRON_Session[]
 }
 
-model VerificationToken {
+model EFFICHRON_VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
@@ -59,14 +59,14 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model SessionLog {
-  id        String   @id @default(uuid())
-  userId    String
-  sessionSnapshot String @db.VarChar(1000) // This will store the strigified session object.
-  createdAt DateTime @default(now())
+model EFFICHRON_SessionLog {
+  id              String   @id @default(uuid())
+  userId          String
+  sessionSnapshot String   @db.VarChar(1000) // This will store the strigified session object.
+  createdAt       DateTime @default(now())
 }
 
-model Task {
+model EFFICHRON_Task {
   id        String   @id @default(uuid())
   userId    String
   name      String

@@ -19,7 +19,7 @@ export async function GET_SESSION(req: Request, res: Response) {
   const fetchCount = parseInt(searchParams.get('count') || '');
 
   // TODO This might be a bit inefficient as this sends all the previously sent sessions as well which the client already has. Use a cursor to send only the missing sessions
-  const sessionLogs = await prisma.sessionLog.findMany({
+  const sessionLogs = await prisma.eFFICHRON_SessionLog.findMany({
     where: {
       userId: user.id,
     },

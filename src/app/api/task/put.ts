@@ -39,7 +39,7 @@ export async function PUT_TASK(req: Request, res: Response) {
     // FIXME: I'm unable to add userId as a where condition.
     // Therefore, if a different user tries to delete someone's task,
     // they can do so, provided they have the taskid which is extremely unlikely to happen.
-    await prisma.task.update({
+    await prisma.eFFICHRON_Task.update({
       where: {
         id: taskid,
       },

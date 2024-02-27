@@ -8,7 +8,7 @@ import { prisma } from '../prisma';
 
 export const createDefaultTasks = async (userId: string): Promise<Response> => {
   try {
-    const userTasks = await prisma.task.findMany({
+    const userTasks = await prisma.eFFICHRON_Task.findMany({
       where: {
         userId: userId,
       },
@@ -18,7 +18,7 @@ export const createDefaultTasks = async (userId: string): Promise<Response> => {
       return SendResponse(JSON.stringify(userTasks), 200);
     }
 
-    const createTasks = await prisma.task.createMany({
+    const createTasks = await prisma.eFFICHRON_Task.createMany({
       data: [
         {
           userId: userId,
@@ -33,7 +33,7 @@ export const createDefaultTasks = async (userId: string): Promise<Response> => {
       ],
     });
 
-    const userDefaultTasks = await prisma.task.findMany({
+    const userDefaultTasks = await prisma.eFFICHRON_Task.findMany({
       where: {
         userId: userId,
       },
