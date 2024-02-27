@@ -21,7 +21,7 @@ export async function DELETE_TASK(req: Request, res: Response) {
   const taskid = searchParams.get('id') as string;
 
   try {
-    await prisma.eFFICHRON_Task.delete({
+    await prisma.task.delete({
       where: {
         id: taskid,
       },

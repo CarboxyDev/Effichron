@@ -34,7 +34,7 @@ export const getUserFromSession = async (
 
   const user = session.user;
 
-  const prismaUser = await prisma.eFFICHRON_User.findUnique({
+  const prismaUser = await prisma.user.findUnique({
     where: {
       email: user.email as string,
     },

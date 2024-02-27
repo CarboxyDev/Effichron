@@ -20,7 +20,7 @@ export async function GET_ADMIN(req: Request, res: Response) {
   }
 
   if (queryType === 'usercount') {
-    const userCount = await prisma.eFFICHRON_User.count();
+    const userCount = await prisma.user.count();
     return SendResponse(
       JSON.stringify({ data: userCount, message: 'Fetched the user count' }),
       200
@@ -28,7 +28,7 @@ export async function GET_ADMIN(req: Request, res: Response) {
   }
 
   if (queryType === 'taskcount') {
-    const taskCount = await prisma.eFFICHRON_Task.count();
+    const taskCount = await prisma.task.count();
     return SendResponse(
       JSON.stringify({ data: taskCount, message: 'Fetched the task count' }),
       200
@@ -36,7 +36,7 @@ export async function GET_ADMIN(req: Request, res: Response) {
   }
 
   if (queryType === 'sessionlogcount') {
-    const sessionLogCount = await prisma.eFFICHRON_SessionLog.count();
+    const sessionLogCount = await prisma.sessionLog.count();
     return SendResponse(
       JSON.stringify({
         data: sessionLogCount,
@@ -47,7 +47,7 @@ export async function GET_ADMIN(req: Request, res: Response) {
   }
 
   if (queryType === 'recentuserjoined') {
-    const recentUser = await prisma.eFFICHRON_User.findFirst({
+    const recentUser = await prisma.user.findFirst({
       orderBy: {
         createdAt: 'desc',
       },
@@ -63,7 +63,7 @@ export async function GET_ADMIN(req: Request, res: Response) {
   }
 
   if (queryType === 'recentuserslist') {
-    const recentUsersList = await prisma.eFFICHRON_User.findMany({
+    const recentUsersList = await prisma.user.findMany({
       orderBy: {
         createdAt: 'desc',
       },
@@ -80,7 +80,7 @@ export async function GET_ADMIN(req: Request, res: Response) {
   }
 
   if (queryType === 'recenttaskcreated') {
-    const recentTask = await prisma.eFFICHRON_Task.findFirst({
+    const recentTask = await prisma.task.findFirst({
       orderBy: {
         createdAt: 'desc',
       },

@@ -10,7 +10,7 @@ datasource db {
 
 // NOTE: Use userId to scope all queries to the current user
 
-model EFFICHRON_Account {
+model Account {
   id                String  @id @default(cuid())
   userId            String
   type              String
@@ -24,34 +24,34 @@ model EFFICHRON_Account {
   id_token          String? @db.Text
   session_state     String?
 
-  user EFFICHRON_User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
 }
 
-model EFFICHRON_Session {
+model Session {
   id           String         @id @default(cuid())
   sessionToken String         @unique
   userId       String
   expires      DateTime
-  user         EFFICHRON_User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
-model EFFICHRON_User {
+model User {
   id            String              @id @default(cuid())
   name          String?
   email         String?             @unique
   emailVerified DateTime?
   image         String?
   createdAt     DateTime            @default(now())
-  accounts      EFFICHRON_Account[]
-  sessions      EFFICHRON_Session[]
+  accounts      Account[]
+  sessions      Session[]
 }
 
-model EFFICHRON_VerificationToken {
+model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
@@ -59,14 +59,14 @@ model EFFICHRON_VerificationToken {
   @@unique([identifier, token])
 }
 
-model EFFICHRON_SessionLog {
+model SessionLog {
   id              String   @id @default(uuid())
   userId          String
   sessionSnapshot String   @db.VarChar(1000) // This will store the strigified session object.
   createdAt       DateTime @default(now())
 }
 
-model EFFICHRON_Task {
+model Task {
   id        String   @id @default(uuid())
   userId    String
   name      String

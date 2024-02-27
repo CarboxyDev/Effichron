@@ -23,7 +23,7 @@ export async function GET_TASK(req: Request, res: Response) {
   }
 
   try {
-    const tasks = await prisma.eFFICHRON_Task.findMany({
+    const tasks = await prisma.task.findMany({
       where: {
         userId: user.id,
       },

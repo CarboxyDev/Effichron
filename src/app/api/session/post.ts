@@ -29,7 +29,7 @@ export async function POST_SESSION(req: Request, res: Response) {
 
   // This goes through all the database records which makes it very inefficient.
   // Try having the latest session's timestamp recorded somewhere instead.
-  const latestSessionLog = await prisma.eFFICHRON_SessionLog.findMany({
+  const latestSessionLog = await prisma.sessionLog.findMany({
     where: {
       userId: user.id,
     },
@@ -53,7 +53,7 @@ export async function POST_SESSION(req: Request, res: Response) {
     }
   }
 
-  await prisma.eFFICHRON_SessionLog.create({
+  await prisma.sessionLog.create({
     data: {
       userId: user.id,
       sessionSnapshot: JSON.stringify(cleanSnapshot), // ! The database can only store strings so this conversion is necessary

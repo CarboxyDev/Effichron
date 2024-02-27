@@ -26,7 +26,7 @@ export async function POST_TASK(req: Request, res: Response) {
 
   const { name, color } = body.data;
 
-  const userTaskCount = await prisma.eFFICHRON_Task.count({
+  const userTaskCount = await prisma.task.count({
     where: {
       userId: user.id,
     },
@@ -44,7 +44,7 @@ export async function POST_TASK(req: Request, res: Response) {
     return SendResponse('You must provide a color for the task', 403);
   }
   try {
-    const newTask = await prisma.eFFICHRON_Task.create({
+    const newTask = await prisma.task.create({
       data: {
         userId: user.id,
         name: name,
